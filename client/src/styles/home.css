@@ -4,9 +4,15 @@
     box-sizing: border-box;
     padding: 0;
 }
+.handleInput{
+    margin-top: 30px;
+    text-align: left;
+}
 nav{
     
-    
+    height: 4em;
+    position: fixed;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -30,6 +36,15 @@ nav{
     justify-content: space-between;
     
 }
+.content-problemset{
+    display: flex;
+    flex-direction: row;
+align-items: flex-start;
+    
+}
+.pset{
+    padding: 5px;
+}
 .link{
     text-decoration: none;
     margin-left: 1em;
@@ -37,6 +52,11 @@ nav{
     color: rgb(253, 232, 218);
     font-size: 1.5rem;
 }
-body{
-    background-color: whitesmoke;
+
+.controls{
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 15px;
+    width: 250px;
+    height: auto;
 }
