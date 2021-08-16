@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Display from './DisplayList'
 const Train = () => {
     const [handle, setHandle] = useState('')
     const [generalSet, setAcceptedList] = useState(null)
+    const [updatedSet, setUpdate] = useState(null)
     const [startRange, setStartRange] = useState('')
     const [endRange, setEndRange] = useState('')
     const ChangeInputHandle = (event) => {
@@ -13,12 +15,14 @@ const Train = () => {
         event.preventDefault()
         console.log("Entered handle is ", handle)
         try {
-            const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=10`)
+            const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
             console.log(response.data.result)
             const ProblemSetInfo = response.data.result.filter((info) => {
                 return info.verdict === "OK"
             })
+            console.log(ProblemSetInfo)
             setAcceptedList(ProblemSetInfo)
+            setUpdate(ProblemSetInfo)
 
         }
         catch (error) {
@@ -26,6 +30,10 @@ const Train = () => {
         }
 
     }
+    const handleList = (generalSet) => (
+        generalSet ?  <Display info = {updatedSet}/> 
+        : null
+    )
     const handleEndRange=  (event) => {
          setEndRange(event.target.value)
     }
@@ -36,8 +44,28 @@ const Train = () => {
         event.preventDefault()
        
             console.log(startRange, " ", endRange)
-        
+        if(updatedSet.length)
+        {
+            if(startRange !== '' && endRange !== '')
+            {
+                const filterSet = generalSet.filter((info) => info.problem.rating >= startRange && info.problem.rating <= endRange)
+            
+                setUpdate(filterSet)
+            }
+            else{
+                alert("Please enter the valid range")
+            }
+            
+        }
+        else{
+            alert("Please add handles to sort the questions")
+        }
     
+    }
+    const clearRange = () =>{
+setStartRange('')
+setEndRange('')
+setUpdate(generalSet)
     }
     return (
         <div>
@@ -49,77 +77,21 @@ const Train = () => {
             </form>
             <div className="content-problemset">
                 <div className="pset">
-                    <table class="ui celled table unstackable">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><p>Loredsjdfsdfdsfdddddddddddddddddddd</p></td>
-                                <td>Unknown</td>
-                                <td class="negative">None</td>
-                            </tr>
-                            <tr class="positive">
-                                <td>Jimmy</td>
-                                <td><i class="icon checkmark"></i> Approved</td>
-                                <td>None</td>
-                            </tr>
-                            <tr>
-                                <td>Jamie</td>
-                                <td>Unknown</td>
-                                <td class="positive"><i class="icon close"></i> Requires call</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-                            <tr class="negative">
-                                <td>Jill</td>
-                                <td>Unknown</td>
-                                <td>None</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+               {
+                  handleList(updatedSet)
+               }
+                   
                 </div>
 
-                <div class="controls">
+                <div className="controls">
                    <form onSubmit={handleRangeSubmit}>
                        <input value = {startRange} onChange = {handleStartRange}/>
 
                        <input value = {endRange} onChange = {handleEndRange}/>
                        <button>Submit</button>
+                      
                    </form>
+                   <button onClick = {clearRange}>Cancel</button>
                 </div>
             </div>
         </div>
