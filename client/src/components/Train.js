@@ -23,24 +23,30 @@ const Train = () => {
 
         try {
             var handles = [...listHandle]
-            handles.push(handle)
-            var alreadyExistingProblemSet = new Set()
-            const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
-            console.log(response.data.result)
-            const ProblemSetInfo = response.data.result.filter((info) => {
-                return info.verdict === "OK"
-            })
-
-            for (let i = 0; i < generalSet.length; i++) {
-                alreadyExistingProblemSet.add(generalSet[i])
+            if(handles.includes(handle) === false)
+            {
+                handles.push(handle)
+                var alreadyExistingProblemSet = new Set()
+                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
+                console.log(response.data.result)
+                const ProblemSetInfo = response.data.result.filter((info) => {
+                    return info.verdict === "OK"
+                })
+    
+                for (let i = 0; i < generalSet.length; i++) {
+                    alreadyExistingProblemSet.add(generalSet[i])
+                }
+                console.log(ProblemSetInfo)
+                for (let i = 0; i < ProblemSetInfo.length; i++) {
+                    alreadyExistingProblemSet.add(ProblemSetInfo[i])
+                }
+                setListHandle(handles)
+                setAcceptedList([...alreadyExistingProblemSet])
+                setUpdate([...alreadyExistingProblemSet])
             }
-            console.log(ProblemSetInfo)
-            for (let i = 0; i < ProblemSetInfo.length; i++) {
-                alreadyExistingProblemSet.add(ProblemSetInfo[i])
-            }
-            setListHandle(handles)
-            setAcceptedList([...alreadyExistingProblemSet])
-            setUpdate([...alreadyExistingProblemSet])
+           else{
+               alert("Handle is already added")
+           }
 
         }
         catch (error) {
@@ -99,6 +105,13 @@ const Train = () => {
         setEndRange('')
         setUpdate(generalSet)
     }
+
+    const handleRemovePerson = (info) => {
+        console.log("From u wanted ",info)
+        const data = [...listHandle]
+        const filter  = data.filter((name) => name !== info)
+        setListHandle(filter)
+    }
     return (
         <div>
 
@@ -109,7 +122,11 @@ const Train = () => {
                 <button type="submit">Add Handle</button>
                 <div className="addedHandles">
                     {
-                        listHandle.map((info) => <div className="tagFilterName"><h4>{info}</h4></div>)
+                        listHandle.map((info) =>{
+                            return(
+                                <div className="tagFilterName"><h4>{info}<span className="collapse" onClick = {() =>handleRemovePerson(info)}>❌</span></h4></div>
+                            )
+                        })
                     }
 
                 </div>
