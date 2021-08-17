@@ -72,3 +72,18 @@ align-items: flex-start;
     display: block;
     
 }
+.addedHandles{
+    border: 2px solid black;
+    width: auto;
+    height: auto;
+   color: red;
+   margin: 30px;
+   
+}
+.tagFilterName{
+   
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+    
+}

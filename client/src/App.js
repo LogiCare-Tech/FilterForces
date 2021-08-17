@@ -8,19 +8,24 @@ import Navbar from './components/Navbar'
 const App = () => {
     return (
         <BrowserRouter>
-<Navbar/>
-        {/* Switch will stop looking for matching routes once it finds the first one */}
-            <Switch>
-                <Route exact path="/">
-                    <Home />
-                </Route>
-                <Route path="/train">
-                    <Train />
-                </Route>
-                <Route path="/visualize">
-                    <Visualize />
-                </Route>
-            </Switch>
+            <div>
+                <Navbar />
+            </div>
+            <div>
+                {/* Switch will stop looking for matching routes once it finds the first one */}
+                <Switch>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route path="/train">
+                        <Train />
+                    </Route>
+                    <Route path="/visualize">
+                        <Visualize />
+                    </Route>
+                </Switch>
+            </div>
+
         </BrowserRouter>
     )
 }

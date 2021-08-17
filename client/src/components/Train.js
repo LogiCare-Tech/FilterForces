@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Display from './DisplayList'
+
 const Train = () => {
     const [handle, setHandle] = useState('')
-    const [generalSet, setAcceptedList] = useState(null)
-    const [updatedSet, setUpdate] = useState(null)
+    const [listHandle, setListHandle] = useState([])
+
+    //generalSet stores the questions which are obtained from initial api get request
+    const [generalSet, setAcceptedList] = useState([])
+
+    //updatedSet stores the questions which are sorted by giving rating range
+    const [updatedSet, setUpdate] = useState([])
     const [startRange, setStartRange] = useState('')
     const [endRange, setEndRange] = useState('')
     const ChangeInputHandle = (event) => {
@@ -14,84 +20,119 @@ const Train = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
         console.log("Entered handle is ", handle)
+
         try {
+            var handles = [...listHandle]
+            handles.push(handle)
+            var alreadyExistingProblemSet = new Set()
             const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
             console.log(response.data.result)
             const ProblemSetInfo = response.data.result.filter((info) => {
                 return info.verdict === "OK"
             })
+
+            for (let i = 0; i < generalSet.length; i++) {
+                alreadyExistingProblemSet.add(generalSet[i])
+            }
             console.log(ProblemSetInfo)
-            setAcceptedList(ProblemSetInfo)
-            setUpdate(ProblemSetInfo)
+            for (let i = 0; i < ProblemSetInfo.length; i++) {
+                alreadyExistingProblemSet.add(ProblemSetInfo[i])
+            }
+            setListHandle(handles)
+            setAcceptedList([...alreadyExistingProblemSet])
+            setUpdate([...alreadyExistingProblemSet])
 
         }
         catch (error) {
+            alert("Please enter the valid handle or wait for the codeforces api to accept the request")
             console.log(error)
         }
 
     }
+    const displayHandleNames = (names) => {
+        console.log("handles are ", names)
+        const data = names.map((info) => {
+            console.log(info)
+            return (
+                <div>
+                    <p>{info}</p>
+                </div>
+
+            )
+        })
+        console.log("here ", data)
+        return data
+        //return data
+    }
     const handleList = (generalSet) => (
-        generalSet ?  <Display info = {updatedSet}/> 
-        : null
+        generalSet ? <Display info={updatedSet} />
+            : null
     )
-    const handleEndRange=  (event) => {
-         setEndRange(event.target.value)
+    const handleEndRange = (event) => {
+        setEndRange(event.target.value)
     }
     const handleStartRange = (event) => {
         setStartRange(event.target.value)
     }
     const handleRangeSubmit = (event) => {
         event.preventDefault()
-       
-            console.log(startRange, " ", endRange)
-        if(updatedSet.length)
-        {
-            if(startRange !== '' && endRange !== '')
-            {
+
+        console.log(startRange, " ", endRange)
+        if (updatedSet.length) {
+            if (startRange !== '' && endRange !== '') {
                 const filterSet = generalSet.filter((info) => info.problem.rating >= startRange && info.problem.rating <= endRange)
-            
+
                 setUpdate(filterSet)
             }
-            else{
+            else {
                 alert("Please enter the valid range")
             }
-            
+
         }
-        else{
+        else {
             alert("Please add handles to sort the questions")
         }
-    
+
     }
-    const clearRange = () =>{
-setStartRange('')
-setEndRange('')
-setUpdate(generalSet)
+    const clearRange = () => {
+        setStartRange('')
+        setEndRange('')
+        setUpdate(generalSet)
     }
     return (
         <div>
+
             <h1>Enter the handle</h1>
             <form onSubmit={handleSubmit} className="handleInput">
-                <input value={handle}  type="text" onChange={ChangeInputHandle} />
+                <input value={handle} type="text" onChange={ChangeInputHandle} />
                 <br />
                 <button type="submit">Add Handle</button>
+                <div className="addedHandles">
+                    {
+                        listHandle.map((info) => <div className="tagFilterName"><h4>{info}</h4></div>)
+                    }
+
+                </div>
+
             </form>
+            <button>Apply</button>
             <div className="content-problemset">
                 <div className="pset">
-               {
-                  handleList(updatedSet)
-               }
-                   
+                    {
+                        handleList(updatedSet)
+                    }
+
                 </div>
 
                 <div className="controls">
-                   <form onSubmit={handleRangeSubmit}>
-                       <input value = {startRange} onChange = {handleStartRange}/>
+                    <form onSubmit={handleRangeSubmit}>
+                        <input value={startRange} onChange={handleStartRange} />
 
-                       <input value = {endRange} onChange = {handleEndRange}/>
-                       <button>Submit</button>
-                      
-                   </form>
-                   <button onClick = {clearRange}>Cancel</button>
+                        <input value={endRange} onChange={handleEndRange} />
+                        <button>Submit</button>
+
+                    </form>
+                    <button onClick={clearRange}>Cancel</button>
                 </div>
             </div>
         </div>
