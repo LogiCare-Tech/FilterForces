@@ -4,6 +4,7 @@ import Display from './DisplayList'
 
 const Train = () => {
     const [handle, setHandle] = useState('')
+
     const [listHandle, setListHandle] = useState([])
 
     //generalSet stores the questions which are obtained from initial api get request
@@ -13,6 +14,7 @@ const Train = () => {
     const [updatedSet, setUpdate] = useState([])
     const [startRange, setStartRange] = useState('')
     const [endRange, setEndRange] = useState('')
+    const [allHandlePsetInfo, setPsetInfo] = useState({})
     const ChangeInputHandle = (event) => {
 
         setHandle(event.target.value)
@@ -23,8 +25,7 @@ const Train = () => {
 
         try {
             var handles = [...listHandle]
-            if(handles.includes(handle) === false)
-            {
+            if (handles.includes(handle) === false) {
                 handles.push(handle)
                 var alreadyExistingProblemSet = new Set()
                 const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
@@ -32,21 +33,30 @@ const Train = () => {
                 const ProblemSetInfo = response.data.result.filter((info) => {
                     return info.verdict === "OK"
                 })
-    
-                for (let i = 0; i < generalSet.length; i++) {
-                    alreadyExistingProblemSet.add(generalSet[i])
-                }
+
+
                 console.log(ProblemSetInfo)
                 for (let i = 0; i < ProblemSetInfo.length; i++) {
                     alreadyExistingProblemSet.add(ProblemSetInfo[i])
+                }
+                // var obj = { key1: "value1", key2: "value2" };
+                // var pair = { key3: "value3" };
+                // obj = { ...obj, ...pair };
+                var newGuy = {
+                    ...allHandlePsetInfo
+                }
+                newGuy[handle] = [...alreadyExistingProblemSet]
+                setPsetInfo(newGuy)
+                for (let i = 0; i < generalSet.length; i++) {
+                    alreadyExistingProblemSet.add(generalSet[i])
                 }
                 setListHandle(handles)
                 setAcceptedList([...alreadyExistingProblemSet])
                 setUpdate([...alreadyExistingProblemSet])
             }
-           else{
-               alert("Handle is already added")
-           }
+            else {
+                alert("Handle is already added")
+            }
 
         }
         catch (error) {
@@ -107,9 +117,25 @@ const Train = () => {
     }
 
     const handleRemovePerson = (info) => {
-        console.log("From u wanted ",info)
+
         const data = [...listHandle]
-        const filter  = data.filter((name) => name !== info)
+        const filter = data.filter((name) => name !== info)
+        const updatedObject = allHandlePsetInfo
+
+        delete updatedObject[info]
+
+
+        const list = filter.map((handleName) => allHandlePsetInfo[handleName].map(info => info))
+        if (list.length) {
+            setAcceptedList(list[0])
+            setUpdate(list[0])
+        }
+        else {
+            setAcceptedList([])
+            setUpdate([])
+        }
+        setPsetInfo(updatedObject)
+
         setListHandle(filter)
     }
     return (
@@ -122,9 +148,9 @@ const Train = () => {
                 <button type="submit">Add Handle</button>
                 <div className="addedHandles">
                     {
-                        listHandle.map((info) =>{
-                            return(
-                                <div className="tagFilterName"><h4>{info}<span className="collapse" onClick = {() =>handleRemovePerson(info)}>❌</span></h4></div>
+                        listHandle.map((info) => {
+                            return (
+                                <div className="tagFilterName"><h4>{info}<span className="collapse" onClick={() => handleRemovePerson(info)}>❌</span></h4></div>
                             )
                         })
                     }
