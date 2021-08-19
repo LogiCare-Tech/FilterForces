@@ -15,13 +15,15 @@ const Train = () => {
     const [startRange, setStartRange] = useState('')
     const [endRange, setEndRange] = useState('')
     const [allHandlePsetInfo, setPsetInfo] = useState({})
+    const [personalHandle, setPersonalHandle] = useState('')
+    const [personalPsetOnCf, setPersonalPsetOnCf] = useState([])
     const ChangeInputHandle = (event) => {
 
         setHandle(event.target.value)
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log("Entered handle is ", handle)
+       
 
         try {
             var handles = [...listHandle]
@@ -29,13 +31,13 @@ const Train = () => {
                 handles.push(handle)
                 var alreadyExistingProblemSet = new Set()
                 const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
-                console.log(response.data.result)
+               
                 const ProblemSetInfo = response.data.result.filter((info) => {
                     return info.verdict === "OK"
                 })
 
 
-                console.log(ProblemSetInfo)
+              
                 for (let i = 0; i < ProblemSetInfo.length; i++) {
                     alreadyExistingProblemSet.add(ProblemSetInfo[i])
                 }
@@ -66,9 +68,9 @@ const Train = () => {
 
     }
     const displayHandleNames = (names) => {
-        console.log("handles are ", names)
+        
         const data = names.map((info) => {
-            console.log(info)
+            
             return (
                 <div>
                     <p>{info}</p>
@@ -76,12 +78,12 @@ const Train = () => {
 
             )
         })
-        console.log("here ", data)
+      
         return data
         //return data
     }
     const handleList = (generalSet) => (
-        generalSet ? <Display info={updatedSet} />
+        generalSet ? <Display info={updatedSet} personalInfo = {personalPsetOnCf}/>
             : null
     )
     const handleEndRange = (event) => {
@@ -93,7 +95,7 @@ const Train = () => {
     const handleRangeSubmit = (event) => {
         event.preventDefault()
 
-        console.log(startRange, " ", endRange)
+       
         if (updatedSet.length) {
             if (startRange !== '' && endRange !== '') {
                 const filterSet = generalSet.filter((info) => info.problem.rating >= startRange && info.problem.rating <= endRange)
@@ -138,6 +140,19 @@ const Train = () => {
 
         setListHandle(filter)
     }
+    const handlePersonalHandle = (event) =>{
+        setPersonalHandle(event.target.value)
+    }
+    const handleAdminUsername = async(event) => {
+        event.preventDefault()
+        
+        const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}&from=1&count=50`)
+        //response.data.result
+         console.log([...response.data.result])
+       
+        setPersonalPsetOnCf([...response.data.result])
+        
+    }
     return (
         <div>
 
@@ -156,9 +171,11 @@ const Train = () => {
                     }
 
                 </div>
-
+                
             </form>
-            <button>Apply</button>
+            <i class="user secret icon"></i><span>Enter your handle</span>
+                <input type="text" value = {personalHandle} onChange = {(event) => handlePersonalHandle(event)}/>
+            <button onClick = {(event)=>handleAdminUsername(event)}>Apply</button>
             <div className="content-problemset">
                 <div className="pset">
                     {

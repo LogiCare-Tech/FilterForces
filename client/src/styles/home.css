@@ -36,6 +36,12 @@ nav{
     justify-content: space-between;
     
 }
+.Negative{
+    background-color: rgb(236, 106, 106);
+}
+.Positive{
+    background-color: rgb(171, 235, 171);
+}
 .content-problemset{
     display: flex;
     flex-direction: row;
