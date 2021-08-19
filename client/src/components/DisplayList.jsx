@@ -1,34 +1,24 @@
 import React from 'react'
-import axios from 'axios'
+
 
 //{getSolvedNumber(inf.problem.tags, inf.problem.name)}
 
 const Display = (props) => {
     const getSolvedNumber = (INFO) => {
-        ////const tagFormat = INFO.problem.tags.map((topic) => `${topic};`)
+      const stats = props.stats.filter((info) => ((Number(INFO.problem.contestId) === Number(info.contestId)) && (String(INFO.problem.index) ===String(info.index))))
     
-        //  const data = await axios.get(`https://codeforces.com/api/problemset.problems?tags=${tagFormat}`)
-      // console.log(tagFormat)
-       // const response = await axios.get(`https://codeforces.com/api/problemset.problems?tags=${tagFormat}`)
-        // console.log(response)
-        const response = async(INFO)=>{
-            var actualTagFromat = ""
-            const tagFormat = INFO.problem.tags.map((topic) => {
-                actualTagFromat += `${topic};`
-             return`${topic};`
-            })
-          try{
-            const response = await axios.get(`https://codeforces.com/api/problemset.problems?tags=${actualTagFromat}`)
-            console.log("From ehre ",response.data.result.problemStatistics)
-          }
-          catch(err){
-              console.log(err.message)
-          }
-             
-           
+      if(stats[0])
+      {
+          let obj = stats[0]
+          
+          return obj.solvedCount
+      }
+        else{
+            console.log("hi ", stats[0])
+            return "Unavailable"
         }
-        response(INFO)
-       return 1000
+   
+            
     }
     const checkAppropriateColor = (INFO) => {
        

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Display from './DisplayList'
 
@@ -17,6 +17,15 @@ const Train = () => {
     const [allHandlePsetInfo, setPsetInfo] = useState({})
     const [personalHandle, setPersonalHandle] = useState('')
     const [personalPsetOnCf, setPersonalPsetOnCf] = useState([])
+    const [allPset, setAllPset] = useState([])
+    useEffect(()=>{
+        const find = async()=>{
+
+            const response = await axios.get(`https://codeforces.com/api/problemset.problems`)
+        setAllPset([...response.data.result.problemStatistics])
+        }
+        find()
+    },[])
     const ChangeInputHandle = (event) => {
 
         setHandle(event.target.value)
@@ -30,7 +39,7 @@ const Train = () => {
             if (handles.includes(handle) === false) {
                 handles.push(handle)
                 var alreadyExistingProblemSet = new Set()
-                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=50`)
+                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=2350`)
                
                 const ProblemSetInfo = response.data.result.filter((info) => {
                     return info.verdict === "OK"
@@ -41,9 +50,7 @@ const Train = () => {
                 for (let i = 0; i < ProblemSetInfo.length; i++) {
                     alreadyExistingProblemSet.add(ProblemSetInfo[i])
                 }
-                // var obj = { key1: "value1", key2: "value2" };
-                // var pair = { key3: "value3" };
-                // obj = { ...obj, ...pair };
+               
                 var newGuy = {
                     ...allHandlePsetInfo
                 }
@@ -83,7 +90,7 @@ const Train = () => {
         //return data
     }
     const handleList = (generalSet) => (
-        generalSet ? <Display info={updatedSet} personalInfo = {personalPsetOnCf}/>
+        generalSet ? <Display info={updatedSet} personalInfo = {personalPsetOnCf} stats = {allPset}/>
             : null
     )
     const handleEndRange = (event) => {
@@ -146,7 +153,7 @@ const Train = () => {
     const handleAdminUsername = async(event) => {
         event.preventDefault()
         
-        const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}&from=1&count=50`)
+        const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}&from=1&count=10000`)
         //response.data.result
          console.log([...response.data.result])
        
@@ -173,7 +180,7 @@ const Train = () => {
                 </div>
                 
             </form>
-            <i class="user secret icon"></i><span>Enter your handle</span>
+            <i className="user secret icon"></i><span>Enter your handle</span>
                 <input type="text" value = {personalHandle} onChange = {(event) => handlePersonalHandle(event)}/>
             <button onClick = {(event)=>handleAdminUsername(event)}>Apply</button>
             <div className="content-problemset">
