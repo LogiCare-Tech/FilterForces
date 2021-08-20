@@ -8,6 +8,17 @@
     margin-top: 30px;
     text-align: left;
 }
+.smallTagDisplay{
+    color: red;
+}
+.psetDisplayStyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-grow: 100;
+}
 nav{
     
     height: 4em;
@@ -46,10 +57,20 @@ nav{
     display: flex;
     flex-direction: row;
 align-items: flex-start;
+background-color: rgb(250, 224, 224);
+justify-content: space-between;
+
     
 }
 .pset{
     padding: 5px;
+    background-color: yellowgreen;
+    margin-top: 80px;
+    flex: 3;
+   
+    height: 600px;/*..very important if you want scroll bar...*/
+    overflow: auto; /*..will introduce scroll bar when needed..*/
+    overflow-x: hidden;
 }
 .link{
     text-decoration: none;
@@ -65,8 +86,12 @@ align-items: flex-start;
     border: 2px solid black;
     border-radius: 15px;
     padding: 15px;
-    width: 250px;
-    height: auto;
+    overflow:hidden;  /* code added to prevent scroll */
+    
+   margin-top: 80px;
+    flex:1;
+    height: 100%;
+    background-color: rgb(10, 131, 236);
 }
 .iconTick{
     background: url('tick.ico');
@@ -94,4 +119,8 @@ display: flex;
 flex-direction: row;
 justify-content: space-around;
     
+}
+tr{
+    width: auto;
+    height: auto;
 }

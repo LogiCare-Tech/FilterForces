@@ -18,39 +18,53 @@ const Train = () => {
     const [personalHandle, setPersonalHandle] = useState('')
     const [personalPsetOnCf, setPersonalPsetOnCf] = useState([])
     const [allPset, setAllPset] = useState([])
-    useEffect(()=>{
-        const find = async()=>{
+    const [allTags, setAllTags] = useState([])
+    useEffect(() => {
+        const find = async () => {
 
             const response = await axios.get(`https://codeforces.com/api/problemset.problems`)
-        setAllPset([...response.data.result.problemStatistics])
+            const AllTags = []
+
+            let sets = response.data.result.problems
+            for (let i = 0; i < sets.length; i++) {
+                for (let j = 0; j < sets[i].tags.length; j++) {
+                    if (!AllTags.includes(sets[i].tags[j])) {
+                        AllTags.push(sets[i].tags[j])
+                    }
+                }
+            }
+
+
+            setAllTags([...AllTags])
+            setAllPset([...response.data.result.problemStatistics])
         }
         find()
-    },[])
+    }, [])
     const ChangeInputHandle = (event) => {
 
         setHandle(event.target.value)
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
-       
+
 
         try {
             var handles = [...listHandle]
             if (handles.includes(handle) === false) {
                 handles.push(handle)
                 var alreadyExistingProblemSet = new Set()
-                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=2350`)
-               
+                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=20`)
+
                 const ProblemSetInfo = response.data.result.filter((info) => {
                     return info.verdict === "OK"
                 })
 
 
-              
+
                 for (let i = 0; i < ProblemSetInfo.length; i++) {
                     alreadyExistingProblemSet.add(ProblemSetInfo[i])
                 }
-               
+
                 var newGuy = {
                     ...allHandlePsetInfo
                 }
@@ -75,9 +89,9 @@ const Train = () => {
 
     }
     const displayHandleNames = (names) => {
-        
+
         const data = names.map((info) => {
-            
+
             return (
                 <div>
                     <p>{info}</p>
@@ -85,12 +99,12 @@ const Train = () => {
 
             )
         })
-      
+
         return data
         //return data
     }
     const handleList = (generalSet) => (
-        generalSet ? <Display info={updatedSet} personalInfo = {personalPsetOnCf} stats = {allPset}/>
+        generalSet ? <Display info={updatedSet} personalInfo={personalPsetOnCf} stats={allPset} tags={allTags} />
             : null
     )
     const handleEndRange = (event) => {
@@ -102,7 +116,7 @@ const Train = () => {
     const handleRangeSubmit = (event) => {
         event.preventDefault()
 
-       
+
         if (updatedSet.length) {
             if (startRange !== '' && endRange !== '') {
                 const filterSet = generalSet.filter((info) => info.problem.rating >= startRange && info.problem.rating <= endRange)
@@ -147,42 +161,23 @@ const Train = () => {
 
         setListHandle(filter)
     }
-    const handlePersonalHandle = (event) =>{
+    const handlePersonalHandle = (event) => {
         setPersonalHandle(event.target.value)
     }
-    const handleAdminUsername = async(event) => {
+    const handleAdminUsername = async (event) => {
         event.preventDefault()
-        
+
         const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}&from=1&count=10000`)
         //response.data.result
-         console.log([...response.data.result])
-       
+
+
         setPersonalPsetOnCf([...response.data.result])
-        
+
     }
     return (
         <div>
 
-            <h1>Enter the handle</h1>
-            <form onSubmit={handleSubmit} className="handleInput">
-                <input value={handle} type="text" onChange={ChangeInputHandle} />
-                <br />
-                <button type="submit">Add Handle</button>
-                <div className="addedHandles">
-                    {
-                        listHandle.map((info) => {
-                            return (
-                                <div className="tagFilterName"><h4>{info}<span className="collapse" onClick={() => handleRemovePerson(info)}>❌</span></h4></div>
-                            )
-                        })
-                    }
 
-                </div>
-                
-            </form>
-            <i className="user secret icon"></i><span>Enter your handle</span>
-                <input type="text" value = {personalHandle} onChange = {(event) => handlePersonalHandle(event)}/>
-            <button onClick = {(event)=>handleAdminUsername(event)}>Apply</button>
             <div className="content-problemset">
                 <div className="pset">
                     {
@@ -200,8 +195,34 @@ const Train = () => {
 
                     </form>
                     <button onClick={clearRange}>Cancel</button>
+                    <h1>Enter the handle</h1>
+                    <form onSubmit={handleSubmit} className="handleInput">
+                        <input value={handle} type="text" onChange={ChangeInputHandle} />
+                        <br />
+                        <button type="submit">Add Handle</button>
+                        <div className="addedHandles">
+                            {
+                                listHandle.map((info, index) => {
+                                    return (
+                                        <div className="tagFilterName" key={index}><h4>{info}<span className="collapse" onClick={() => handleRemovePerson(info)}>❌</span></h4></div>
+                                    )
+                                })
+                            }
+
+                        </div>
+
+                    </form>
+                    <i className="user secret icon"></i><span>Enter your handle</span>
+                    <input type="text" value={personalHandle} onChange={(event) => handlePersonalHandle(event)} />
+                    <button onClick={(event) => handleAdminUsername(event)}>Apply</button>
+                    <div>
+                        {
+                           allTags.map((i,index) => <p key = {index}>{i}</p>)
+                        }
+                    </div>
                 </div>
             </div>
+
         </div>
     )
 }
