@@ -53,9 +53,12 @@ const Display = (props) => {
                 return (
                     <tr key={index}  className={checkAppropriateColor(inf)}>
                         {/* <td><tr><td><p>{inf.problem.name}</p> </td> <td>{[inf.problem.tags.map((topic)=>`${topic}; `) ]}</td></tr></td> */}
+                        <td>
+                            {inf.problem.index}
+                        </td>
                         <td >
                             <div className = "psetDisplayStyle">
-                            {inf.problem.name} <p className ="smallTagDisplay">{[inf.problem.tags.map((topic)=>`${topic}; `) ]}</p>
+                            <a href = {`https://codeforces.com/problemset/problem/${inf.problem.contestId}/${inf.problem.index}` } target="_blank" rel="noopener noreferrer">{inf.problem.name}</a> <p className ="smallTagDisplay">{[inf.problem.tags.map((topic)=>`${topic}; `) ]}</p>
                             </div>
                         </td>
                         <td >{inf.problem.rating}</td>
@@ -71,6 +74,7 @@ const Display = (props) => {
                 <table className="ui celled table unstackable">
                     <thead>
                         <tr>
+                            <th><h2>#</h2></th>
                             <th ><h2>Problem</h2></th>
                             <th ><h2>Rating</h2></th>
                             <th ><icon className="iconTick"></icon></th>

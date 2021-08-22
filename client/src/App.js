@@ -8,10 +8,11 @@ import Navbar from './components/Navbar'
 const App = () => {
     return (
         <BrowserRouter>
-            <div>
+           
                 <Navbar />
-            </div>
-            <div>
+            
+               
+                <div className="middleSection">
                 {/* Switch will stop looking for matching routes once it finds the first one */}
                 <Switch>
                     <Route exact path="/">
