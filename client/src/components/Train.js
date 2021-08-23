@@ -12,9 +12,10 @@ const Train = () => {
 
     //updatedSet stores the questions which are sorted by giving rating range
     const updatedSet = useRef([])
+    
     const triggerRender = useRef(false)
-    const [startRange, setStartRange] = useState(0)
-    const [endRange, setEndRange] = useState(1000000)
+    const [startRange, setStartRange] = useState(null)
+    const [endRange, setEndRange] = useState(null)
     const [allHandlePsetInfo, setPsetInfo] = useState({})
     const [personalHandle, setPersonalHandle] = useState('')
     const [personalPsetOnCf, setPersonalPsetOnCf] = useState([])
@@ -24,8 +25,7 @@ const Train = () => {
     const [ladderInputField, setLadderField] = useState('')
     const [currentLadder, setCurrentLadder] = useState([])
     const [currentRange, setCurrentRange] = useState([])
-    //Universal problemset
-    const [universalPset, setUniversalPset] = useState([])
+
 
 
     //Universal pset which are filtered according to Personal Handle tags
@@ -55,7 +55,7 @@ const Train = () => {
             setAllLadder([...AllLadder])
             setAllTags([...AllTags])
 
-            setUniversalPset([...response.data.result.problems])
+           
             setAllPset([...response.data.result.problemStatistics])
         }
         find()
@@ -67,24 +67,36 @@ const Train = () => {
         if (triggerRender.current == true) {
 
             for (let info of filterTagPset) {
-                mp1.set(info, 1)
+                mp1.set(info, 0)
             }
-
+             
             for (let info of filterTagPset) {
 
                 if (info.rating >= currentRange[0] && info.rating <= currentRange[1]) {
                     mp1.set(info, mp1.get(info) + 1)
+                    if(currentLadder.includes(info.index))
+                    {
+                        mp1.set(info, mp1.get(info) + 1)
+                    }
                 }
 
 
-                if (currentLadder.includes(info.index)) {
-                    mp1.set(info, mp1.get(info) + 1)
-                }
 
             }
+            if(currentRange.length == 0)
+            {
+                for(let info of filterTagPset)
+             {
+                 
+                if (currentLadder.includes(info.index)) {
+                    mp1.set(info, mp1.get(info) + 1)
+                   
+                }
+             }
+            }
+             
 
-
-            console.log("After everything ", mp1)
+           
             let values = []
             for (let info of mp1.values()) {
                 values.push(info)
@@ -92,19 +104,31 @@ const Train = () => {
             let listToDisplay = []
             let maxVotes = Math.max(...values)
             //console.log("Max votes ", maxVotes)
-            for (let info of mp1) {
-                // console.log("from heaven ",info)
-                if (mp1.get(info[0]) === maxVotes) {
-                    //console.log("From heaven ", info)
-                    listToDisplay.push(info[0])
+            if(currentLadder.length || currentRange.length)
+            {
+                for (let info of mp1) {
+                    // console.log("from heaven ",info)
+                    if (maxVotes > 0 &&  mp1.get(info[0]) === maxVotes) {
+                        //console.log("From heaven ", info)
+                        listToDisplay.push(info[0])
+                    }
                 }
             }
+            else{
+                for (let info of mp1) {
+                    // console.log("from heaven ",info)
+                    if ( mp1.get(info[0]) === maxVotes) {
+                        //console.log("From heaven ", info)
+                        listToDisplay.push(info[0])
+                    }
+                }
+            }
+            
             // console.log("List to display ", listToDisplay)
             updatedSet.current = [...listToDisplay]
             triggerRender.current = false
-            console.log("from inside ", updatedSet.current)
-            console.log("from inside ", triggerRender.current)
-            setAcceptedList([...updatedSet.current])
+            
+            setAcceptedList([])
         }
 
     }, [filterTagPset, currentLadder, currentRange])
@@ -215,9 +239,9 @@ const Train = () => {
     }
     const clearRange = () => {
         triggerRender.current = true
-        setStartRange(0)
-        setEndRange(1000000)
-        setCurrentRange([0, 100000])
+        setStartRange('')
+        setEndRange('')
+        setCurrentRange([])
     }
 
     const handleRemovePerson = (info) => {
@@ -285,9 +309,15 @@ const Train = () => {
 
         }
         else {
-            console.log(prevLadder)
+           
             alert("Please enter the valid tag")
         }
+    }
+    const handleRemoveLadder = (data) => {
+      
+        triggerRender.current = true
+        let listLadder = currentLadder.filter((info) => info !== data.info)
+         setCurrentLadder([...listLadder])
     }
     return (
         <div className="mainField">
@@ -305,7 +335,7 @@ const Train = () => {
                                     <div key={index} className="ui image label">
                                         <span>{info}</span>
 
-                                        <i className="delete icon"></i>
+                                        <i className="delete icon" onClick = {() => handleRemoveLadder({info})}></i>
                                     </div>
                                 )
                             })
@@ -327,9 +357,9 @@ const Train = () => {
                     <div className="controls">
 
                         <form onSubmit={handleRangeSubmit}>
-                            <input value={startRange} onChange={handleStartRange} />
+                            <input value={startRange} onChange={(event) =>handleStartRange(event)} />
 
-                            <input value={endRange} onChange={handleEndRange} />
+                            <input value={endRange} onChange={event => handleEndRange(event)} />
                             <button>Submit</button>
 
                         </form>
