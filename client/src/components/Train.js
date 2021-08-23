@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import Display from './DisplayList'
 
@@ -11,9 +11,10 @@ const Train = () => {
     const [generalSet, setAcceptedList] = useState([])
 
     //updatedSet stores the questions which are sorted by giving rating range
-    const [updatedSet, setUpdate] = useState([])
-    const [startRange, setStartRange] = useState('')
-    const [endRange, setEndRange] = useState('')
+    const updatedSet = useRef([])
+    const triggerRender = useRef(false)
+    const [startRange, setStartRange] = useState(0)
+    const [endRange, setEndRange] = useState(1000000)
     const [allHandlePsetInfo, setPsetInfo] = useState({})
     const [personalHandle, setPersonalHandle] = useState('')
     const [personalPsetOnCf, setPersonalPsetOnCf] = useState([])
@@ -22,7 +23,16 @@ const Train = () => {
     const [allLadder, setAllLadder] = useState([])
     const [ladderInputField, setLadderField] = useState('')
     const [currentLadder, setCurrentLadder] = useState([])
-    const [showTagOverlay, setTagOverlay] = useState(false)
+    const [currentRange, setCurrentRange] = useState([])
+    //Universal problemset
+    const [universalPset, setUniversalPset] = useState([])
+
+
+    //Universal pset which are filtered according to Personal Handle tags
+    const [filterTagPset, setFilterTagPset] = useState([])
+
+
+
     useEffect(() => {
         const find = async () => {
 
@@ -44,23 +54,74 @@ const Train = () => {
 
             setAllLadder([...AllLadder])
             setAllTags([...AllTags])
+
+            setUniversalPset([...response.data.result.problems])
             setAllPset([...response.data.result.problemStatistics])
         }
         find()
     }, [])
+    useEffect(() => {
+        let mp1 = new Map()
+
+
+        if (triggerRender.current == true) {
+
+            for (let info of filterTagPset) {
+                mp1.set(info, 1)
+            }
+
+            for (let info of filterTagPset) {
+
+                if (info.rating >= currentRange[0] && info.rating <= currentRange[1]) {
+                    mp1.set(info, mp1.get(info) + 1)
+                }
+
+
+                if (currentLadder.includes(info.index)) {
+                    mp1.set(info, mp1.get(info) + 1)
+                }
+
+            }
+
+
+            console.log("After everything ", mp1)
+            let values = []
+            for (let info of mp1.values()) {
+                values.push(info)
+            }
+            let listToDisplay = []
+            let maxVotes = Math.max(...values)
+            //console.log("Max votes ", maxVotes)
+            for (let info of mp1) {
+                // console.log("from heaven ",info)
+                if (mp1.get(info[0]) === maxVotes) {
+                    //console.log("From heaven ", info)
+                    listToDisplay.push(info[0])
+                }
+            }
+            // console.log("List to display ", listToDisplay)
+            updatedSet.current = [...listToDisplay]
+            triggerRender.current = false
+            console.log("from inside ", updatedSet.current)
+            console.log("from inside ", triggerRender.current)
+            setAcceptedList([...updatedSet.current])
+        }
+
+    }, [filterTagPset, currentLadder, currentRange])
     const ChangeInputHandle = (event) => {
 
         setHandle(event.target.value)
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
-
+        console.log("hi ", handle)
 
         try {
+            triggerRender.current = true
             var handles = [...listHandle]
             if (handles.includes(handle) === false) {
                 handles.push(handle)
-                var alreadyExistingProblemSet = new Set()
+                var alreadyExistingProblemSet = []
                 const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=20`)
 
                 const ProblemSetInfo = response.data.result.filter((info) => {
@@ -68,37 +129,36 @@ const Train = () => {
                 })
 
 
-
+                var list = []
                 for (let i = 0; i < ProblemSetInfo.length; i++) {
-                    alreadyExistingProblemSet.add(ProblemSetInfo[i])
+                    alreadyExistingProblemSet.push(ProblemSetInfo[i].problem)
+                    list.push(ProblemSetInfo[i].problem)
                 }
 
                 var newGuy = {
                     ...allHandlePsetInfo
                 }
+
                 newGuy[handle] = [...alreadyExistingProblemSet]
+
+
+
+                // console.log(allHandlePsetInfo)
+                for (let i = 0; i < listHandle.length; i++) {
+
+                    let individualPset = [...allHandlePsetInfo[listHandle[i]]]
+                    for (let j = 0; j < individualPset.length; j++) {
+                        list.push(individualPset[j])
+
+                    }
+                }
+
+                //  console.log("RangeFIlter length ",filterRangePset.length)
+                //console.log("LadderFilter length ", filterLadderPset.length)
                 setPsetInfo(newGuy)
-                for (let i = 0; i < generalSet.length; i++) {
-                    alreadyExistingProblemSet.add(generalSet[i])
-                }
                 setListHandle(handles)
-                if(currentLadder.length)
-                {
-                    let existingLadder = [...currentLadder]
-                    let filterQuesitons = alreadyExistingProblemSet.filter((info) =>
-                    {
-                        return (existingLadder.includes(info.problem.index))
-                    }) 
-                    setUpdate([...filterQuesitons])
-                    setAcceptedList([...alreadyExistingProblemSet])
-                }
-                else{
-                   
-                    setLadderField('')
-                    setCurrentLadder('')
-                    setUpdate([...alreadyExistingProblemSet])
-                }
-               
+                setFilterTagPset([...list])
+
             }
             else {
                 alert("Handle is already added")
@@ -126,9 +186,14 @@ const Train = () => {
         return data
         //return data
     }
-    const handleList = (generalSet) => (
-        generalSet ? <Display info={updatedSet} personalInfo={personalPsetOnCf} stats={allPset} tags={allTags} ladders={allLadder} />
+    const handleList = (general) => (
+
+
+
+        general ? <Display info={general} personalInfo={personalPsetOnCf} stats={allPset} tags={allTags} ladders={allLadder} />
             : null
+
+
     )
     const handleEndRange = (event) => {
         setEndRange(event.target.value)
@@ -138,28 +203,21 @@ const Train = () => {
     }
     const handleRangeSubmit = (event) => {
         event.preventDefault()
+        console.log(startRange, endRange)
+        triggerRender.current = true
 
 
-        if (updatedSet.length) {
-            if (startRange !== '' && endRange !== '') {
-                const filterSet = generalSet.filter((info) => info.problem.rating >= startRange && info.problem.rating <= endRange)
+        setCurrentRange([startRange, endRange])
 
-                setUpdate(filterSet)
-            }
-            else {
-                alert("Please enter the valid range")
-            }
 
-        }
-        else {
-            alert("Please add handles to sort the questions")
-        }
+
 
     }
     const clearRange = () => {
-        setStartRange('')
-        setEndRange('')
-        setUpdate(generalSet)
+        triggerRender.current = true
+        setStartRange(0)
+        setEndRange(1000000)
+        setCurrentRange([0, 100000])
     }
 
     const handleRemovePerson = (info) => {
@@ -167,19 +225,21 @@ const Train = () => {
         const data = [...listHandle]
         const filter = data.filter((name) => name !== info)
         const updatedObject = allHandlePsetInfo
-
+        triggerRender.current = true
         delete updatedObject[info]
 
+        let psetHolder = []
+        for (let i = 0; i < listHandle.length; i++) {
+            if (listHandle[i] !== info) {
+                let individualPset = [...allHandlePsetInfo[listHandle[i]]]
 
-        const list = filter.map((handleName) => allHandlePsetInfo[handleName].map(info => info))
-        if (list.length) {
-            setAcceptedList(list[0])
-            setUpdate(list[0])
+                for (let x of individualPset) {
+                    psetHolder.push(x)
+                }
+            }
         }
-        else {
-            setAcceptedList([])
-            setUpdate([])
-        }
+        setFilterTagPset(psetHolder)
+
         setPsetInfo(updatedObject)
 
         setListHandle(filter)
@@ -199,31 +259,30 @@ const Train = () => {
     }
     const handleTagSubmit = (event) => {
         event.preventDefault()
-        setTagOverlay(true)
+        //Problem tags
     }
     const handleLadderChange = (event) => {
-        console.log(event.target.value)
+
         setLadderField(event.target.value)
     }
     const handleSubmitLadder = (event) => {
         event.preventDefault()
         const prevLadder = [...currentLadder]
-        
-       
+
+        triggerRender.current = true
         if (allLadder.includes(ladderInputField)) {
-            const prevSet = updatedSet.filter((info) => info.problem.index === ladderInputField || prevLadder.includes(info.problem.index))
-           if(!prevLadder.includes(ladderInputField))
-           {
-            prevLadder.push(ladderInputField)
-            setUpdate([...prevSet])
+
+            if (!prevLadder.includes(ladderInputField)) {
+                prevLadder.push(ladderInputField)
 
 
-            setCurrentLadder([...prevLadder])
-           }
-           else{
-               alert("Already added ")
-           }
-           
+
+                setCurrentLadder([...prevLadder])
+            }
+            else {
+                alert("Already added ")
+            }
+
         }
         else {
             console.log(prevLadder)
@@ -236,31 +295,31 @@ const Train = () => {
 
             <div className="content-problemset">
                 <div className="lablesFiled">
-                    
-                        {
-                            currentLadder.length > 0?
-                            
-                                currentLadder.map((info) =>{
-                                    return(
-                                       
-                                        <div class="ui image label">
-                                       <span>{info}</span>
-                                       
-                                        <i class="delete icon"></i>
+
+                    {
+                        currentLadder.length > 0 ?
+
+                            currentLadder.map((info, index) => {
+                                return (
+
+                                    <div key={index} className="ui image label">
+                                        <span>{info}</span>
+
+                                        <i className="delete icon"></i>
                                     </div>
                                 )
-                                })
-                                :
-                                null
-                            
-                           
-                        }
-                   
+                            })
+                            :
+                            null
+
+
+                    }
+
                 </div>
                 <div className="content">
                     <div className="pset">
                         {
-                            handleList(updatedSet)
+                            handleList(updatedSet.current)
                         }
 
                     </div>

@@ -5,7 +5,7 @@ import React from 'react'
 
 const Display = (props) => {
     const getSolvedNumber = (INFO) => {
-      const stats = props.stats.filter((info) => ((Number(INFO.problem.contestId) === Number(info.contestId)) && (String(INFO.problem.index) ===String(info.index))))
+      const stats = props.stats.filter((info) => ((Number(INFO.contestId) === Number(info.contestId)) && (String(INFO.index) ===String(info.index))))
     
       if(stats[0])
       {
@@ -29,7 +29,7 @@ const Display = (props) => {
           
        
        
-        const isElementPresent = props.personalInfo.filter((info) => ((info.problem.contestId === INFO.problem.contestId) && (info.problem.index === INFO.problem.index)))
+        const isElementPresent = props.personalInfo.filter((info) => ((info.problem.contestId === INFO.contestId) && (info.problem.index === INFO.index)))
         
         if(!isElementPresent[0])
         {
@@ -54,14 +54,14 @@ const Display = (props) => {
                     <tr key={index}  className={checkAppropriateColor(inf)}>
                         {/* <td><tr><td><p>{inf.problem.name}</p> </td> <td>{[inf.problem.tags.map((topic)=>`${topic}; `) ]}</td></tr></td> */}
                         <td>
-                            {inf.problem.index}
+                            {inf.index}
                         </td>
                         <td >
                             <div className = "psetDisplayStyle">
-                            <a href = {`https://codeforces.com/problemset/problem/${inf.problem.contestId}/${inf.problem.index}` } target="_blank" rel="noopener noreferrer">{inf.problem.name}</a> <p className ="smallTagDisplay">{[inf.problem.tags.map((topic)=>`${topic}; `) ]}</p>
+                            <a href = {`https://codeforces.com/problemset/problem/${inf.contestId}/${inf.index}` } target="_blank" rel="noopener noreferrer">{inf.name}</a> <p className ="smallTagDisplay">{[inf.tags.map((topic)=>`${topic}; `) ]}</p>
                             </div>
                         </td>
-                        <td >{inf.problem.rating}</td>
+                        <td >{inf.rating}</td>
                         <td >🤺 x{getSolvedNumber(inf)}</td>
                     </tr>
                 )
