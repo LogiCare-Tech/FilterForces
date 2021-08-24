@@ -6,8 +6,8 @@ const Train = () => {
     const [handle, setHandle] = useState('')
 
     const [listHandle, setListHandle] = useState([])
-
-    //generalSet stores the questions which are obtained from initial api get request
+  
+   
 
 
     //updatedSet stores the questions which are sorted by giving rating range
