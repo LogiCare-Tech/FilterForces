@@ -8,14 +8,14 @@ const Train = () => {
     const [listHandle, setListHandle] = useState([])
 
     //generalSet stores the questions which are obtained from initial api get request
-    const [generalSet, setAcceptedList] = useState([])
+
 
     //updatedSet stores the questions which are sorted by giving rating range
-    const updatedSet = useRef([])
-    
+    // const updatedSet = useRef([])
+    const [updatedSet, setUpdate] = useState([])
     const triggerRender = useRef(false)
-    const [startRange, setStartRange] = useState(null)
-    const [endRange, setEndRange] = useState(null)
+    const [startRange, setStartRange] = useState('')
+    const [endRange, setEndRange] = useState('')
     const [allHandlePsetInfo, setPsetInfo] = useState({})
     const [personalHandle, setPersonalHandle] = useState('')
     const [personalPsetOnCf, setPersonalPsetOnCf] = useState([])
@@ -24,9 +24,10 @@ const Train = () => {
     const [allLadder, setAllLadder] = useState([])
     const [ladderInputField, setLadderField] = useState('')
     const [currentLadder, setCurrentLadder] = useState([])
+    const [currentTopics, setCurrentTopics] = useState([])
     const [currentRange, setCurrentRange] = useState([])
-
-
+    const [display, setDisplay] = useState("flex")
+    const [topicOverlay, setTopciOverlay] = useState("none")
 
     //Universal pset which are filtered according to Personal Handle tags
     const [filterTagPset, setFilterTagPset] = useState([])
@@ -55,7 +56,7 @@ const Train = () => {
             setAllLadder([...AllLadder])
             setAllTags([...AllTags])
 
-           
+
             setAllPset([...response.data.result.problemStatistics])
         }
         find()
@@ -64,39 +65,65 @@ const Train = () => {
         let mp1 = new Map()
 
 
-        if (triggerRender.current == true) {
+        if (triggerRender.current === true) {
 
             for (let info of filterTagPset) {
                 mp1.set(info, 0)
             }
-             
+            function hasSubArray(master, sub) {
+                return sub.every((i => v => i = master.indexOf(v, i) + 1)(0));
+            }
             for (let info of filterTagPset) {
 
                 if (info.rating >= currentRange[0] && info.rating <= currentRange[1]) {
                     mp1.set(info, mp1.get(info) + 1)
-                    if(currentLadder.includes(info.index))
-                    {
+                    if (currentLadder.includes(info.index)) {
                         mp1.set(info, mp1.get(info) + 1)
+
+                    }
+                    if (currentTopics.length) {
+                        let flag = 0
+                        for (let tag of info.tags) {
+                            if (currentTopics.includes(tag)) {
+                                flag = 1
+                            }
+                        }
+                        if (flag) {
+                            mp1.set(info, mp1.get(info) + 1)
+                            flag = 0
+                        }
                     }
                 }
 
 
 
             }
-            if(currentRange.length == 0)
-            {
-                for(let info of filterTagPset)
-             {
-                 
-                if (currentLadder.includes(info.index)) {
-                    mp1.set(info, mp1.get(info) + 1)
-                   
-                }
-             }
-            }
-             
 
-           
+            if (currentRange.length === 0) {
+                for (let info of filterTagPset) {
+
+                    if (currentLadder.includes(info.index)) {
+                        mp1.set(info, mp1.get(info) + 1)
+
+                    }
+                    if (currentTopics.length) {
+                        let flag = 0
+
+                        for (let tag of info.tags) {
+                            if (currentTopics.includes(tag)) {
+                                flag = 1
+                            }
+                        }
+                        if (flag) {
+                            mp1.set(info, mp1.get(info) + 1)
+                            flag = 0
+                        }
+                    }
+                }
+            }
+
+
+
             let values = []
             for (let info of mp1.values()) {
                 values.push(info)
@@ -104,34 +131,33 @@ const Train = () => {
             let listToDisplay = []
             let maxVotes = Math.max(...values)
             //console.log("Max votes ", maxVotes)
-            if(currentLadder.length || currentRange.length)
-            {
+            if (currentLadder.length || currentRange.length || currentTopics.length) {
                 for (let info of mp1) {
                     // console.log("from heaven ",info)
-                    if (maxVotes > 0 &&  mp1.get(info[0]) === maxVotes) {
+                    if (maxVotes > 0 && mp1.get(info[0]) === maxVotes) {
                         //console.log("From heaven ", info)
                         listToDisplay.push(info[0])
                     }
                 }
             }
-            else{
+            else {
                 for (let info of mp1) {
                     // console.log("from heaven ",info)
-                    if ( mp1.get(info[0]) === maxVotes) {
+                    if (mp1.get(info[0]) === maxVotes) {
                         //console.log("From heaven ", info)
                         listToDisplay.push(info[0])
                     }
                 }
             }
-            
+
             // console.log("List to display ", listToDisplay)
-            updatedSet.current = [...listToDisplay]
+            //updatedSet.current = [...listToDisplay]
             triggerRender.current = false
-            
-            setAcceptedList([])
+
+            setUpdate([...listToDisplay])
         }
 
-    }, [filterTagPset, currentLadder, currentRange])
+    }, [filterTagPset, currentLadder, currentRange, currentTopics])
     const ChangeInputHandle = (event) => {
 
         setHandle(event.target.value)
@@ -146,7 +172,7 @@ const Train = () => {
             if (handles.includes(handle) === false) {
                 handles.push(handle)
                 var alreadyExistingProblemSet = []
-                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}&from=1&count=20`)
+                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}`)
 
                 const ProblemSetInfo = response.data.result.filter((info) => {
                     return info.verdict === "OK"
@@ -281,8 +307,10 @@ const Train = () => {
         setPersonalPsetOnCf([...response.data.result])
 
     }
-    const handleTagSubmit = (event) => {
+    const handleTopicSubmit = (event) => {
         event.preventDefault()
+        setDisplay("none")
+        setTopciOverlay("flex")
         //Problem tags
     }
     const handleLadderChange = (event) => {
@@ -309,15 +337,45 @@ const Train = () => {
 
         }
         else {
-           
+
             alert("Please enter the valid tag")
         }
     }
+    const handleAddTopic = (topic) => {
+        const prevTopics = [...currentTopics]
+        triggerRender.current = true
+
+        if (prevTopics.includes(topic) === false) {
+            prevTopics.push(topic)
+            setCurrentTopics([...prevTopics])
+        }
+        else {
+            alert("Already added this topic")
+        }
+
+
+    }
     const handleRemoveLadder = (data) => {
-      
+
         triggerRender.current = true
         let listLadder = currentLadder.filter((info) => info !== data.info)
-         setCurrentLadder([...listLadder])
+        setCurrentLadder([...listLadder])
+    }
+    const handleRemoveTopic = (data => {
+        triggerRender.current = true
+        let listTopics = currentTopics.filter((info) => info !== data.info)
+        setCurrentTopics([...listTopics])
+    })
+    const contentStyle = {
+        display: `${display}`
+    }
+    const OverlayStyle = {
+        display: `${topicOverlay}`
+    }
+    const manageOverlayTopic = () => {
+        console.log("cancel")
+        setDisplay('flex')
+        setTopciOverlay("none")
     }
     return (
         <div className="mainField">
@@ -335,7 +393,7 @@ const Train = () => {
                                     <div key={index} className="ui image label">
                                         <span>{info}</span>
 
-                                        <i className="delete icon" onClick = {() => handleRemoveLadder({info})}></i>
+                                        <i className="delete icon" onClick={() => handleRemoveLadder({ info })}></i>
                                     </div>
                                 )
                             })
@@ -346,10 +404,34 @@ const Train = () => {
                     }
 
                 </div>
-                <div className="content">
+                <div className="lablesFiled">
+                    {
+                        currentTopics.length > 0 ?
+                            currentTopics.map((info, index) => {
+                                return (
+                                    <div key={index} className="ui image label">
+                                        <span>{info}</span>
+
+                                        <i className="delete icon" onClick={() => handleRemoveTopic({ info })}></i>
+                                    </div>
+                                )
+                            })
+                            :
+                            null
+                    }
+                </div>
+                <div className="overlayForTopics" style={OverlayStyle}>
+                    <button onClick={() => manageOverlayTopic()}>
+                        Cancel
+                    </button>
+                    {
+                        allTags.map((i, index) => <p key={index} onClick={() => handleAddTopic(i)}>{i}</p>)
+                    }
+                </div>
+                <div className="content" style={contentStyle}>
                     <div className="pset">
                         {
-                            handleList(updatedSet.current)
+                            handleList(updatedSet)
                         }
 
                     </div>
@@ -357,7 +439,7 @@ const Train = () => {
                     <div className="controls">
 
                         <form onSubmit={handleRangeSubmit}>
-                            <input value={startRange} onChange={(event) =>handleStartRange(event)} />
+                            <input value={startRange} onChange={(event) => handleStartRange(event)} />
 
                             <input value={endRange} onChange={event => handleEndRange(event)} />
                             <button>Submit</button>
@@ -384,13 +466,10 @@ const Train = () => {
                         <i className="user secret icon"></i><span>Enter your handle</span>
                         <input type="text" value={personalHandle} onChange={(event) => handlePersonalHandle(event)} />
                         <button onClick={(event) => handleAdminUsername(event)}>Apply</button>
-                        {/* <div>
-                         {
-                           allTags.map((i,index) => <p key = {index}>{i}</p>)
-                        } 
 
-                    </div> */}
-                        <button onClick={(event) => handleTagSubmit(event)}></button>
+                        <button onClick={(event) => handleTopicSubmit(event)}>Select the topic</button>
+
+
                         <div className="ladderControls">
                             <h1>
                                 Ladders

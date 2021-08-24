@@ -28,7 +28,7 @@ nav{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-   background-color: black;
+   background-color: rgb(24,32,38);
    font-family: 'Roboto Mono', monospace;
    z-index: 100;
 }
@@ -58,7 +58,7 @@ nav{
     display: flex;
     flex-direction:column;
 
-background-color: rgb(19, 2, 2);
+
 justify-content: space-between;
 margin-top: 50px;
 
@@ -70,14 +70,14 @@ margin-top: 50px;
   
    width: 100%;
    height: auto;
-   background-color: khaki;
+  
    margin: 0;
    position: sticky;
 }
 
 
 .middleSection{
-    border: 2px solid brown;
+    border: 2px solid black;
     width: 100%;
 }
 
@@ -88,18 +88,31 @@ margin-top: 50px;
  align-items: center;
  align-content: center;
 }
-.content{
+.overlayForTopics{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+  height: 400px;
+   padding: 10px;
+    border: 2px solid rgb(29, 6, 6);
+    border-radius: 15px;
     display: flex;
+    flex-direction: column;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.content{
+    /* display: flex; */
     flex-direction: row;
-   position: sticky;
+     position: sticky;
 
+    
 
-background-color: rgb(39, 7, 7);
 justify-content: space-between;
 }
 .pset{
     padding: 5px;
-    background-color: yellowgreen;
+    
     margin-top: 10px;
     flex: 3;
   
@@ -126,7 +139,7 @@ justify-content: space-between;
    margin-top: 10px;
     flex:1;
     height: 100%;
-    background-color: rgb(10, 131, 236);
+    
 }
 .iconTick{
     background: url('tick.ico');
@@ -160,9 +173,9 @@ tr{
     height: auto;
 }
 .ladderControls{
-    background-color: brown;
-    width: 100%;
-    height: 100%;
+    
+  width: auto;
+  height: auto;
     border: 2px solid black;
 }
 .lablesFiled{
