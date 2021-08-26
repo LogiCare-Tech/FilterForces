@@ -5,6 +5,7 @@ import Home from './components/Home'
 import Train from './components/Train'
 import Visualize from './components/Visualize'
 import Navbar from './components/Navbar'
+import Login from './components/Login'
 const App = () => {
     return (
         <BrowserRouter>
@@ -23,6 +24,9 @@ const App = () => {
                     </Route>
                     <Route path="/visualize">
                         <Visualize />
+                    </Route>
+                    <Route path="/login">
+                        <Login />
                     </Route>
                 </Switch>
             </div>
