@@ -1,0 +1,7 @@
+###
+POST http://localhost:3001/api/Train/
+Content-Type: application/json
+
+{
+    "people": ["divya_patel", "hackerbhaiya"]
+}
