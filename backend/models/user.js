@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 const userSchema = mongoose.Schema({
-    googleId: {
+    username: {
         type: String,
         required: true
     },
-    displayName: {
+    name: {
         type: String,
         required: true
     },
@@ -12,20 +12,17 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    lastName: {
+    email: {
         type: String,
         required: true
     },
-    image: {
-        type: String
-    },
+  
     createdAt: {
         type: Date,
         default: Date.now
     }
 
-    //Training info
-    //Filters 
+  
 })
 userSchema.set('toJSON', {
     transform: (document,returnedObject) => {
@@ -33,4 +30,5 @@ userSchema.set('toJSON', {
         delete returnedObject.__v
     }
 })
+
 module.exports  = mongoose.model('User', userSchema)
