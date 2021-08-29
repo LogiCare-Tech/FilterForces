@@ -3,11 +3,15 @@ const mongoose = require('mongoose')
 const trainSchema = new mongoose.Schema({
    people: [{
        type:String
-   }]
+   }],
+   userId: {
+       type: mongoose.Schema.Types.ObjectId,
+       ref:'User'
+   }
 })
 trainSchema.set('toJSON', {
     transform: (document,returnedObject) => {
-        returnedObject._id = returnedObject._id.toString()
+        
         delete returnedObject.__v
     
     }

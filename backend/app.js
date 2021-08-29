@@ -11,7 +11,8 @@ const config = require('./utils/config.js')
 
 //Routers
 const TrainRouter = require('./controllers/Train')
-// const GoogleStrategy = require('passport-google-oauth20').Strategy
+const VisualizeRouter = require('./controllers/Visualization')
+const UserRouter = require('./controllers/users')
 
 const AuthRouter = require("./controllers/auth")
 dotenv.config()
@@ -39,6 +40,6 @@ mongoose.connect(config.MONGODB_URI, {
   })
  app.use("/api/auth/google", AuthRouter)
  app.use("/api/Train",TrainRouter)
-
-
+ app.use("/api/Visualize", VisualizeRouter)
+ app.use("/api/Users", UserRouter)
 module.exports = app

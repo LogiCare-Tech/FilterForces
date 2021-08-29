@@ -5,3 +5,34 @@ Content-Type: application/json
 {
     "people": ["divya_patel", "hackerbhaiya"]
 }
+###
+GET http://localhost:3001/api/Train/
+
+###
+GET http://localhost:3001/api/Visualize/
+
+###
+POST http://localhost:3001/api/Visualize/
+Content-Type: application/json
+
+{
+    "div": 2,
+    "rating": 1300,
+    "topic": ["permutatin"],
+    "time": "2",
+    "userId": "6129fb21e012b10ee17d1593"
+}
+###
+POST http://localhost:3001/api/Users/
+Content-Type: application/json
+
+{
+    "username": "testerusername1",
+    "name": "testername",
+    "firstname": "tester",
+    "email": "testeremail@gmail.com",
+    "password": "123456"
+}
+
+###
+GET http://localhost:3001/api/Users/
