@@ -3,7 +3,8 @@ POST http://localhost:3001/api/Train/
 Content-Type: application/json
 
 {
-    "people": ["divya_patel", "hackerbhaiya"]
+    "people": ["divya_patel", "hackerbhaiya"],
+    "userId": "612b189cd7a39df66e53a502"
 }
 ###
 GET http://localhost:3001/api/Train/
@@ -14,25 +15,29 @@ GET http://localhost:3001/api/Visualize/
 ###
 POST http://localhost:3001/api/Visualize/
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c215bGlmZTBAZ21haWwuY29tIiwiaWQiOiI2MTJjNTkxOGEzNGY1NWE1MTc4MzM3NWYiLCJpYXQiOjE2MzAyOTYzNDQsImV4cCI6MTYzMDI5OTk0NH0.OIadKayf3rC-hJ4R6vA5USQhgru0DARIAlCR0SJbzgE
 
 {
     "div": 2,
     "rating": 1300,
-    "topic": ["permutatin"],
-    "time": "2",
-    "userId": "6129fb21e012b10ee17d1593"
+    "topic": ["itsmylife"],
+    "time": "4",
+    "userId": "612c5918a34f55a51783375f"
 }
 ###
-POST http://localhost:3001/api/Users/
+POST http://localhost:3001/api/Users/signup
 Content-Type: application/json
 
 {
-    "username": "testerusername1",
-    "name": "testername",
-    "firstname": "tester",
-    "email": "testeremail@gmail.com",
-    "password": "123456"
+    "username": "itsmylife0",
+    "name": "itsmylife",
+    "firstname": "itsmylife",
+    "email": "itsmylife01@gmail.com",
+    "password": "123457",
+    "confirmPassword": "1234567"
 }
 
 ###
 GET http://localhost:3001/api/Users/
+
+###

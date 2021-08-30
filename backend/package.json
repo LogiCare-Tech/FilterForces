@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
@@ -21,6 +22,7 @@
     "express-handlebars": "^5.3.3",
     "express-session": "^1.17.2",
     "google-auth-library": "^7.6.2",
+    "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongoose": "^6.0.1",
