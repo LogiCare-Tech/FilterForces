@@ -1,7 +1,7 @@
 
 const Train = require('../models/train.js')
 const TrainRouter = require('express').Router()
-const User = require('../models/user')
+const User = require('../models/userModel')
 TrainRouter.get('/', async(request, response) => {
     const data = await Train.find({}).populate('userId')
     response.status(200).json(data)

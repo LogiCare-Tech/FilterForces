@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const config = require('./config')
-const User = require('../models/user')
+const User = require('../models/userModel')
 
 const tokenExtractor = (request, response, next) => {
    // console.log("from token extractor ", request.authorization)

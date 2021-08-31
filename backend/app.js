@@ -12,7 +12,7 @@ const config = require('./utils/config')
 //Routers
 const TrainRouter = require('./controllers/Train')
 const VisualizeRouter = require('./controllers/Visualization')
-const UserRouter = require('./controllers/users')
+const UserRouter = require('./controllers/userCtrl')
 
 
 const AuthRouter = require("./controllers/auth")

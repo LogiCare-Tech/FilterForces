@@ -15,14 +15,14 @@ GET http://localhost:3001/api/Visualize/
 ###
 POST http://localhost:3001/api/Visualize/
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c215bGlmZTBAZ21haWwuY29tIiwiaWQiOiI2MTJjNTkxOGEzNGY1NWE1MTc4MzM3NWYiLCJpYXQiOjE2MzAyOTYzNDQsImV4cCI6MTYzMDI5OTk0NH0.OIadKayf3rC-hJ4R6vA5USQhgru0DARIAlCR0SJbzgE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Iml0c215bGlmZTFAZ21haWwuY29tIiwiaWQiOiI2MTJjNmJhZTliMzNiNDcwOTQxODRjYWIiLCJpYXQiOjE2MzAzOTA0MzMsImV4cCI6MTYzMDM5NDAzM30.Ho4k-8jSTC_N1fIk0c6bpclC5SdPLPqgXnuGWbmUQtE
 
 {
     "div": 2,
     "rating": 1300,
-    "topic": ["itsmylife"],
+    "topic": ["hello"],
     "time": "4",
-    "userId": "612c5918a34f55a51783375f"
+    "userId": "612c6bae9b33b47094184cab"
 }
 ###
 POST http://localhost:3001/api/Users/signup
@@ -32,12 +32,38 @@ Content-Type: application/json
     "username": "itsmylife0",
     "name": "itsmylife",
     "firstname": "itsmylife",
-    "email": "itsmylife01@gmail.com",
-    "password": "123457",
-    "confirmPassword": "1234567"
+    "email": "itsmylife1@gmail.com",
+    "password": "123",
+    "confirmPassword": "123"
 }
+###
+POST http://localhost:3001/api/Users/signin
+Content-Type: application/json
+
+{
+    "email": "itsmylife1@gmail.com",
+    "password": "123"
+}
+###
+POST http://localhost:3001/api/Users/register
+Content-Type: application/json
+
+{
+     "name": "Shreenanda P",
+    "email": "shreenandap@gmail.com",
+    "password": "adminhubhai@isroscientist"
+}
+
 
 ###
 GET http://localhost:3001/api/Users/
 
 ###
+POST http://localhost:3001/api/Users/register
+Content-Type: application/json
+
+{
+    "name": "S",
+    "email": "xyz@gmail.com",
+    "password": "1234"
+}
