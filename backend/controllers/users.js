@@ -44,6 +44,7 @@ UserRouter.post('/signin', async(request, response) =>{
     const {email, password} = request.body
     try{
         const existingUser = await User.findOne({email: email})
+        
         if(!existingUser)
         {
             return response.status(404).json({message: "User doesn't exist"})
@@ -54,7 +55,7 @@ UserRouter.post('/signin', async(request, response) =>{
             return response.status(400).json({message: "Invalid credentials"})
         }
         else{
-            const token = jwt.sign({email: existingUser.email, id: existingUser._id}, 'test', {expiresIn: "1h"})
+            const token = jwt.sign({email: existingUser.email, id: existingUser._id}, config.SECRET, {expiresIn: "1h"})
             response.status(200).json({result: existingUser, token})
         }
     }
