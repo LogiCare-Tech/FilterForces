@@ -1,0 +1,38 @@
+.login_page{
+    max-width: 500px;
+    margin: auto;
+    color: #444;
+    padding: 0 15px;
+}
+.login_page h2{
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin: 20px 0;
+    letter-spacing: 1.5px;
+}
+.login_page input{
+    width: 100%;
+    height: 45px;
+    margin: 10px 0;
+    border: 2px solid #777;
+    outline: none;
+    padding: 0 10px;
+}
+.login_page .row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+    align-items: flex-start;
+}
+.login_page .row a{
+    color: crimson;
+}
+.login_page .row button{
+    width: 150px;
+    padding: 10px 0;
+    color: white;
+    background: black;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-right: 10px;
+}

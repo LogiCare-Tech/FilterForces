@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+code {
+    font-family: source-code-pro, Melno, Monaco, Consolas, 'Courier New', monospace;
+}
+.App{
+    overflow: hidden;
+    max-width: 1400px;
+    width: 100%;
+ 
+   
+   
+    
+    min-height: 100vh;
+    box-shadow: 0 0 20px #eee;
+    margin: 0 auto;
+}
+a{
+    text-decoration: none;
+}
+ul{
+    list-style: none;
+}
+button{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+@import url("./components//header//header.css");
+
+@import url("./components/body/auth/auth.css");

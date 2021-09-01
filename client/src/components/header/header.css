@@ -1,0 +1,33 @@
+header{
+    width:100%;
+    min-height: 100px;
+    background-color: rgb(24,32,38);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 30px;
+}
+.options{
+    display: flex;
+    flex-direction: row;
+   
+}
+header a{
+    color: white !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+ 
+}
+header ul li{
+   
+
+    padding: 10px 20px;
+    opacity: 0.7;
+    border: 2px solid red;
+}
+header ul li:hover{
+    opacity: 1;
+    color: azure !important;
+}

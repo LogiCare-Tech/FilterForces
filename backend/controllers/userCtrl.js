@@ -12,71 +12,9 @@ const jwt = require('jsonwebtoken')
 const config = require('../utils/config')
 
 const sendMail = require('./sendMail')
-const sendEmail = require('./sendMail')
+
 //Middleware
 const middleware = require('../utils/middleware')
-
-
-UserRouter.get('/', async(request, response) => {
-    const data = await Users.find({}).populate('viz', {
-        topic: 1,div:1,time:1
-    }).populate('train')
-    response.status(200).json(data)
-})
-
-UserRouter.post('/signup', async(request, response) =>{
-    const data = request.body
-    
-    
-
-    try{
-        const existingUser = await Users.findOne({email: data.email})
-        if(existingUser)return response.status(400).json({message: "User already exists."})
-        if(data.password !== data.confirmPassword)return response.status(400).json({message: "Passwords doesn't match"})
-        const hashedPassword = await bcrypt.hash(data.password,12)
-        const user = new Users({
-            username: data.username,
-            name: data.name,
-            firstName: data.firstName,
-            email: data.email,
-          
-            password: hashedPassword,
-           
-        })
-        const savedData = await user.save()
-        const token  = jwt.sign({email: savedData.email, id: savedData._id}, config.SECRET, {expiresIn: '1h'})
-        console.log("Token generated is ", token)
-        response.status(200).json({savedData,token})
-    }
-    catch(err)
-    {
-        console.log(err)
-        response.status(500).json({message:err.Error})
-    }
-})
-UserRouter.post('/signin', async(request, response) =>{
-    const {email, password} = request.body
-    try{
-        const existingUser = await Users.findOne({email: email})
-        
-        if(!existingUser)
-        {
-            return response.status(404).json({message: "User doesn't exist"})
-        }
-        const isPasswordCorrect = await bcrypt.compare(password, existingUser.password)
-        if(!isPasswordCorrect)
-        {
-            return response.status(400).json({message: "Invalid credentials"})
-        }
-        else{
-            const token = jwt.sign({email: existingUser.email, id: existingUser._id}, config.SECRET, {expiresIn: "1h"})
-            response.status(200).json({result: existingUser, token})
-        }
-    }
-    catch(err){
-              response.status(500).json({message: "Something went wrong"})
-    }
-})
 
 //Functions to handle register 
 function validateEmail(email) {
@@ -216,7 +154,7 @@ UserRouter.post('/forgotPassword',async (request, response) => {
 
           const url = `${config.CLIENT_URL}/user/reset/${access_token}`
 
-          sendEmail(email,url, "Reset your password")
+          sendMail(email,url, "Reset your password")
 
           response.json({msg: "Re-set the password, Please check your email..."})
      }

@@ -3,7 +3,7 @@ import {Link, NavLink} from 'react-router-dom'
 
 const Navbar = () => {
     return(
-        <nav>
+        <div className = "header">
             <NavLink className = "logo" to ="/">
                 Logo
             </NavLink>
@@ -19,7 +19,7 @@ const Navbar = () => {
                 Login
             </NavLink>
            </div>
-        </nav>
+        </div>
     )
 }
 export default Navbar

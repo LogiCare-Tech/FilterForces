@@ -19,7 +19,7 @@
     align-content: center;
     flex-grow: 100;
 }
-nav{
+.header{
     
     height: 4em;
     position: fixed;
