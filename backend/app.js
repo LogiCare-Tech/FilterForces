@@ -3,6 +3,7 @@ const cors = require('cors')
 require('express-async-errors')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
 const app = express()
 const middleware = require('./utils/middleware')
 const dotenv = require('dotenv')
@@ -23,9 +24,11 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(passport.initialize())
-app.use(cors())
-
 app.use(express.json())
+app.use(cors())
+app.use(cookieParser())
+
+
 // var user = {}
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,

@@ -16,7 +16,7 @@ const userExtractor = async(request, response, next) => {
     if(request.token)
     {
         const token = request.token
-        const decodedToken = jwt.verify(token, config.SECRET)
+        const decodedToken = jwt.verify(token, config.ACCESS_TOKEN_SECRET)
         if(!decodedToken.id){
             return response.status(401).json({error: 'User does not exist'})
         }
@@ -28,6 +28,25 @@ const userExtractor = async(request, response, next) => {
     }
     next()
 } 
+const auth = (request, response, next) => {
+   try{
+      
+      const token = request.header("Authorization")
+      if(!token) return response.status(400).json({msg: "Invalid Authentication."})
+
+      jwt.verify(token, `${config.ACCESS_TOKEN_SECRET}`, (err, user) => {
+          if(err) return response.status(400).json({msg: "Invalid Authentication"})
+          console.log(user)
+          request.user = user
+          next()
+      })
+      
+   }catch(err){
+       console.log(err)
+       return response.status(500).json({msg: err.message})
+   }
+   
+}
 const errorHandler = (error, request, response, next) => {
     if(error.name === 'CastError')
     {
@@ -73,6 +92,7 @@ const errorHandler = (error, request, response, next) => {
 const object = {
     tokenExtractor: tokenExtractor,
     userExtractor: userExtractor,
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    auth: auth
 }
 module.exports = object

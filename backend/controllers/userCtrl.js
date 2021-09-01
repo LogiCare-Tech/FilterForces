@@ -4,7 +4,7 @@ const UserRouter = require('express').Router()
 //User model
 const Users = require('../models/userModel.js')
 
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 
 const jwt = require('jsonwebtoken')
 
@@ -12,6 +12,9 @@ const jwt = require('jsonwebtoken')
 const config = require('../utils/config')
 
 const sendMail = require('./sendMail')
+const sendEmail = require('./sendMail')
+//Middleware
+const middleware = require('../utils/middleware')
 
 UserRouter.get('/', async(request, response) => {
     const data = await Users.find({}).populate('viz', {
@@ -85,11 +88,11 @@ const createActivationToken = (payload) => {
 }
 
 const createAccessToken = (payload) => {
-    return jwt.sign(payload, config.ACCESS_TOKEN_SECRET, {expiresIn: '15m'})
+    return jwt.sign(payload, `${config.ACCESS_TOKEN_SECRET}`, {expiresIn: '15m'})
 }
 
 const createRefreshToken = (payload) => {
-    return jwt.sign(payload, config.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
+    return jwt.sign(payload, `${config.REFRESH_TOKEN_SECRET}`, {expiresIn: '7d'})
 }
 
 
@@ -157,5 +160,89 @@ UserRouter.post('/activateEmail', async(request, response) =>{
        return response.status(500).json({msg: err.message})
    }
     
+})
+UserRouter.post('/login', async(request, response) => {
+   
+    try{
+        const {email, password} = request.body
+        const user = await Users.findOne({email: email})
+        if(!user) return response.status(400).json({msg: "This email does not exists"})
+        console.log(user)
+        console.log(password)
+        const isMatch= await bcrypt.compare(`${password}`, `${user.password}`)
+        if(!isMatch) return response.status(400).json({msg: "Password is incorrect"})
+        const refresh_token = createRefreshToken({id: user._id})
+        console.log("hi",refresh_token)
+        response.cookie('refreshtoken', refresh_token,{
+            httpOnly: true,
+            path: '/api/Users/refresh_token',
+            maxAge: 7 * 24 * 60 * 60* 1000 // 7 days
+        })
+        response.json({msg: "Login successful"})
+    }
+    catch(err)
+    {
+        return response.status(500).json({msg: err.message})
+    }
+})
+
+UserRouter.post('/refresh_token', async(request, response) => {
+    try{
+        
+       const rf_token = request.cookies.refreshtoken
+       console.log(rf_token) 
+       if(!rf_token) return response.status(400).json({msg: "Please login now !"})
+       jwt.verify(rf_token, `${config.REFRESH_TOKEN_SECRET}`, (err, user) =>{
+           if(err)return response.status(400).json({msg: "Please login now"})
+           const access_token = createAccessToken({id: user.id})
+           response.json({access_token})
+       })
+    }
+    catch(err)
+    {
+        return response.status(500).json({msg: err.message})
+    }
+})
+UserRouter.post('/forgotPassword',async (request, response) => {
+     try{
+          const {email} = request.body
+
+          const user = await Users.findOne({email})
+
+          if(!user) return response.status(400).json({msg: "This email does not exist."})
+
+          const access_token = createAccessToken({id: user._id})
+
+          const url = `${config.CLIENT_URL}/user/reset/${access_token}`
+
+          sendEmail(email,url, "Reset your password")
+
+          response.json({msg: "Re-set the password, Please check your email..."})
+     }
+     catch(err){
+        return response.status(500).json({msg: err.message})
+     }
+})
+UserRouter.post('/resetPassword',middleware.auth, async (request, response) => {
+    try{
+   
+        const password = request.body.password
+
+        
+          
+          const passwordHash = await bcrypt.hash(`${password}` ,12)
+          console.log(passwordHash)
+          const user = request.user
+          console.log("Hello from reset Password ", user)
+          await Users.findOneAndUpdate({_id: user.id}, {
+              password: passwordHash
+           
+          }, {new: true})
+          response.json({msg: "Password successfully changed!"})
+    }
+    catch(err){
+        console.log(err)
+        return response.status(500).json({msg: err.message})
+    }
 })
 module.exports = UserRouter
