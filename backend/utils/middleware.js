@@ -32,6 +32,7 @@ const auth = (request, response, next) => {
    try{
       
       const token = request.header("Authorization")
+     
       if(!token) return response.status(400).json({msg: "Invalid Authentication."})
 
       jwt.verify(token, `${config.ACCESS_TOKEN_SECRET}`, (err, user) => {
@@ -69,26 +70,7 @@ const errorHandler = (error, request, response, next) => {
     console.log(error.message)
     next(error)
 }
-// const auth = async(request, response,next) => {
-//     try{
-//          const token = request.headers.authorization.split(" ")[1]
-//          const isCustomAuth = token.length < 500
-//          let decodedData
-//          if(token && isCustomAuth)
-//          {
-//              decodedData = jwt.verify(token,'test')
-//              request.userId = decodedData ?.id
-//          }
-//          else{
-//              decodedData = jwt.decode(token)
-//              request.userId = decodedData?.sub
-//          }
-//          next()
-//     }
-//     catch(error){
-// console.log(error)
-//     }
-// }
+
 const object = {
     tokenExtractor: tokenExtractor,
     userExtractor: userExtractor,

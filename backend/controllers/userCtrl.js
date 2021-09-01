@@ -16,6 +16,7 @@ const sendEmail = require('./sendMail')
 //Middleware
 const middleware = require('../utils/middleware')
 
+
 UserRouter.get('/', async(request, response) => {
     const data = await Users.find({}).populate('viz', {
         topic: 1,div:1,time:1
@@ -241,7 +242,28 @@ UserRouter.post('/resetPassword',middleware.auth, async (request, response) => {
           response.json({msg: "Password successfully changed!"})
     }
     catch(err){
-        console.log(err)
+        
+        return response.status(500).json({msg: err.message})
+    }
+})
+UserRouter.get('/userInfo',middleware.auth, async(request, response) => {
+    try{
+        
+        const user = await Users.findById(request.user.id).select('-password').populate('viz').populate('train')
+        response.json(user)
+    }
+    catch(err)
+    {
+        return response.status(500).json({msg: err.message})
+    }
+})
+UserRouter.get('/logout', async (request, response) =>{
+    try{
+        response.clearCookie('refreshtoken', {path:'/api/Users/refresh_token'})
+        return response.json({msg: "Loging out"})
+    }
+    catch(err)
+    {
         return response.status(500).json({msg: err.message})
     }
 })
