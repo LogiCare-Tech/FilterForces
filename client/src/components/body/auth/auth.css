@@ -36,3 +36,10 @@
     letter-spacing: 1.5px;
     margin-right: 10px;
 }
+.login_page p{
+    margin: 10px 0;
+}
+.login_page a{
+    color:  #111;
+    font-weight: 600;
+}

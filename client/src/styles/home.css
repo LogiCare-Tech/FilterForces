@@ -80,7 +80,10 @@ margin-top: 50px;
     border: 2px solid black;
     width: 100%;
 }
-
+.whole{
+    display: flex;
+    flex-direction: column;
+}
 #root{
  display: flex;
  flex-direction: column;

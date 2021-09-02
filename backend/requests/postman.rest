@@ -54,7 +54,13 @@ Content-Type: application/json
     "password": "adminhubhai@isroscientist"
 }
 
+###
+POST http://localhost:3001/api/Users/activateEmail
+Content-Type: application/json
 
+{
+"activation_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2hyZWVuYW5kYSBQIiwiZW1haWwiOiJzaHJlZW5hbmRhcEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMiR5cXg2bW81LklUOUtpeVA0MlVSZUEuY0ouV3pJenFiNGlGQkhvNDljM2ZuMXlJamJWbDFmRyIsImlhdCI6MTYzMDQxMjk4MiwiZXhwIjoxNjMwNDEzMjgyfQ.sC9b1V5Oe4a2jAsdX6nTGtRESTGyqBhx_oap_cMLr30"
+}
 ###
 GET http://localhost:3001/api/Users/
 
@@ -67,3 +73,13 @@ Content-Type: application/json
     "email": "xyz@gmail.com",
     "password": "1234"
 }
+###
+POST http://localhost:3001/api/Users/login
+Content-Type: application/json
+
+{
+   "email": "shreenandap@gmail.com",
+   "password": "adminhubhai@isroscientist"
+}
+###
+POST http://localhost:3001/api/Users/getAccessToken
