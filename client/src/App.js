@@ -35,7 +35,7 @@ const App = () => {
            
             setUser(userResponse.data)
             setLoginState(true)
-            setAccessKey(res.data.access_token)
+           
             
         }
     }, [loginState, localStorage.getItem('firstLogin')])

@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { showErrMsg,showSuccessMsg } from '../../../utils/notification/Notification'
-import { UserContext } from '../../../contexts/UserContext'
+
+import { showErrMsg,showSuccessMsg } from '../../utils/notification/Notification'
+import { UserContext } from '../../contexts/UserContext'
 import axios from 'axios'
 
 
-const Login = () => {
+const ForgotPassword = () => {
     const [user, setUser, loginState,setLoginState,accessKey,setAccessKey] = useContext(UserContext)
    
 
@@ -20,13 +20,10 @@ const Login = () => {
     const handleSubmit = async e => {
         e.preventDefault()
         try{
-            const res = await axios.post('/api/Users/login', {
-                email, password
-            })
-            setUser({...user, err: '', success: res.data.msg})
-            localStorage.setItem('firstLogin', true)
-            window.location.href = "/"
-            setLoginState(true)
+           const res = await axios.post('/api/Users/forgotPassword', {
+               email: user.email
+           })
+           setUser({...user, err: '', success: res.data.msg})
         }catch(err){
             err.response.data.msg &&
             setUser({...user,  err: err.response.data.msg, success: ''})
@@ -36,7 +33,7 @@ const Login = () => {
       
         return (
             <div className="login_page">
-                <h2>Login</h2>
+                <h2>Forgot password?</h2>
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
                 <form onSubmit = {handleSubmit}>
@@ -50,26 +47,17 @@ const Login = () => {
                             name="email"
                             onChange = {handleChangeInput} />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            placeholder="Enter your password"
-                            id="password"
-                            value={password}
-                            name="password"
-                            onChange = {handleChangeInput} />
-                    </div>
+                   
                     <div className = "row">
-                        <button type = "submit">Login</button>
-                        <Link to = "/forgotPassword">Forgot passowrd</Link>
+                        <button type = "submit">Submit</button>
+                       
                     </div>
                 </form>
-                <p>New to here? <Link to = "/register">Register</Link> </p>
+               
             </div>
         )
       
     
     
 }
-export default Login
+export default ForgotPassword
