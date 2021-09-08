@@ -393,7 +393,7 @@ const Train = () => {
                                     <div key={index} className="ui image label">
                                         <span>{info}</span>
 
-                                        <i className="delete icon" onClick={() => handleRemoveLadder({ info })}></i>
+                                        <i className="delete icon" onClick={() => handleRemoveLadder({ info })}/>
                                     </div>
                                 )
                             })
@@ -412,7 +412,7 @@ const Train = () => {
                                     <div key={index} className="ui image label">
                                         <span>{info}</span>
 
-                                        <i className="delete icon" onClick={() => handleRemoveTopic({ info })}></i>
+                                        <i className="delete icon" onClick={() => handleRemoveTopic({ info })}/>
                                     </div>
                                 )
                             })
@@ -463,7 +463,7 @@ const Train = () => {
                             </div>
 
                         </form>
-                        <i className="user secret icon"></i><span>Enter your handle</span>
+                        <i className="user secret icon"/><span>Enter your handle</span>
                         <input type="text" value={personalHandle} onChange={(event) => handlePersonalHandle(event)} />
                         <button onClick={(event) => handleAdminUsername(event)}>Apply</button>
 

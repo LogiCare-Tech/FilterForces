@@ -46,6 +46,7 @@ mongoose.connect(config.MONGODB_URI, {
 })
   .then(() => {
     console.log("Connected")
+   
   })
   .catch((error) => {
     console.log({ error: error })

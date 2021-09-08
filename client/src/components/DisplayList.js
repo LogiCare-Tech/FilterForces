@@ -64,6 +64,7 @@ const Display = (props) => {
                         <td >{inf.rating}</td>
                         <td >🤺 x{getSolvedNumber(inf)}</td>
                     </tr>
+                    
                 )
 
             })
@@ -71,13 +72,13 @@ const Display = (props) => {
         }
         return (
             <React.Fragment>
-                <table className="ui celled table unstackable">
+                 <table className="ui celled table unstackable">
                     <thead>
                         <tr>
                             <th><h2>#</h2></th>
                             <th ><h2>Problem</h2></th>
                             <th ><h2>Rating</h2></th>
-                            <th ><icon className="iconTick"></icon></th>
+                            <th ><i className="iconTick"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,7 +89,7 @@ const Display = (props) => {
                         }
 
                     </tbody>
-                </table>
+                </table> 
             </React.Fragment>
         )
     }

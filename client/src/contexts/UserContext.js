@@ -2,6 +2,7 @@
 import React, {createContext, useState} from "react"
 export const UserContext = createContext()
 const initialState = {
+    name: '',
     email: '',
     password: '',
     err: '',

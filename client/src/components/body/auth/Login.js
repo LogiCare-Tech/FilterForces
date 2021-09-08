@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, {useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { showErrMsg,showSuccessMsg } from '../../../utils/notification/Notification'
 import { UserContext } from '../../../contexts/UserContext'
@@ -6,7 +6,7 @@ import axios from 'axios'
 
 
 const Login = () => {
-    const [user, setUser, loginState,setLoginState,accessKey,setAccessKey] = useContext(UserContext)
+    const [user, setUser,loginState,setLoginState] = useContext(UserContext)
    
 
     const { email, password, err, success } = user

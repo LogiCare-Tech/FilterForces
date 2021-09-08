@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../contexts/UserContext'
 
 const Header = () => {
-    const [user, setUser, loginState, setLoginState, accessKey, setAccessKey] = useContext(UserContext)
+    const [user,setUser, loginState, setLoginState] = useContext(UserContext)
     const handleLogout = async () => {
         try {
             await axios.get('/api/Users/logout')
             localStorage.removeItem('firstLogin')
             window.location.href = "/"
-            setUser({name: ''})
+            setUser({ name: '' })
             setLoginState(false)
         } catch (err) {
             window.location.href = "/"
@@ -31,8 +31,15 @@ const Header = () => {
                     <>
                         <li><Link to="/"><i className="fas fa-chart-line"></i> Visualize</Link></li>
                         <li><Link to="/train"><i className="fas fa-user-ninja"></i> Train</Link></li>
-                        <li className="personalInfo">{user.name}</li>
-                        <li><Link to="/logout" onClick={handleLogout}><i className="fas fa-user"></i>Logout</Link></li>
+                      
+                            
+                         
+                         
+                         
+                          <li  className = "gate"><Link to="/logout" onClick={handleLogout}><i className="fas fa-user"></i>Logout</Link></li>
+
+
+
                     </>
                 }
 

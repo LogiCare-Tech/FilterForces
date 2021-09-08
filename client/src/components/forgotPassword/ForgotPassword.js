@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, {useContext } from 'react'
 
 import { showErrMsg,showSuccessMsg } from '../../utils/notification/Notification'
 import { UserContext } from '../../contexts/UserContext'
@@ -6,10 +6,10 @@ import axios from 'axios'
 
 
 const ForgotPassword = () => {
-    const [user, setUser, loginState,setLoginState,accessKey,setAccessKey] = useContext(UserContext)
+    const [user, setUser] = useContext(UserContext)
    
 
-    const { email, password, err, success } = user
+    const { email,err, success } = user
     
     const handleChangeInput = e => {
         const {name, value} = e.target

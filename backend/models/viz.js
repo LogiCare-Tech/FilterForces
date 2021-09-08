@@ -1,18 +1,16 @@
 const mongoose = require('mongoose')
 
 const vizSchema = new mongoose.Schema({
-    div: {
-        type: Number
-    },
+    
     rating: {
         type: Number
     },
+    type: String,
     topic: [{
         type: String
     }],
     time: {
-        type: String,
-        required: true
+        type: String
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

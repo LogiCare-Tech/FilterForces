@@ -103,11 +103,13 @@ UserRouter.post('/activateEmail', async(request, response) =>{
 UserRouter.post('/login', async(request, response) => {
    
     try{
+       
         const {email, password} = request.body
+        console.log(email, password);
         const user = await Users.findOne({email: email})
         if(!user) return response.status(400).json({msg: "This email does not exists"})
-        console.log(user)
-        console.log(password)
+        console.log("Terrible ",user)
+      
         const isMatch= await bcrypt.compare(`${password}`, `${user.password}`)
         if(!isMatch) return response.status(400).json({msg: "Password is incorrect"})
         const refresh_token = createRefreshToken({id: user._id})
@@ -117,7 +119,7 @@ UserRouter.post('/login', async(request, response) => {
             path: '/api/Users/refresh_token',
             maxAge: 7 * 24 * 60 * 60* 1000 // 7 days
         })
-        response.json({msg: "Login successful"})
+        response.status(200).send({msg: "Login successful", key: refresh_token})
     }
     catch(err)
     {

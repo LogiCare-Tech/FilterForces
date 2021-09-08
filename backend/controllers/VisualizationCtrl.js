@@ -25,7 +25,7 @@ VisualizeRouter.post('/', middleware.auth, async (request, response) => {
     const data = request.body
    
     const visualize = new Visualize({
-        div: data.div,
+       type: data.type,
         topic: [...data.topic],
         ratig: data.ratig,
         time: data.time,
