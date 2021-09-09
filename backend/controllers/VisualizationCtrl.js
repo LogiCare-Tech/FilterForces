@@ -7,7 +7,7 @@ const middleware = require('../utils/middleware')
 
 const Users = require('../models/userModel')
 
-VisualizeRouter.get('/', middleware.auth, async (request, response) => {
+VisualizeRouter.get('/', async (request, response) => {
     const user = await Users.findById({_id: request.user.id})
     let data = []
     for(let ID of user.viz){

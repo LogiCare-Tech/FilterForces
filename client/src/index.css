@@ -33,3 +33,5 @@ button{
 @import url("./components//header//header.css");
 
 @import url("./components/body/auth/auth.css");
+
+@import url("./components/Visualizer/react-calendar-heatmap.css");
