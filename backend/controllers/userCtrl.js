@@ -119,7 +119,7 @@ UserRouter.post('/login', async(request, response) => {
             path: '/api/Users/refresh_token',
             maxAge: 7 * 24 * 60 * 60* 1000 // 7 days
         })
-        response.status(200).send({msg: "Login successful", key: refresh_token})
+        response.status(200).send({msg: "Login successful", userInfo: user})
     }
     catch(err)
     {
@@ -190,7 +190,7 @@ UserRouter.get('/userInfo',middleware.auth, async(request, response) => {
     try{
         
         const user = await Users.findById(request.user.id).select('-password').populate('viz').populate('train')
-        response.json(user)
+        response.status(200).json(user)
     }
     catch(err)
     {

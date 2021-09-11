@@ -9,7 +9,7 @@ import { UserContext } from './contexts/UserContext'
 const App = () => {
     
    const {USER, LOGIN_STATE} = useContext(UserContext)
-    const [user, setUser] = USER
+   
     const [loginState,setLoginState] = LOGIN_STATE
   
    
@@ -19,22 +19,20 @@ const App = () => {
            
             if(firstLogin)
             { 
-                console.log(loginState)
+            
               
-                const res = await axios.post('/api/Users/refresh_token')
-                const userResponse = await axios.get('/api/Users/userInfo', {
-                    headers: {"Authorization": `${res.data.access_token}`}
-                })
-               
-                setUser(userResponse.data)
+                
+                
                 setLoginState(true)
+             
+             
                
                 
             }
         }
         dummy()
     
-    }, [loginState, localStorage.getItem('firstLogin')])
+    }, [loginState,localStorage.getItem('firstLogin')])
     return (
       
        

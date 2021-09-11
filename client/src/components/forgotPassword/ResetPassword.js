@@ -12,7 +12,8 @@ const ResetPassword = () => {
     const { access_token } = useParams()
     const [err, setErr] = useState('')
     const [success, setSuccess] = useState('')
-    const [user, setUser] = useContext(UserContext)
+    const {USER}= useContext(UserContext)
+   const [user, setUser] = USER
 
     const handleSubmit = async e => {
         e.preventDefault()

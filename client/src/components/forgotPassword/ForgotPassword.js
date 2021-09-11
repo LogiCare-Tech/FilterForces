@@ -6,8 +6,8 @@ import axios from 'axios'
 
 
 const ForgotPassword = () => {
-    const [user, setUser] = useContext(UserContext)
-   
+   const {USER}= useContext(UserContext)
+   const [user, setUser] = USER
 
     const { email,err, success } = user
     

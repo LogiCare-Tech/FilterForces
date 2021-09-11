@@ -8,8 +8,9 @@ import axios from 'axios'
 const Login = () => {
    
     const {USER, LOGIN_STATE} = useContext(UserContext)
-    const [user, setUser] = USER
-    const {setLoginState} = LOGIN_STATE
+    const [user,setUser] = USER
+   
+    const [loginState,setLoginState] = LOGIN_STATE
 
     const { email, password, err, success } = user
     
@@ -21,17 +22,46 @@ const Login = () => {
 
     const handleSubmit = async e => {
         e.preventDefault()
+        
         try{
             const res = await axios.post('/api/Users/login', {
                 email, password
             })
-            setUser({...user, err: '', success: res.data.msg})
-            localStorage.setItem('firstLogin', true)
-            window.location.href = "/"
-            setLoginState(true)
+        
+           
+                localStorage.setItem('firstLogin', true)
+                setUser({...user, err: '', success: res.data.msg})
+                window.location.href = "/"
+            //    try{
+            //     const use = await axios.post('/api/Users/refresh_token')
+
+           
+            //     const userResponse = await axios.get('/api/Users/userInfo', {
+            //         headers: {"Authorization": use.data.access_token}
+            //     })
+               
+                
+            //    }catch(Err)
+            //    {
+            //        console.log(Err)
+            //    }
+            
+              
+              
+              
+                setLoginState(true)
+              
+                
+               
+               
+         
+         
         }catch(err){
-            err.response.data.msg &&
+           if(err.response)
+           {
             setUser({...user,  err: err.response.data.msg, success: ''})
+           }
+            
         }
     } 
     
@@ -48,7 +78,7 @@ const Login = () => {
                             type="text"
                             placeholder="Enter email address"
                             id="email"
-                            value={email}
+                           value={email}
                             name="email"
                             onChange = {handleChangeInput} />
                     </div>
@@ -58,7 +88,7 @@ const Login = () => {
                             type="password"
                             placeholder="Enter your password"
                             id="password"
-                            value={password}
+                           value={password}
                             name="password"
                             onChange = {handleChangeInput} />
                     </div>
