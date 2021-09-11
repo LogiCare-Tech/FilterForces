@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../contexts/UserContext'
 
 const Header = () => {
-    const [user,setUser, loginState, setLoginState] = useContext(UserContext)
+    const {USER, LOGIN_STATE} = useContext(UserContext)
+    const [user, setUser] = USER
+    const [loginState,setLoginState] = LOGIN_STATE
+   
     const handleLogout = async () => {
         try {
             await axios.get('/api/Users/logout')

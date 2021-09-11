@@ -6,8 +6,10 @@ import axios from 'axios'
 
 
 const Login = () => {
-    const [user, setUser,loginState,setLoginState] = useContext(UserContext)
    
+    const {USER, LOGIN_STATE} = useContext(UserContext)
+    const [user, setUser] = USER
+    const {setLoginState} = LOGIN_STATE
 
     const { email, password, err, success } = user
     

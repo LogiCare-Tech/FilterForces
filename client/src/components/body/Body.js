@@ -10,7 +10,9 @@ import { UserContext } from '../../contexts/UserContext'
 import ForgotPassword from '../forgotPassword/ForgotPassword'
 import ResetPassword from '../forgotPassword/ResetPassword'
 const Body = () => {
-    const [user, setUser, loginState] = useContext(UserContext)
+    const {LOGIN_STATE} = useContext(UserContext)
+ 
+    const [loginState] = LOGIN_STATE
     return (
         <div>
             <section>

@@ -8,7 +8,7 @@ import './index.css'
 const Rand = () => {
     return(
         <UserProvider>
-<App/>
+            <App/>
         </UserProvider>
     )
 }

@@ -3,6 +3,7 @@ import HeatMap from './Heatmap'
 const Resume = () => {
     return(
         <div>
+          
           {
             <HeatMap/>
           }

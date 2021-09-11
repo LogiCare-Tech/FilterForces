@@ -14,7 +14,7 @@ export const UserProvider = (props)=>{
    const [accessKey, setAccessKey] = useState('')
     
     return(
-        <UserContext.Provider value = {[user, setUser, loginState,setLoginState,accessKey,setAccessKey]}>
+        <UserContext.Provider value = {{ USER :  [user, setUser],LOGIN_STATE : [loginState,setLoginState], ACCESS_KEY: [accessKey,setAccessKey]}}>
                {props.children}
         </UserContext.Provider>
     )

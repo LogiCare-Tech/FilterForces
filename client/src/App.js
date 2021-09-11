@@ -8,9 +8,10 @@ import axios from 'axios'
 import { UserContext } from './contexts/UserContext'
 const App = () => {
     
-   
-    
-   const [user,setUser, loginState,setLoginState] = useContext(UserContext)
+   const {USER, LOGIN_STATE} = useContext(UserContext)
+    const [user, setUser] = USER
+    const [loginState,setLoginState] = LOGIN_STATE
+  
    
     useEffect( () => {
         const dummy = async() => {
