@@ -115,7 +115,7 @@ body{
   background-color: whitesmoke;
 }
 .dropdown{
-  width: 12vw;
+  width: 30%;
   padding: 8px;
 }
 
@@ -137,9 +137,18 @@ body{
 cursor: pointer;
  
 }
-.VizHolder{
-  display: flex;
-  flex-direction: column;
-  
 
+.Histogram{
+  width: 80%;
+  margin-top: 1vh;
+
+  margin-left: auto;
+  margin-right: auto;
+ 
+}
+.Doughnut{
+  background-color: rgb(2, 2, 10);
+  width: 50%;
+  height: 30%;
+ 
 }

@@ -29,7 +29,7 @@ const HeatMap = ({ optionWise, DateWise, YearInfo }) => {
 
 
 
-        <div className = "VizHolder">
+        <div>
             {date ?<Overlay date = {date} DateWise={DateWise} setDate = {setDate}/>
                 : <div className="MainContainer">
 

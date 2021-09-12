@@ -1,7 +1,7 @@
 import React from 'react'
-import { Bar} from 'react-chartjs-2';
+import { Doughnut} from 'react-chartjs-2';
 
-const Histogram = (props) => {
+const Doughnuts = (props) => {
     let AvgTime = []
     console.log(props.RatingInfo)
     for (let value of props.RatingInfo) {
@@ -23,9 +23,9 @@ const Histogram = (props) => {
     }
     return (
         
-        <div className="Histogram">
+        <div className="Doughnut">
 
-            <Bar
+            <Doughnut
                 data={data}
 
                 options={{
@@ -34,7 +34,7 @@ const Histogram = (props) => {
                     responsive: true,
                     plugins: {
                         legend: {
-                            display: false
+                            display: true
                         },
                         title: {
                             display: true,
@@ -49,4 +49,4 @@ const Histogram = (props) => {
     )
 
 }
-export default Histogram
+export default Doughnuts
