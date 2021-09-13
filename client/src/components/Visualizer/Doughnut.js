@@ -2,30 +2,34 @@ import React from 'react'
 import { Doughnut} from 'react-chartjs-2';
 
 const Doughnuts = (props) => {
-    let AvgTime = []
-    console.log(props.RatingInfo)
-    for (let value of props.RatingInfo) {
-        let time = props.RatingWiseAvg.get(value)[0]
-        let minutes = Math.ceil(time / 60)
-        //  let seconds = time - minutes * 60
-        AvgTime.push(minutes)
+
+    let AvgTimeTopic = []
+   
+    for(let value of props.TopicInfo){
+        let time = Math.ceil(props.TopicWiseAvg.get(value)[0] /  props.TopicWiseAvg.get(value)[1])
+        let minutes  = Math.ceil(time/ 60)
+        AvgTimeTopic.push(minutes)
     }
     var data = {
-        labels: [...props.RatingInfo],
+        labels: [...props.TopicInfo],
         datasets: [
             {
 
-                data: [...AvgTime],
-                backgroundColor: 'pink'
+                data: [...AvgTimeTopic],
+                backgroundColor: 'green'
 
             }
         ]
     }
+
     return (
         
         <div className="Doughnut">
-
-            <Doughnut
+           
+         
+            
+             <div className = "DoughnutContainer">
+             <Doughnut
                 data={data}
 
                 options={{
@@ -34,16 +38,18 @@ const Doughnuts = (props) => {
                     responsive: true,
                     plugins: {
                         legend: {
-                            display: true
+                            display: true,
+                            position:'right'
                         },
                         title: {
                             display: true,
-                            text: 'Rating vs Time (in minutes)',
+                            text: 'Topic vs Time (in minutes)',
                             fontSize: 50
                         }
                     }
                 }}
             />
+             </div>
             </div>
          
     )

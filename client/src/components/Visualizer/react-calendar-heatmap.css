@@ -139,16 +139,66 @@ cursor: pointer;
 }
 
 .Histogram{
-  width: 80%;
-  margin-top: 1vh;
+  display: flex;
+  flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+width: 90%;
 
-  margin-left: auto;
-  margin-right: auto;
+margin-left: auto;
+margin-right: auto;
  
 }
-.Doughnut{
-  background-color: rgb(2, 2, 10);
-  width: 50%;
-  height: 30%;
+.Histogram:first-child{
+   background-color: yellow;
+}
+.HistoContainer
+{
+  
+   padding: 2px;
+  
+   
+   background-color: whitesmoke;
+   border-radius: 15px;
+   margin-top: 10px;
+   width: 80%;
  
+}
+.HistoContainer:hover{
+  box-shadow: 12px 12px 25px 15px #d1cbcb;
+  transition: 0.3s;
+}
+.Doughnut{
+ 
+ 
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ background-color: #d6e685;
+
+}
+body{
+  background-color: rgb(241, 238, 238) !important;
+}
+.INPUT{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  border: 1px solid black;
+ 
+}
+.INPUT:hover{
+  box-shadow: 5px 5px 8px 8px #d1cbcb;
+  transition: 0.3s;
+}
+.HandleInput{
+  border: 2px solid black;
+  height: 30px;
+  width: 100%;
+
 }

@@ -5,12 +5,19 @@ const Histogram = (props) => {
     let AvgTime = []
     console.log(props.RatingInfo)
     for (let value of props.RatingInfo) {
-        let time = props.RatingWiseAvg.get(value)[0]
+        let time = Math.ceil(props.RatingWiseAvg.get(value)[0] / props.RatingWiseAvg.get(value)[1])
         let minutes = Math.ceil(time / 60)
         //  let seconds = time - minutes * 60
         AvgTime.push(minutes)
     }
-    var data = {
+    let AvgTimeType = []
+
+    for(let value of props.TypeInfo){
+        let time = Math.ceil(props.TypeWiseAvg.get(value)[0] /  props.TypeWiseAvg.get(value)[1])
+        let minutes  = Math.ceil(time/ 60)
+        AvgTimeType.push(minutes)
+    }
+    var data = [{
         labels: [...props.RatingInfo],
         datasets: [
             {
@@ -20,17 +27,28 @@ const Histogram = (props) => {
 
             }
         ]
-    }
+    }, 
+{
+    labels: [...props.TypeInfo],
+    datasets: [
+        {
+
+            data: [...AvgTimeType],
+            backgroundColor: 'green'
+
+        }
+    ]
+}]
     return (
         
         <div className="Histogram">
-
-            <Bar
-                data={data}
+           <div className = "HistoContainer">
+           <Bar
+                data={data[0]}
 
                 options={{
                    
-                   
+                   maintainAspectRation: true,
                     responsive: true,
                     plugins: {
                         legend: {
@@ -44,7 +62,34 @@ const Histogram = (props) => {
                     }
                 }}
             />
+           </div>
+           <div className = "HistoContainer">
+           <Bar
+                data={data[1]}
+
+                options={{
+                   
+                    maintainAspectRation: true,
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false,
+                       
+                        },
+                        title: {
+                            display: true,
+                            text: 'Type vs Time (in minutes)',
+                            fontSize: 50
+                        }
+                    }
+                }}
+            />
+           </div>
+             
+
+
             </div>
+
          
     )
 

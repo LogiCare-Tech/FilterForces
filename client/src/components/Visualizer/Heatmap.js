@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import ReactTooltip from 'react-tooltip'
 import Select from 'react-select'
@@ -85,17 +85,5 @@ const HeatMap = ({ optionWise, DateWise, YearInfo }) => {
 
 }
 
-function shiftDate(date, numDays) {
-    const newDate = new Date(date);
-    newDate.setDate(newDate.getDate() + numDays);
-    return newDate;
-}
 
-function getRange(count) {
-    return Array.from({ length: count }, (_, i) => i);
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 export default HeatMap
