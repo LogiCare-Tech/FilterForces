@@ -3,7 +3,7 @@ import { Bar} from 'react-chartjs-2';
 
 const Histogram = (props) => {
     let AvgTime = []
-    console.log(props.RatingInfo)
+  
     for (let value of props.RatingInfo) {
         let time = Math.ceil(props.RatingWiseAvg.get(value)[0] / props.RatingWiseAvg.get(value)[1])
         let minutes = Math.ceil(time / 60)

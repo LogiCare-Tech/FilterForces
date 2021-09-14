@@ -1,7 +1,12 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
-    username:String,
+    username:
+    {   type: String,
+        required: [true, "Please enter your Codeforces username"],
+        unique: true,
+        trmie:true
+    },
     name: {
         type: String,
         required: [true, "Please enter your email!"],

@@ -4,6 +4,7 @@ import { showErrMsg,showSuccessMsg } from '../../../utils/notification/Notificat
 import { isEmpty, isEmail, isLength, isMatch } from '../../../utils/validation/Validation'
 import axios from 'axios'
 const initialState = {
+    username:'',
     name: '',
     email: '',
     password: '',
@@ -14,7 +15,7 @@ const initialState = {
 const Register = () => {
     const [user, setUser] = useState(initialState)
 
-    const { name, email, password,cf_password, err, success } = user
+    const { username,name, email, password,cf_password, err, success } = user
     
     const handleChangeInput = e => {
         const {name, value} = e.target
@@ -24,8 +25,9 @@ const Register = () => {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        if(isEmpty(name) || isEmpty(password))
+        if(isEmpty(name) || isEmpty(password) || isEmail(username))
         {
+            
             return setUser({...user, err: "Please fill in all fields", success: ''})
         }
         if(!isEmail(email))
@@ -42,10 +44,12 @@ const Register = () => {
         }
         try{
            
-
+           
             const res = await axios.post('/api/Users/register', {
-                name,email, password
-            })
+                username, name,email, password
+             })
+           
+        
             setUser({...user, err: '', success: res.data.msg})
            
         }catch(err){
@@ -59,6 +63,16 @@ const Register = () => {
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
             <form onSubmit = {handleSubmit}>
+            <div>
+                    <label htmlFor="username">Enter your Codeforces handle</label>
+                    <input
+                        type="text"
+                        placeholder="Enter your handle"
+                        id="username"
+                        value={username}
+                        name="username"
+                        onChange = {handleChangeInput} />
+                </div>
             <div>
                     <label htmlFor="name">Name</label>
                     <input

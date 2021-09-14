@@ -39,10 +39,11 @@ const Doughnuts = (props) => {
                     plugins: {
                         legend: {
                             display: true,
-                            position:'right'
+                            position:'bottom'
                         },
                         title: {
                             display: true,
+                        
                             text: 'Topic vs Time (in minutes)',
                             fontSize: 50
                         }

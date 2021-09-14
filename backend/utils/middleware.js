@@ -32,7 +32,7 @@ const auth = (request, response, next) => {
    try{
       
       const token = request.header("Authorization")
-     
+      console.log(token)
       if(!token) return response.status(400).json({msg: "Invalid Authentication."})
 
       jwt.verify(token, `${config.ACCESS_TOKEN_SECRET}`, (err, user) => {

@@ -6,41 +6,58 @@ const VisualizeRouter = require('express').Router()
 const middleware = require('../utils/middleware')
 
 const Users = require('../models/userModel')
-
-VisualizeRouter.get('/', async (request, response) => {
-    const user = await Users.findById({_id: request.user.id})
+// VisualizeRouter.get('/deleteAll', async (request, response) => {
+//     await Visualize.deleteMany({})
+//     response.status(200).json({msg: "Success"})
+// })
+VisualizeRouter.get('/:HANDLE', async (request, response) => {
+    const HANDLE = request.params.HANDLE
+   
+    const user = await Users.find({username: `${HANDLE}`})
     let data = []
-    for(let ID of user.viz){
-        let value = await Visualize.findById({_id: ID}).populate('userId', {
-            username: 1, name: 1, email: 1
-        })
-        data.push(value)
+ 
+    for(let ID of user[0].viz){
+        
+            let value = await Visualize.findById({_id: `${ID}`})
+            data.push(value)
+        
+     
     }
     
-    response.status(200).json({...data})
+    response.status(200).json({data})
 })
 
 VisualizeRouter.post('/', middleware.auth, async (request, response) => {
 
     const data = request.body
+    console.log("From here",request.user)
+    let ID = request.user.id
    
+    console.log(ID)
+    
     const visualize = new Visualize({
-       type: data.type,
+        type: data.type,
         topic: [...data.topic],
-        ratig: data.ratig,
+        ratig: data.rating,
         time: data.time,
-        userId: request.user.id
+        userId: `${ID}`
 
     })
-
+    const user = await Users.findOne({ _id: `${ID}`})
+    if(user.username !== data.handle)
+    {
+      return  response.status(401).json({msg: "Un-Authorized"})
+    }
     const savedData = await visualize.save()
 
-    const user = await Users.findOne({ _id: request.user.id })
-
+    
+  
+   
     user.viz = user.viz.concat(savedData._id)
 
     await user.save()
-
+    
+   
     response.status(201).json(savedData)
 })
 module.exports = VisualizeRouter

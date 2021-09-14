@@ -2,14 +2,17 @@ import React, {  useState } from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import ReactTooltip from 'react-tooltip'
 import Select from 'react-select'
-import Overlay from './Overlay'
+// date ? 
+// <Overlay date={date} DateWise={DateWise} setDate={setDate} />
+// :
 
 
 
 
-const HeatMap = ({ optionWise, DateWise, YearInfo }) => {
-    const [year, setYear] = useState(optionWise[0].value)
+const HeatMap = ({ optionWise, DateWise}) => {
     const [date, setDate] = useState(null)
+    const [year, setYear] = useState(optionWise[0].value)
+ 
     const randomValues = []
 
     for (let info of DateWise) {
@@ -30,8 +33,7 @@ const HeatMap = ({ optionWise, DateWise, YearInfo }) => {
 
 
         <div>
-            {date ?<Overlay date = {date} DateWise={DateWise} setDate = {setDate}/>
-                : <div className="MainContainer">
+            <div className="MainContainer">
 
                     <div className="HEATMAP-Container">
 
@@ -76,7 +78,7 @@ const HeatMap = ({ optionWise, DateWise, YearInfo }) => {
 
                 </div>
 
-            }
+            
         </div>
 
 

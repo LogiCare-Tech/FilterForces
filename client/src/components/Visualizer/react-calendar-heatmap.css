@@ -13,9 +13,7 @@
     stroke-width: 1px;
   }
   
-  /*
-   * Default color scale
-   */
+
   
   .react-calendar-heatmap .color-empty {
     fill: #eeeeee;
@@ -24,11 +22,7 @@
   .react-calendar-heatmap .color-filled {
     fill: #8cc665;
   }
-  
-  /*
-   * Github color scale
-   */
-  
+
   .react-calendar-heatmap .color-github-0 {
     fill: #eeeeee !important;
   }
@@ -53,9 +47,7 @@
   .react-calendar-heatmap{
     fill: rgb(16, 63, 16);
   }
-  /*
-   * Gitlab color scale
-   */
+  
   
   .react-calendar-heatmap .color-gitlab-0 {
     fill: #ededed;
@@ -120,20 +112,31 @@ body{
 }
 
 .Overlay{
-  width: 80%;
-  background-color: rgb(217, 243, 190);
+  width: 50%;
+  height: auto;
+  background-color: snow;
   border-radius: 5px;
+  border: 1px solid black;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: auto;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Overlay ul{
+  margin: 5px;
 }
 .Cancel-overlay{
   background-color: black;
-  border-radius: 100%;
-  margin-left: 95%;
+  border-radius: 40%;
+  background-color: red;
+  margin-left: 80%;
+  padding: .5em;
+  font-size: 1.5em;
 cursor: pointer;
  
 }
@@ -171,11 +174,11 @@ margin-right: auto;
 .Doughnut{
  
  
- display: flex;
- flex-direction: row;
- justify-content: space-between;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
  background-color: #d6e685;
-
+ margin-bottom: 10px;
 }
 body{
   background-color: rgb(241, 238, 238) !important;

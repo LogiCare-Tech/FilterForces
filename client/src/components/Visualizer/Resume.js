@@ -4,6 +4,7 @@ import axios from 'axios'
 import HeatMap from './Heatmap'
 import Histogram from './Histogram_RatingWise'
 import Doughnuts from './Doughnut'
+import Overlay from './Overlay'
 
 const Resume = () => {
   const [HANDLE, setHandle] = useState('')
@@ -16,6 +17,7 @@ const Resume = () => {
   const [RatingWiseAvg, setRatingWiseAvg] = useState()
   const [TopicWiseAvg, setTopicWiseAvg] = useState()
   const [TypeWiseAvg, setTypeWiseAvg] = useState()
+
   const handleChange = (e) => {
     setHandle(e.target.value)
   }
@@ -33,6 +35,60 @@ const Resume = () => {
       let AvgRatingTime = new Map()
       let AvgTopicTime = new Map()
       let AvgTypeTime = new Map()
+      try {
+        let getVisualizationInfo = await axios.get(`http://localhost:3001/api/Visualize/${data}`)
+
+
+        for (let data of getVisualizationInfo.data.data) {
+
+          if (data.type) {
+            if (AvgTypeTime.get(data.type)) {
+              let count = Number(AvgTypeTime.get(data.type)[1]) + 1
+              let AvgTime = Number(AvgTypeTime.get(data.type)[0]) + Number(data.time)
+              AvgTypeTime.set(data.type, [AvgTime, count])
+            }
+            else {
+              AvgTypeTime.set(data.type, [Number(data.time), 1])
+            }
+          }
+          if (data.topic) {
+            for (let topic of data.topic) {
+              if (AvgTopicTime.get(topic)) {
+                let count = Number(AvgTopicTime.get(topic)[1]) + 1
+                let AvgTime = Number(AvgTopicTime.get(topic)[0]) + Number(data.time)
+                AvgTopicTime.set(topic, [AvgTime, count])
+
+              }
+              else {
+                AvgTopicTime.set(topic, [Number(data.time), 1])
+              }
+            }
+          }
+          if (data.rating) {
+            if (AvgRatingTime.get(data.rating)) {
+              let count = Number(AvgRatingTime.get(data.rating)[1]) + 1
+              let AvgTime = Number(AvgRatingTime.get(data.rating)[0]) + Number(data.time)
+
+              AvgRatingTime.set(data.rating, [AvgTime, count])
+
+            }
+            else {
+
+              AvgRatingTime.set(data.rating, [Number(data.time), 1])
+
+            }
+          }
+
+        }
+
+      }
+      catch (Err) {
+
+        alert("This guy is not using our extension so only contest data will be visualized");
+      }
+
+
+
       for (let data of response.data.result) {
 
         //Collecting the Year 
@@ -102,6 +158,9 @@ const Resume = () => {
       for (let data of YEAR) {
         optionHolder.push({ value: data, label: data })
       }
+
+
+
       RATING = [...AvgRatingTime.keys()]
       TOPIC = [...AvgTopicTime.keys()]
       TYPE = [...AvgTypeTime.keys()]
@@ -134,53 +193,55 @@ const Resume = () => {
   return (
     <div>
       {
-        YearInfo.length === 0 &&
-      
-      <>
-      <h1 style = {{textAlign: 'center',marginTop: '10%'}}>Enter the Codeforces Handle</h1>
-        <form onSubmit = {handleSubmit} className= "INPUT">
-         
-         <div class="ui action input ">
-           
-         
-        
-           <input
-         
-            type="text"
-            value={HANDLE}
-             placeholder="Errichto"
-             onChange={(e) => handleChange(e)}/>
-           <button class ="ui icon button">
-           <i class ="arrow right icon"/>
-           </button>
-           
-         </div>
-         </form>
-      </>
-    
+        YearInfo.length == 0&&
+
+        <>
+          <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter the Codeforces Handle</h1>
+          <form onSubmit={handleSubmit} className="INPUT">
+
+            <div className="ui action input ">
+
+
+
+              <input
+
+                type="text"
+                value={HANDLE}
+                placeholder="Errichto"
+                onChange={(e) => handleChange(e)} />
+              <button className="ui icon button">
+                <i className="arrow right icon" />
+              </button>
+
+            </div>
+          </form>
+        </>
+
 
       }
       {
-        YearInfo.length > 0 &&
-        <>
-          <HeatMap
-            DateWise={DateWise}
-            YearInfo={YearInfo}
-            optionWise={optionWise}
-          />
-          <Histogram
-            RatingInfo={RatingInfo}
-            RatingWiseAvg={RatingWiseAvg}
-            TypeInfo={TypeInfo}
-            TypeWiseAvg={TypeWiseAvg}
-          />
-          <Doughnuts
-            TopicInfo={TopicInfo}
-            TopicWiseAvg={TopicWiseAvg}
+       YearInfo.length > 0 &&
+          <>
+            <HeatMap
+              DateWise={DateWise}
+              YearInfo={YearInfo}
+              optionWise={optionWise}
+            
+            />
+            <Histogram
+              RatingInfo={RatingInfo}
+              RatingWiseAvg={RatingWiseAvg}
+              TypeInfo={TypeInfo}
+              TypeWiseAvg={TypeWiseAvg}
+            />
+            <Doughnuts
+              TopicInfo={TopicInfo}
+              TopicWiseAvg={TopicWiseAvg}
 
-          />
+            />
 
-        </>
+          </> 
+          
       }
     </div>
   )

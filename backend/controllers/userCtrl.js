@@ -38,9 +38,15 @@ const createRefreshToken = (payload) => {
 UserRouter.post('/register', async(request, response) =>{
    
     try{
-        const {name, email, password} = request.body
-        
-        if(!name || !email || !password){
+       
+    
+        const username = String(request.body.username)
+        const name = String(request.body.name)
+        const email = String(request.body.email)
+        const password = String(request.body.password)
+       
+        if(name.length === 0 || email.length === 0 || password.length === 0 || username.length === 0){
+            
             return response.status(400).json({msg: "Please fill in all fields."})
         }
         if(!validateEmail(email)){
@@ -57,6 +63,7 @@ UserRouter.post('/register', async(request, response) =>{
         const passwordHash = await bcrypt.hash(password,12)
         
         const newUser = {
+            username: username,
             name: name,
             email: email,
             password: passwordHash
@@ -65,8 +72,14 @@ UserRouter.post('/register', async(request, response) =>{
         const activation_token = createActivationToken(newUser)
         console.log("hi -> ",activation_token)
         const url = `${config.CLIENT_URL}/user/activate/${activation_token}`
-
+      try{
         sendMail(email, url, "Verify your email address")
+      }
+      catch(err)
+      {
+          console.log(err)
+      }
+        
 
         response.json({msg: "Register Success! Please activate your email to start."})
     }
@@ -80,14 +93,15 @@ UserRouter.post('/activateEmail', async(request, response) =>{
     const {activation_token} = request.body
     console.log("hi ",activation_token)
    const user =  jwt.verify(activation_token, `${config.ACCESS_TOKEN_SECRET}`)
-
-    const {name, email, password} = user
+console.log("USER FROM ACTIVATION", user)
+    const {username,name, email, password} = user
     const check = await Users.findOne({email})
     if(check)
     {
         return res.status(400).json({msg: "This email already exists"})
     }
     const newUser = new Users({
+        username: username,
         name: name,
         email: email,
         password: password
@@ -103,8 +117,10 @@ UserRouter.post('/activateEmail', async(request, response) =>{
 UserRouter.post('/login', async(request, response) => {
    
     try{
-       
-        const {email, password} = request.body
+        console.log(request.body)
+        
+        const email = request.body.email
+        const password = request.body.password
         console.log(email, password);
         const user = await Users.findOne({email: email})
         if(!user) return response.status(400).json({msg: "This email does not exists"})
