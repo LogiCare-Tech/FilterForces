@@ -48,11 +48,11 @@ const Display = (props) => {
         
     }
         const list = (INFO) => {
-
+             console.log(INFO)
             const data = INFO.map((inf, index) => {
                 return (
                     <tr key={index}  className={checkAppropriateColor(inf)}>
-                        {/* <td><tr><td><p>{inf.problem.name}</p> </td> <td>{[inf.problem.tags.map((topic)=>`${topic}; `) ]}</td></tr></td> */}
+                      
                         <td>
                             {inf.index}
                         </td>
@@ -71,8 +71,8 @@ const Display = (props) => {
             return data
         }
         return (
-            <React.Fragment>
-                 <table className="ui celled table unstackable">
+            <div className = "TABLE">
+                 <table className="ui celled table unstackable" >
                     <thead>
                         <tr>
                             <th><h2>#</h2></th>
@@ -90,7 +90,7 @@ const Display = (props) => {
 
                     </tbody>
                 </table> 
-            </React.Fragment>
+            </div>
         )
     }
     export default Display

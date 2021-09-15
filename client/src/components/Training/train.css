@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+
+.smallTagDisplay{
+    color: red;
+}
+.psetDisplayStyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-grow: 100;
+}
+
+
+
+.Negative{
+    background-color: rgb(247, 177, 177);
+}
+.Positive{
+    background-color: rgb(118, 233, 118);
+}
+.content-problemset{
+    display: flex;
+    flex-direction:column;
+    background-color: rgb(255, 242, 242);
+
+justify-content: space-between;
+
+
+
+}
+.lablesFiled{
+    border: 2px solid red;
+   
+  
+   width: 100%;
+   height: auto;
+  
+   margin: 0;
+   position: sticky;
+}
+
+
+
+
+.overlayForTopics{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+  height: 400px;
+   padding: 10px;
+    border: 2px solid rgb(29, 6, 6);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    overflow-x: hidden;
+    background-color: greenyellow;
+}
+.content{
+    display: flex;
+    flex-direction: row;
+   margin-top: 2%;
+     width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+
+    justify-content: space-between;
+}
+
+
+.link{
+    text-decoration: none;
+    margin-left: 1em;
+    margin-right: 1em;
+    color: rgb(253, 232, 218);
+    font-size: 1.5rem;
+}
+.collapse{
+    cursor: pointer;
+}
+.controls{
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    
+}
+.TABLE{
+    overflow: auto;
+    border: 2px solid black;
+    flex: 5;
+    height: 100vh;/*..very important if you want scroll bar...*/
+    overflow: auto; /*..will introduce scroll bar when needed..*/
+}
+.iconTick{
+    background: url('tick.ico');
+   height: 40px;
+   background-repeat: no-repeat;
+   background-size: 40px;
+
+   width: 40px;
+   margin-left: auto;
+   margin-right: auto;
+    display: block;
+    
+}
+.addedHandles{
+   
+    width: auto;
+    height: auto;
+   color: red;
+   margin: 30px;
+   
+}
+.tagFilterName{
+   
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+flex-wrap: wrap;
+    
+}
+tr{
+   border: 1px solid black;
+    
+    margin: 10px auto 10px auto;
+}
+
+.lablesFiled{
+    margin-top: 2em;
+    padding: 2%;
+}
+.RangeInput{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  
+}
+.RangeInput input{
+    width: 50%;
+    border: 1px solid black;
+    height: 2em;
+    margin: 2px;
+
+    border-radius: 5px;
+    text-align: center;
+}
+.RangeInputForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid black;
+    padding: 1em;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.ladderControls input{
+    width: 80%;
+    border: 1px solid black;
+    height: 2em;
+    margin: 2px;
+    
+    border-radius: 5px;
+    text-align: center;
+}
+.ladderControls{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid black;
+    padding: 1em;
+    margin: 1px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.HandleInputForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid black;
+    padding: 1em;
+    margin: 2px 4px 2px 2px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.HandleInputForm input{
+    width: 80%;
+    border: 1px solid black;
+    height: 2em;
+  
+    border-radius: 5px;
+    text-align: center;
+}
+.filterTag{
+ 
+  border: 2px solid blue !important;
+  color: black !important;
+  font-size: 1em !important;
+  font-weight: bolder !important;
+  padding: 2em;
+  
+  
+}
+.TOPIC{
+    background-color: orange !important;
+
+}
+.LABLE{
+    background-color: greenyellow !important;
+}
+.RIGHT {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1%;
+    flex-wrap: wrap;
+}
+
+.RIGHT .LEFT{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}

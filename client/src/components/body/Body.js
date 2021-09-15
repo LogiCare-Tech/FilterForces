@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import Login from './auth/Login'
 import Register from './auth/Register'
 import ActivationEmail from './auth/ActivationEmail'
-import Train from '../Train'
+import Train from '../Training/Train'
 import Resume from "../Visualizer/Resume"
 import NotFound from '../notFound/NotFound'
 import { UserContext } from '../../contexts/UserContext'
