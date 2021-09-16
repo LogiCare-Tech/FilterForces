@@ -1,9 +1,16 @@
 import React from 'react'
 
 
-//{getSolvedNumber(inf.problem.tags, inf.problem.name)}
 
+let tagDisplay
 const Display = (props) => {
+    if(props.showTag === "Hide the tag")
+    {
+        tagDisplay = "block"
+    }
+    else{
+        tagDisplay = "none"
+    }
     const getSolvedNumber = (INFO) => {
       const stats = props.stats.filter((info) => ((Number(INFO.contestId) === Number(info.contestId)) && (String(INFO.index) ===String(info.index))))
     
@@ -48,7 +55,7 @@ const Display = (props) => {
         
     }
         const list = (INFO) => {
-             console.log(INFO)
+            
             const data = INFO.map((inf, index) => {
                 return (
                     <tr key={index}  className={checkAppropriateColor(inf)}>
@@ -58,7 +65,7 @@ const Display = (props) => {
                         </td>
                         <td >
                             <div className = "psetDisplayStyle">
-                            <a href = {`https://codeforces.com/problemset/problem/${inf.contestId}/${inf.index}` } target="_blank" rel="noopener noreferrer">{inf.name}</a> <p className ="smallTagDisplay">{[inf.tags.map((topic)=>`${topic}; `) ]}</p>
+                            <a href = {`https://codeforces.com/problemset/problem/${inf.contestId}/${inf.index}` } target="_blank" rel="noopener noreferrer">{inf.name}</a> <p className ="smallTagDisplay" style = {{display: tagDisplay}}>{[inf.tags.map((topic)=>`${topic}; `) ]}</p>
                             </div>
                         </td>
                         <td >{inf.rating}</td>
@@ -71,12 +78,16 @@ const Display = (props) => {
             return data
         }
         return (
+            
+                   
             <div className = "TABLE">
+               
                  <table className="ui celled table unstackable" >
+        
                     <thead>
                         <tr>
                             <th><h2>#</h2></th>
-                            <th ><h2>Problem</h2></th>
+                            <th ><h2>Problem   </h2> </th>
                             <th ><h2>Rating</h2></th>
                             <th ><i className="iconTick"/></th>
                         </tr>
@@ -91,6 +102,7 @@ const Display = (props) => {
                     </tbody>
                 </table> 
             </div>
+            
         )
     }
     export default Display

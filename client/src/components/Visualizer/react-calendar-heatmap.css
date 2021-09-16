@@ -1,16 +1,16 @@
 
 .react-calendar-heatmap text {
-    font-size: 8px;
+    font-size: 1em;
     fill: #aaa;
   }
   
   .react-calendar-heatmap .react-calendar-heatmap-small-text {
-    font-size: 2px;
+    font-size: 1em;
   }
   
   .react-calendar-heatmap rect:hover {
     stroke: #555;
-    stroke-width: 1px;
+    stroke-width: .1em;
   }
   
 
@@ -87,7 +87,7 @@
    background-color: snow;
    display: flex;
    justify-content: center;
- 
+
    flex-direction: column;
    border-radius: 8px;
    transition: .2s;
@@ -97,7 +97,7 @@
   display: flex;
   justify-content: space-between;
   margin-left: 5px;
- 
+
 }
 .HEATMAP-Container:hover{
   box-shadow: 12px 12px 25px 15px #d1cbcb;
@@ -112,7 +112,8 @@ body{
 }
 
 .Overlay{
-  width: 50%;
+  width: 80%;
+  font-size: 1em;
   height: auto;
   background-color: snow;
   border-radius: 5px;
@@ -125,11 +126,15 @@ body{
   padding: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  
+ align-items: center;
+  flex-wrap: wrap;
 }
-.Overlay ul{
-  margin: 5px;
+.OverlayQn{
+  align-items: flex-start !important;
+  font-size: larger;
 }
+
 .Cancel-overlay{
   background-color: black;
   border-radius: 40%;
@@ -174,11 +179,11 @@ margin-right: auto;
 .Doughnut{
  
  
-  width: 50%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
- background-color: #d6e685;
- margin-bottom: 10px;
+
+ margin-bottom: 1em;
 }
 body{
   background-color: rgb(241, 238, 238) !important;

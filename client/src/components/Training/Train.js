@@ -57,9 +57,10 @@ const Train = () => {
     const [allProblems, setAllProblems] = useState([])
 
     const [permission, setPermission] = useState(0)
+    const [showTag, setShowTag] = useState("Hide the tag")
 
-
-
+    //Notification
+    const [notification, setNotification] = useState([])
 
     /*
          @currentLadder => Array of user filtered Ladder (Ex: ["A", "B"])
@@ -166,50 +167,50 @@ const Train = () => {
                     }
                 }
             }
-           
 
-            else{
 
-            
-            for (let info of filterTagPset) {
+            else {
 
-                if (info.rating >= currentRange[0] && info.rating <= currentRange[1]) {
 
-                    //If Pset lies under rating range, increment the priyority
-                    priorityPset.set(info, priorityPset.get(info) + 1)
+                for (let info of filterTagPset) {
 
-                    //If Pset lies under user Filtered Ladder, increment the priyority
-                    if (currentLadder.includes(info.index)) {
+                    if (info.rating >= currentRange[0] && info.rating <= currentRange[1]) {
+
+                        //If Pset lies under rating range, increment the priyority
                         priorityPset.set(info, priorityPset.get(info) + 1)
 
-                    }
+                        //If Pset lies under user Filtered Ladder, increment the priyority
+                        if (currentLadder.includes(info.index)) {
+                            priorityPset.set(info, priorityPset.get(info) + 1)
 
-                    /*If Any topics under user Filtered Topic matches with current Pset, increment the priyority
-                       Ex: currentTopics: ["DP", "DSU", "Graphs"]
-                           Current Pset Topics => ["Bit Masks", "DSU", "Probability"]
-                           "DSU" is common in both => Increment priority
-                    */
-                    if (currentTopics.length) {
-                        let flag = 0
-                        for (let tag of info.tags) {
-                            if (currentTopics.includes(tag)) {
-                                flag = 1
+                        }
+
+                        /*If Any topics under user Filtered Topic matches with current Pset, increment the priyority
+                           Ex: currentTopics: ["DP", "DSU", "Graphs"]
+                               Current Pset Topics => ["Bit Masks", "DSU", "Probability"]
+                               "DSU" is common in both => Increment priority
+                        */
+                        if (currentTopics.length) {
+                            let flag = 0
+                            for (let tag of info.tags) {
+                                if (currentTopics.includes(tag)) {
+                                    flag = 1
+                                }
+                            }
+                            if (flag) {
+                                priorityPset.set(info, priorityPset.get(info) + 1)
+                                flag = 0
                             }
                         }
-                        if (flag) {
-                            priorityPset.set(info, priorityPset.get(info) + 1)
-                            flag = 0
-                        }
                     }
+
+
+
+
                 }
-
-
-
-
             }
-        }
 
-           
+
 
 
 
@@ -224,7 +225,7 @@ const Train = () => {
             let maxVotes = Math.max(...Priority)
 
 
-            if (currentLadder.length  || currentTopics.length) {
+            if (currentLadder.length || currentTopics.length) {
                 for (let info of priorityPset) {
 
                     if (maxVotes > 0 && priorityPset.get(info[0]) === maxVotes) {
@@ -244,14 +245,20 @@ const Train = () => {
             }
 
             triggerRender.current = false
+         
+          
            
-            setUpdate([...listToDisplay])
+          
+          let StopDuplicates = [...new Map(listToDisplay.map(obj => [JSON.stringify(obj), obj])).values()];
+          
+        
+            setUpdate([...StopDuplicates])
 
         }
 
     }, [filterTagPset, currentLadder, currentRange, currentTopics])
 
-   
+
 
     /*
       Controlled input change
@@ -292,18 +299,28 @@ const Train = () => {
                 prevLadder.push(ladderInputField)
 
 
-
+                setTimeout(() => {
+                    setNotification([])
+                }, 2500)
+                setNotification([` ${ladderInputField} is added successfully`, "green"])
                 setCurrentLadder([...prevLadder])
                 setLadderField('')
             }
             else {
-                alert("Already added ")
+
+                setTimeout(() => {
+                    setNotification([])
+                }, 2500)
+                setNotification([`Already added`, "red"])
             }
 
         }
         else {
 
-            alert("Please enter the valid tag")
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Please enter the valid tag`, "red"])
         }
     }
     const handleAddTopic = (topic) => {
@@ -312,10 +329,17 @@ const Train = () => {
 
         if (prevTopics.includes(topic) === false) {
             prevTopics.push(topic)
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Topic ${topic} is added successfully`, "green"])
             setCurrentTopics([...prevTopics])
         }
         else {
-            alert("Already added this topic")
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Already added this topic`, "red"])
         }
 
 
@@ -324,26 +348,60 @@ const Train = () => {
 
         triggerRender.current = true
         let listLadder = currentLadder.filter((info) => info !== data.info)
+        setTimeout(() => {
+            setNotification([])
+        }, 2500)
+        setNotification([`Ladder ${data.info} is removed successfully`, "green"])
         setCurrentLadder([...listLadder])
     }
     const handleRemoveTopic = (data => {
         triggerRender.current = true
         let listTopics = currentTopics.filter((info) => info !== data.info)
+        setTimeout(() => {
+            setNotification([])
+        }, 2500)
+        setNotification([`Ladder ${data.info} is removed successfully`, "green"])
+
         setCurrentTopics([...listTopics])
     })
     const handleRangeSubmit = (event) => {
         event.preventDefault()
         console.log(startRange, endRange)
-        triggerRender.current = true
+        if (startRange.length === 0 || endRange.length === 0 || Number(startRange) > Number(endRange)) {
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Invalid range.. Try something like 1200 - 1500`, "red"])
+        }
+        else {
+            triggerRender.current = true
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Filter ${startRange} - ${endRange} is added`, "green"])
+            setCurrentRange([startRange, endRange])
+        }
 
-
-        setCurrentRange([startRange, endRange])
     }
     const clearRange = (event) => {
         event.preventDefault()
-        triggerRender.current = true
-       
-        setCurrentRange([])
+        if (startRange.length === 0 || endRange.length === 0) {
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Invalid range`, "red"])
+        }
+        else {
+            triggerRender.current = true
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`Filter ${startRange} - ${endRange} is removed`, "green"])
+            setStartRange('')
+            setEndRange('')
+            setCurrentRange([])
+        }
+
     }
     const handleAdminUsername = async (event) => {
         event.preventDefault()
@@ -351,6 +409,7 @@ const Train = () => {
         try {
 
             const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}`)
+
             setPermission(1)
             setPersonalPsetOnCf([...response.data.result])
 
@@ -404,8 +463,10 @@ const Train = () => {
                     }
                 }
 
-                //  console.log("RangeFIlter length ",filterRangePset.length)
-                //console.log("LadderFilter length ", filterLadderPset.length)
+                setTimeout(() => {
+                    setNotification([])
+                }, 2500)
+                setNotification([` ${handle} is added successfully`, "green"])
                 setPsetInfo(newGuy)
                 setListHandle(handles)
                 setFilterTagPset([...list])
@@ -413,13 +474,19 @@ const Train = () => {
 
             }
             else {
-                alert("Handle is already added")
+                setTimeout(() => {
+                    setNotification([])
+                }, 2500)
+                setNotification([` Handle is already added`, "red"])
             }
 
         }
         catch (error) {
-            alert("Please enter the valid handle or wait for the codeforces api to accept the request")
-            console.log(error)
+
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification(["Please enter the valid handle or wait for the codeforces api to accept the request", "red"])
         }
 
     }
@@ -442,6 +509,10 @@ const Train = () => {
                 }
             }
         }
+        setTimeout(() => {
+            setNotification([])
+        }, 2500)
+        setNotification([`${info} is removed successfully`, "green"])
         setFilterTagPset(psetHolder)
 
         setPsetInfo(updatedObject)
@@ -449,7 +520,14 @@ const Train = () => {
         setListHandle(filter)
     }
 
-
+    const handleShowTag = (event) => {
+        if (showTag === "Hide the tag") {
+            setShowTag("Show the tag")
+        }
+        else {
+            setShowTag("Hide the tag")
+        }
+    }
 
 
     //List to display (Pset)
@@ -457,7 +535,7 @@ const Train = () => {
 
 
 
-        general ? <Display info={general} personalInfo={personalPsetOnCf} stats={allPset} tags={allTags} ladders={allLadder} />
+        general ? <Display info={general} personalInfo={personalPsetOnCf} stats={allPset} tags={allTags} ladders={allLadder} showTag={showTag} />
             : null
 
 
@@ -501,113 +579,123 @@ const Train = () => {
 
                     <div className="mainField">
 
+                        {
+                            (currentLadder.length > 0 || currentTopics.length > 0 || listHandle.length > 0) &&
+                            <div className="lablesFiled">
+                                <h4>Applied Filters</h4>
+                                {
+
+
+                                    currentLadder.map((info, index) => {
+                                        return (
+
+                                            <div key={index} className="ui image label filterTag LABLE">
+                                                <span>{info}</span>
+
+                                                <i className="delete icon" onClick={() => handleRemoveLadder({ info })} />
+                                            </div>
+                                        )
+                                    })
+
+
+
+
+                                }
+                                {
+
+                                    currentTopics.map((info, index) => {
+                                        return (
+                                            <div key={index} className="ui image label filterTag TOPIC">
+                                                <span>{info}</span>
+
+                                                <i className="delete icon" onClick={() => handleRemoveTopic({ info })} />
+                                            </div>
+                                        )
+                                    })
+
+                                }
+
+                                {
+
+                                    listHandle.map((info, index) => {
+                                        return (
+                                            <div className="ui image label filterTag tagFilterName" key={index}>
+                                                <span>{info}</span><i className="collapse delete icon" onClick={() => handleRemovePerson(info)} />
+                                            </div>
+                                        )
+                                    })
+                                }
+
+
+                            </div>
+                        }
 
                         <div className="content-problemset" >
+
                             <div className="controls" style={contentStyle}>
-                                <div className = "LEFT">
-                                <form className="RangeInputForm">
-                                    <h3>Enter the difficutly range</h3>
-                                    <div className="RangeInput">
-                                        <input value={startRange} onChange={(event) => handleStartRange(event)} placeholder="From" />
-
-                                        <input value={endRange} onChange={event => handleEndRange(event)} placeholder="To" />
+                                {notification.length === 2 &&
+                                    <div className="Notification" style={{ backgroundColor: notification[1] }}>
+                                        <h3> {notification[0]}</h3>
                                     </div>
+                                }
+                                <h2>Filters</h2>
+                                <div className="LEFT">
+                                    <form className="RangeInputForm">
+                                        <h3>Enter the difficutly range</h3>
+                                        <div className="RangeInput">
+                                            <input value={startRange} onChange={(event) => handleStartRange(event)} placeholder="From" />
 
-                                    <button class="ui secondary button" onClick={(e) => handleRangeSubmit(e)}>
-                                        Submit
-                                    </button>
-                                    <button class="ui button" onClick={(e) => clearRange(e)}>
-                                        Cancel
-                                    </button>
+                                            <input value={endRange} onChange={event => handleEndRange(event)} placeholder="To" />
+                                        </div>
+
+                                        <button className="ui secondary button" onClick={(e) => handleRangeSubmit(e)}>
+                                            Submit
+                                        </button>
+                                        <button className="ui button" onClick={(e) => clearRange(e)}>
+                                            Cancel
+                                        </button>
 
 
-                                </form>
+                                    </form>
 
 
-                               
+
                                 </div>
-                                
 
 
 
-                               <div className = "RIGHT">
-                               <form className="HandleInputForm">
-                                    <h3>Enter the handle</h3>
-                                    <input value={handle} type="text" onChange={ChangeInputHandle} />
-                                    <br />
-                                    <button class="ui secondary button" onClick={clearRange} onClick={handleAddPerson}>
-                                        Add Handle
+
+                                <div className="RIGHT">
+                                    <form className="HandleInputForm">
+                                        <h3>Enter the handle</h3>
+                                        <input value={handle} type="text" onChange={ChangeInputHandle} />
+                                        <br />
+                                        <button className="ui secondary button" onClick={clearRange} onClick={handleAddPerson}>
+                                            Add Handle
+                                        </button>
+
+
+                                    </form>
+                                    <button className="ui select button" onClick={clearRange} onClick={(event) => handleTopicSubmit(event)}>
+                                        Select the topic
                                     </button>
-                                   
+                                    <div className="HideControls">
+                                        <button className="ui button" onClick={(e) => handleShowTag(e)}>{showTag}</button>
+                                        
+                                    </div>
+                                    <div className="ladderControls">
+                                        <h3>
+                                            Ladders
+                                        </h3>
+                                        <input type="text" value={ladderInputField} onChange={(event) => handleLadderChange(event)} placeholder="Ex: A, B" />
 
-                                </form>
-                               <button class="ui select button" onClick={clearRange} onClick={(event) => handleTopicSubmit(event)}>
-                                    Select the topic
-                                </button>
-
-                                <div className="ladderControls">
-                                    <h3>
-                                        Ladders
-                                    </h3>
-                                    <input type="text" value={ladderInputField} onChange={(event) => handleLadderChange(event)} placeholder="Ex: A, B" />
-
-                                    <button class="ui secondary button" onClick={(event) => handleAddLadder(event)}>
-                                        Add ladder
-                                    </button>
+                                        <button className="ui secondary button" onClick={(event) => handleAddLadder(event)}>
+                                            Add ladder
+                                        </button>
+                                    </div>
                                 </div>
-                               </div>
                             </div>
 
-                            {
-                                (currentLadder.length > 0  || currentTopics.length > 0 || listHandle.length > 0)&&
-                                <div className="lablesFiled">
-                                    <h4>Applied Filters</h4>
-                                    {
-
-                                      
-                                        currentLadder.map((info, index) => {
-                                            return (
-
-                                                <div key={index} className="ui image label filterTag LABLE">
-                                                    <span>{info}</span>
-
-                                                    <i className="delete icon" onClick={() => handleRemoveLadder({ info })} />
-                                                </div>
-                                            )
-                                        })
-
-
-
-
-                                    }
-                                    {
-                                    
-                                        currentTopics.map((info, index) => {
-                                            return (
-                                                <div key={index} className="ui image label filterTag TOPIC">
-                                                    <span>{info}</span>
-
-                                                    <i className="delete icon" onClick={() => handleRemoveTopic({ info })} />
-                                                </div>
-                                            )
-                                        })
-
-                                    }
-                                    
-                                         {
-                                             
-                                            listHandle.map((info, index) => {
-                                                return (
-                                                    <div className="ui image label filterTag tagFilterName" key={index}>
-                                                        <span>{info}</span><i className="collapse delete icon" onClick={() => handleRemovePerson(info)} />
-                                                        </div>
-                                                )
-                                            })
-                                        }
-                                    
-
-                                </div>
-                            }
 
 
 
@@ -625,9 +713,11 @@ const Train = () => {
                                     updatedSet.length > 0 ?
                                         handleList(updatedSet)
                                         :
-                                        <>
-                                            <h1 style={{ marginLeft: "auto", marginRight: "auto" }}>Please enter the handles</h1>
-                                        </>
+                                        null
+                                    // :
+                                    // <>
+                                    //     <h1 style={{ marginLeft: "auto", marginRight: "auto" }}>Please enter the handles</h1>
+                                    // </>
 
 
                                 }
@@ -649,7 +739,7 @@ const Train = () => {
 
 
 
-                        <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter the Codeforces Handle</h1>
+                        <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter your Codeforces Handle</h1>
                         <form onSubmit={(event) => handleAdminUsername(event)} className="INPUT">
 
                             <div className="ui action input ">

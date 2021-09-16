@@ -9,8 +9,8 @@ import Select from 'react-select'
 
 
 
-const HeatMap = ({ optionWise, DateWise}) => {
-    const [date, setDate] = useState(null)
+const HeatMap = ({ optionWise, DateWise, setDate}) => {
+    
     const [year, setYear] = useState(optionWise[0].value)
  
     const randomValues = []

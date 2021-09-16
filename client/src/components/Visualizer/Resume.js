@@ -17,7 +17,7 @@ const Resume = () => {
   const [RatingWiseAvg, setRatingWiseAvg] = useState()
   const [TopicWiseAvg, setTopicWiseAvg] = useState()
   const [TypeWiseAvg, setTypeWiseAvg] = useState()
-
+  const [date, setDate] = useState(null)
   const handleChange = (e) => {
     setHandle(e.target.value)
   }
@@ -193,7 +193,7 @@ const Resume = () => {
   return (
     <div>
       {
-        YearInfo.length == 0&&
+        YearInfo.length === 0 &&
 
         <>
           <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter the Codeforces Handle</h1>
@@ -220,13 +220,13 @@ const Resume = () => {
 
       }
       {
-       YearInfo.length > 0 &&
+        YearInfo.length > 0 && date === null ?
           <>
             <HeatMap
               DateWise={DateWise}
               YearInfo={YearInfo}
               optionWise={optionWise}
-            
+              setDate={setDate}
             />
             <Histogram
               RatingInfo={RatingInfo}
@@ -240,9 +240,13 @@ const Resume = () => {
 
             />
 
-          </> 
-          
+          </>
+          :
+          YearInfo.length > 0 ?
+            <Overlay date={date} setDate={setDate} DateWise={DateWise} />
+            : null
       }
+     
     </div>
   )
 }

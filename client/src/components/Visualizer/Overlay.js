@@ -5,17 +5,17 @@ const Overlay = ({ date, DateWise,setDate }) => {
 
         <div className="Overlay">
             <span className="Cancel-overlay" onClick={() => setDate(null)}>❌</span>
-            <div>
-                {
+             <ol className = "OverlayQn">
+             {
                     DateWise &&
                     DateWise.get(date).map((info, index) => {
                         return (
                             (info.verdict === "OK") ?
-
-                                <ul> <a
+                               
+                                <li> <a
                                     key={index}
                                     href={`https://codeforces.com/problemset/problem/${info.problem.contestId}/${info.problem.index}`}
-                                    target="_blank"><h3>{info.problem.name}</h3></a></ul>
+                                    target="_blank"><h3>{info.problem.name}</h3></a></li>
                                 :
                                 null
 
@@ -23,7 +23,9 @@ const Overlay = ({ date, DateWise,setDate }) => {
                     })
                 }
 
-            </div>
+             </ol>
+               
+            
 
         </div>
 

@@ -28,7 +28,7 @@
 }
 .content-problemset{
     display: flex;
-    flex-direction:column;
+    flex-direction: row-reverse;
     background-color: rgb(255, 242, 242);
 
 justify-content: space-between;
@@ -106,6 +106,7 @@ justify-content: space-between;
     overflow: auto;
     border: 2px solid black;
     flex: 5;
+    /* scroll-behavior: smooth; */
     height: 100vh;/*..very important if you want scroll bar...*/
     overflow: auto; /*..will introduce scroll bar when needed..*/
 }
@@ -144,8 +145,10 @@ tr{
 }
 
 .lablesFiled{
-    margin-top: 2em;
+    margin-top: 1%;
     padding: 2%;
+    background-color: cadetblue;
+    border: 2px solid black  !important;
 }
 .RangeInput{
     display: flex;
@@ -237,4 +240,13 @@ tr{
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+}
+.Notification{
+    text-align: center;
+    width: 50%;
+    border-radius: 15px;
+    margin-right: auto;
+    margin-left: auto;
+   margin-top: 2%;
+   margin-bottom: 2%;
 }
