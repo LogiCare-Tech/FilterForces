@@ -96,7 +96,7 @@ const Train = () => {
         const find = async () => {
 
             const response = await axios.get(`https://codeforces.com/api/problemset.problems`)
-
+            
             const AllTags = []
             const AllLadder = []
 
@@ -113,7 +113,8 @@ const Train = () => {
                     AllLadder.push(sets[i].index)
                 }
             }
-
+           
+            
             setAllLadder([...AllLadder])
             setAllTags([...AllTags])
             setAllProblems([...sets])
@@ -121,7 +122,12 @@ const Train = () => {
         }
         find()
     }, [])
-
+// useEffect(() => {
+//     let personalStuff = personalPsetOnCf.map((info) => info.problem)
+//     console.log(personalStuff)
+//    let StopDuplicates = [...new Map(personalStuff.map(obj => [JSON.stringify(obj), obj])).values()];
+//    setUpdate([...StopDuplicates])
+// }, [personalPsetOnCf.length])
 
     //Below UseEffect is also controlled by triggerRender variable
     //triggerRender ? UseEffect Runs : UseEffect depends on other factors
@@ -250,8 +256,7 @@ const Train = () => {
            
           
           let StopDuplicates = [...new Map(listToDisplay.map(obj => [JSON.stringify(obj), obj])).values()];
-          
-        
+           
             setUpdate([...StopDuplicates])
 
         }
@@ -409,7 +414,8 @@ const Train = () => {
         try {
 
             const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}`)
-
+           
+          
             setPermission(1)
             setPersonalPsetOnCf([...response.data.result])
 
@@ -647,6 +653,7 @@ const Train = () => {
 
                                             <input value={endRange} onChange={event => handleEndRange(event)} placeholder="To" />
                                         </div>
+                                       <div style = {{display :"flex", flexDirection: "row", justifyContent:"center",flexWrap: "wrap"}}>
 
                                         <button className="ui secondary button" onClick={(e) => handleRangeSubmit(e)}>
                                             Submit
@@ -654,6 +661,7 @@ const Train = () => {
                                         <button className="ui button" onClick={(e) => clearRange(e)}>
                                             Cancel
                                         </button>
+                                        </div>
 
 
                                     </form>
@@ -666,6 +674,14 @@ const Train = () => {
 
 
                                 <div className="RIGHT">
+                                    <div style = {{display :"flex", flexDirection: "row", justifyContent:"center",flexWrap: "wrap"}}>
+                                    <button className="ui select button" onClick={clearRange} onClick={(event) => handleTopicSubmit(event)} style = {{margin: "0.3em"}}>
+                                        Select the topic
+                                    </button>
+                                    
+                                        <button  style = {{margin: "0.3em"}} className="ui select button" onClick={(e) => handleShowTag(e)}>{showTag}</button>
+                                    </div>
+                                    <div>
                                     <form className="HandleInputForm">
                                         <h3>Enter the handle</h3>
                                         <input value={handle} type="text" onChange={ChangeInputHandle} />
@@ -676,14 +692,11 @@ const Train = () => {
 
 
                                     </form>
-                                    <button className="ui select button" onClick={clearRange} onClick={(event) => handleTopicSubmit(event)}>
-                                        Select the topic
-                                    </button>
-                                    <div className="HideControls">
-                                        <button className="ui button" onClick={(e) => handleShowTag(e)}>{showTag}</button>
+                                   
                                         
-                                    </div>
+                                   
                                     <div className="ladderControls">
+                                    
                                         <h3>
                                             Ladders
                                         </h3>
@@ -693,6 +706,8 @@ const Train = () => {
                                             Add ladder
                                         </button>
                                     </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -710,10 +725,11 @@ const Train = () => {
                             <div className="content" style={contentStyle}>
 
                                 {
-                                    updatedSet.length > 0 ?
+                                       updatedSet.length > 0 ? 
                                         handleList(updatedSet)
                                         :
-                                        null
+                                        <h3 style={{ marginLeft: "auto", marginRight: "auto" }}>Please Add the handles to begin</h3>
+                                      
                                     // :
                                     // <>
                                     //     <h1 style={{ marginLeft: "auto", marginRight: "auto" }}>Please enter the handles</h1>

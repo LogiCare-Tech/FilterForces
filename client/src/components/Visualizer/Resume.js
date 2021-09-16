@@ -18,6 +18,7 @@ const Resume = () => {
   const [TopicWiseAvg, setTopicWiseAvg] = useState()
   const [TypeWiseAvg, setTypeWiseAvg] = useState()
   const [date, setDate] = useState(null)
+  const [notification, setNotification] = useState('')
   const handleChange = (e) => {
     setHandle(e.target.value)
   }
@@ -83,8 +84,10 @@ const Resume = () => {
 
       }
       catch (Err) {
-
-        alert("This guy is not using our extension so only contest data will be visualized");
+        setTimeout(() => {
+          setNotification('')
+        },2500)
+        setNotification("Download our extension to visualize in-depth");
       }
 
 
@@ -182,7 +185,11 @@ const Resume = () => {
 
 
     } catch (err) {
-      alert("Codeforces api Failed to fetch the handle information")
+
+      setTimeout(() => {
+        setNotification('')
+      },2500)
+      setNotification("Codeforces api Failed to fetch the handle information");
     }
   }
   const handleSubmit = (e) => {
@@ -191,12 +198,17 @@ const Resume = () => {
     SendRequest(HANDLE)
   }
   return (
-    <div>
+    <div className = "VizContainer">
+       {notification.length > 0 &&
+                                    <div className="Notification" style={{ backgroundColor: "red" }}>
+                                        <h3> {notification}</h3>
+                                    </div>
+                                }
       {
         YearInfo.length === 0 &&
 
         <>
-          <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter the Codeforces Handle</h1>
+          <h1 style={{ textAlign: 'center', marginTop: '7%', position: "relative" }}>Enter the Codeforces Handle</h1>
           <form onSubmit={handleSubmit} className="INPUT">
 
             <div className="ui action input ">

@@ -21,7 +21,7 @@ const Body = () => {
                     <Route path="/register" component={ loginState ? NotFound : Register} exact />
                     <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
                     <Route path = "/user/reset/:access_token" component = {ResetPassword} exact/>
-                    <Route path="/train" component={loginState ? Train : NotFound} exact />
+                    <Route path="/train" component={Train} exact />
                     <Route path = "/Visualize" component = {Resume} exact />
                     <Route path = "/forgotPassword" component = {loginState ? NotFound : ForgotPassword} exact/>
                 </Switch>

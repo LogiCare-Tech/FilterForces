@@ -108,7 +108,7 @@ body{
 }
 .dropdown{
   width: 30%;
-  padding: 8px;
+  padding: 1em;
 }
 
 .Overlay{
@@ -151,7 +151,7 @@ cursor: pointer;
   flex-direction: column;
    justify-content: space-between;
    align-items: center;
-width: 90%;
+   width: 80%;
 
 margin-left: auto;
 margin-right: auto;
@@ -179,11 +179,11 @@ margin-right: auto;
 .Doughnut{
  
  
-  width: 70%;
+  width: 40%;
   margin-left: auto;
   margin-right: auto;
 
- margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 body{
   background-color: rgb(241, 238, 238) !important;
@@ -208,5 +208,16 @@ body{
   border: 2px solid black;
   height: 30px;
   width: 100%;
+
+}
+@media all and (max-width: 800px)
+{
+  .Doughnut{
+    width: 100%;
+    
+  }
+  .HistoContainer{
+    width: 90%;
+  }
 
 }

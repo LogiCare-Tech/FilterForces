@@ -26,7 +26,19 @@
 .Positive{
     background-color: rgb(118, 233, 118);
 }
+@media all and (max-width: 800px)
+{
+    .content-problemset{
+        flex-direction: column !important;
+       
+    }
+   .RangeInputForm{
+       flex-wrap: wrap;
+   }
+   
+}
 .content-problemset{
+    margin: 1em;
     display: flex;
     flex-direction: row-reverse;
     background-color: rgb(255, 242, 242);
@@ -38,12 +50,13 @@ justify-content: space-between;
 }
 .lablesFiled{
     border: 2px solid red;
-   
+   border-radius: 15px;
   
-   width: 100%;
+   width: 90%;
    height: auto;
-  
-   margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+   
    position: sticky;
 }
 
@@ -67,7 +80,7 @@ justify-content: space-between;
 .content{
     display: flex;
     flex-direction: row;
-   margin-top: 2%;
+     margin-top: 2%;
      width: 95%;
     margin-left: auto;
     margin-right: auto;
@@ -94,20 +107,21 @@ justify-content: space-between;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items:center;
-    margin-top: 10px;
+    margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
-    width: 95%;
+  
     
 }
 .TABLE{
+    padding: 1em;
     overflow: auto;
     border: 2px solid black;
-    flex: 5;
+    height: 150vh;
     /* scroll-behavior: smooth; */
-    height: 100vh;/*..very important if you want scroll bar...*/
+   /*..very important if you want scroll bar...*/
     overflow: auto; /*..will introduce scroll bar when needed..*/
 }
 .iconTick{
@@ -153,6 +167,7 @@ tr{
 .RangeInput{
     display: flex;
     flex-direction: row;
+   
     justify-content: space-between;
   
 }
@@ -171,7 +186,7 @@ tr{
     justify-content: center;
     border: 2px solid black;
     padding: 1em;
-    flex-wrap: wrap;
+   
     align-items: center;
 }
 .ladderControls input{
@@ -179,7 +194,9 @@ tr{
     border: 1px solid black;
     height: 2em;
     margin: 2px;
-    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     border-radius: 5px;
     text-align: center;
 }
@@ -230,7 +247,7 @@ tr{
 }
 .RIGHT {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     margin-top: 1%;
     flex-wrap: wrap;

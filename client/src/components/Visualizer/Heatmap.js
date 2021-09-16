@@ -7,8 +7,6 @@ import Select from 'react-select'
 // :
 
 
-
-
 const HeatMap = ({ optionWise, DateWise, setDate}) => {
     
     const [year, setYear] = useState(optionWise[0].value)
@@ -24,7 +22,12 @@ const HeatMap = ({ optionWise, DateWise, setDate}) => {
 
     randomValues.reverse()
     const handleOverlay = (value) => {
-        setDate(value.date)
+    
+        if(value)
+        {
+            setDate(value.date)
+        }
+        
 
 
     }
@@ -39,7 +42,7 @@ const HeatMap = ({ optionWise, DateWise, setDate}) => {
 
                         <div className="HeadingContainer">
 
-                            <h2> HeatMap</h2>
+                            <h2 style = {{fontSize: "1.2em"}}> HeatMap</h2>
                             <Select
                                 className="dropdown"
                                 options={optionWise}
@@ -61,8 +64,12 @@ const HeatMap = ({ optionWise, DateWise, setDate}) => {
                             }}
                             tooltipDataAttrs={value => {
                                 if (value.count > 0) {
+                                    let da = value.date
+                                    da = da.split('-')
+                                    da.reverse()
+                                     
                                     return {
-                                        'data-tip': `${value.date} has count: ${value.count
+                                        'data-tip': `On ${da[0]}/${da[1]}/${da[2]}, submission count: ${value.count
                                             }`,
                                     }
                                 }

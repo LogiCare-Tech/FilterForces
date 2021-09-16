@@ -27,15 +27,22 @@ const Header = () => {
             <ul className="options">
 
                 {
-                    !loginState && <li><Link to="/login"><i className="far fa-user"></i> Sign in</Link></li>
+                    !loginState && 
+                    <>
+                     <li><Link to="/train"><i className="fas fa-user-ninja"></i> Train</Link></li>
+                    <li><Link to="/Visualize"><i className="fas fa-chart-line"></i> Visualize </Link></li>
+                       
+                    <li><Link to="/login"><i className="far fa-user"></i> Sign in</Link></li>
+                        
+                        </>
                 }
                 {
                     loginState &&
                     <>
-                        <li><Link to="/Visualize"><i className="fas fa-chart-line"></i> Resume </Link></li>
+                       
                         <li><Link to="/train"><i className="fas fa-user-ninja"></i> Train</Link></li>
                       
-                            
+                        <li><Link to="/Visualize"><i className="fas fa-chart-line"></i> Visualize </Link></li>
                          
                          
                          
