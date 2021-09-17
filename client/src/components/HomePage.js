@@ -1,8 +1,8 @@
 import React from 'react'
 
-import VizSvg from './VizSvg.svg'
-import TrainSvg from './TrainSvg.svg'
-import Faltu from './Faltu.svg'
+import VizSvg from '../Assets/VizSvg.svg'
+import TrainSvg from '../Assets/TrainSvg.svg'
+import Faltu from '../Assets/Faltu.svg'
 const HomePage = () => {
     
     return (
