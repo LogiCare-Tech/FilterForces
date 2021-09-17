@@ -165,7 +165,7 @@ background-color: black;
     outline: 1% solid rgb(0, 0, 0);
   }
 .iconTick{
-    background: url('tick.ico');
+ 
    height: 40px;
    background-repeat: no-repeat;
    background-size: 40px;
