@@ -8,7 +8,7 @@ import Body from './components/body/Body'
 import { UserContext } from './contexts/UserContext'
 const App = () => {
     
-   const {USER, LOGIN_STATE} = useContext(UserContext)
+   const {LOGIN_STATE} = useContext(UserContext)
    
     const [loginState,setLoginState] = LOGIN_STATE
   
@@ -32,7 +32,7 @@ const App = () => {
         }
         dummy()
     
-    }, [loginState,localStorage.getItem('firstLogin')])
+    }, [loginState, setLoginState])
     return (
       
        

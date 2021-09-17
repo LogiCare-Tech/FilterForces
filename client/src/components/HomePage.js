@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import VizSvg from './VizSvg.svg'
 import TrainSvg from './TrainSvg.svg'
@@ -17,15 +17,15 @@ const HomePage = () => {
                      
                   
                      
-                    <iframe  frameborder="1" allow="autoplay; picture-in-picture" title="YouTube Embed"
+                    <iframe  frameBorder="1" allow="autoplay; picture-in-picture" title="YouTube Embed"
                         src={"https://www.youtube.com/embed/tgbNymZ7vqY"}>
                     </iframe>
                    
-                    <img src = {Faltu}/>
+                    <img src = {Faltu} alt = "SVG"/>
                 </div>
               
                 <div className="Train-midSection">
-                     <img src = {TrainSvg}/>
+                     <img src = {TrainSvg} alt = "SVG"/>
                      <div className = "Description-middelSection">
                         <h2>Get all the questions solved by your friends</h2>
                         <h3>Enjoy by filtering problems</h3>
@@ -43,7 +43,7 @@ const HomePage = () => {
   
                    </ol>
                      </div>
-                     <img src = {VizSvg}/>
+                     <img src = {VizSvg} alt = "SVG"/>
                 </div>
 
             </div>
@@ -51,7 +51,7 @@ const HomePage = () => {
             <div className="footer">
 
 
-                <h4><i class="linkedin icon" /> <a href="https://www.linkedin.com/in/shreenanda-p-127242147/" target="_blank">Linked in </a><span>      </span><i class="github icon" /> <a href="https://github.com/shreenanda-8" target="_blank">Github</a></h4>
+                <h4><i className="linkedin icon" /> <a href="https://www.linkedin.com/in/shreenanda-p-127242147/" target="_blank" rel="noreferrer" >Linked in </a><span>      </span><i className="github icon" /> <a href="https://github.com/shreenanda-8" target="_blank" rel="noreferrer" >Github</a></h4>
 
 
 

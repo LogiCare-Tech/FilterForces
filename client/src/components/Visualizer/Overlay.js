@@ -15,7 +15,7 @@ const Overlay = ({ date, DateWise,setDate }) => {
                                 <li> <a
                                     key={index}
                                     href={`https://codeforces.com/problemset/problem/${info.problem.contestId}/${info.problem.index}`}
-                                    target="_blank"><h3>{info.problem.name}</h3></a></li>
+                                    target="_blank" rel="noreferrer"><h3>{info.problem.name}</h3></a></li>
                                 :
                                 null
 

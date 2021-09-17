@@ -10,7 +10,7 @@ const Login = () => {
     const {USER, LOGIN_STATE} = useContext(UserContext)
     const [user,setUser] = USER
    
-    const [loginState,setLoginState] = LOGIN_STATE
+    const {setLoginState} = LOGIN_STATE
 
     const { email, password, err, success } = user
     

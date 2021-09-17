@@ -16,6 +16,7 @@ function rainbow(numOfSteps, step) {
         case 3: r = 0; g = q; b = 1; break;
         case 4: r = f; g = 0; b = 1; break;
         case 5: r = 1; g = 0; b = q; break;
+        default: alert("Rainbow");
     }
     var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
     return (c);
@@ -35,7 +36,7 @@ const Histogram = (props) => {
     let AvgTimeType = []
     let TYPES = [...props.TypeInfo]
     TYPES.sort()
-    console.log(TYPES, props.TypeInfo)
+   
     for(let value of TYPES){
         let time = Math.ceil(props.TypeWiseAvg.get(value)[0] /  props.TypeWiseAvg.get(value)[1])
         let minutes  = Math.ceil(time/ 60)

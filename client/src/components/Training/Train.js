@@ -54,7 +54,7 @@ const Train = () => {
     const [allPset, setAllPset] = useState([])
     const [allTags, setAllTags] = useState([])
     const [allLadder, setAllLadder] = useState([])
-    const [allProblems, setAllProblems] = useState([])
+    
 
     const [permission, setPermission] = useState(0)
     const [showTag, setShowTag] = useState("Hide the tag")
@@ -117,7 +117,7 @@ const Train = () => {
             
             setAllLadder([...AllLadder])
             setAllTags([...AllTags])
-            setAllProblems([...sets])
+ 
             setAllPset([...response.data.result.problemStatistics])
         }
         find()
@@ -687,7 +687,7 @@ const Train = () => {
 
                                 <div className="RIGHT">
                                     <div style = {{display :"flex", flexDirection: "row", justifyContent:"center",flexWrap: "wrap"}}>
-                                    <button className="ui select button" onClick={clearRange} onClick={(event) => handleTopicSubmit(event)} style = {{margin: "0.3em"}}>
+                                    <button className="ui select button"  onClick={(event) => handleTopicSubmit(event)} style = {{margin: "0.3em"}}>
                                         Select the topic
                                     </button>
                                     
@@ -698,7 +698,7 @@ const Train = () => {
                                         <h3>Enter the handle</h3>
                                         <input value={handle} type="text" onChange={ChangeInputHandle} />
                                         <br />
-                                        <button className="ui secondary button" onClick={clearRange} onClick={handleAddPerson}>
+                                        <button className="ui secondary button"  onClick={handleAddPerson}>
                                             Add Handle
                                         </button>
 
