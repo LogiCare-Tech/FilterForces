@@ -71,7 +71,9 @@ UserRouter.post('/register', async(request, response) =>{
         
         const activation_token = createActivationToken(newUser)
         console.log("hi -> ",activation_token)
-        const url = `${config.CLIENT_URL}/user/activate/${activation_token}`
+        const url = `${config.CLIENT_URL}user/activate/${activation_token}`
+       
+       // const url = `${config.CLIENT_URL}/user/activate/${activation_token}`
       try{
         sendMail(email, url, "Verify your email address")
       }
