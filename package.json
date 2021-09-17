@@ -4,16 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node app.js",
+    "server": "nodemon app.js",
     "client": "cd client && npm run start",
     "server-install": "npm install",
     "client-install": "cd client && npm install",
     "install-all": "concurrently \"npm run server-install\"  \"npm run client-install\"",
     "dev": "concurrently \"npm run server\"  \"npm run client\"",
-
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-
   },
   "keywords": [],
   "author": "nanda_8",
@@ -28,7 +26,6 @@
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-async-errors": "^3.1.1",
     "express-fileupload": "^1.2.1",
     "express-handlebars": "^5.3.3",
     "express-session": "^1.17.2",
@@ -45,5 +42,8 @@
     "nodemailer": "^6.6.3",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "express-async-errors": "^3.1.1"
   }
 }
