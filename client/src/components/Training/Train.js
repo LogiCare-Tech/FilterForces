@@ -58,7 +58,7 @@ const Train = () => {
 
     const [permission, setPermission] = useState(0)
     const [showTag, setShowTag] = useState("Hide the tag")
-
+    const [contentPset, setContentPset] = useState("column")
     //Notification
     const [notification, setNotification] = useState([])
 
@@ -256,7 +256,10 @@ const Train = () => {
            
           
           let StopDuplicates = [...new Map(listToDisplay.map(obj => [JSON.stringify(obj), obj])).values()];
-           
+            if(StopDuplicates.length > 0)
+            {
+                setContentPset("row-reverse")
+            }
             setUpdate([...StopDuplicates])
 
         }
@@ -421,7 +424,10 @@ const Train = () => {
 
         }
         catch (err) {
-            alert("This handle doesnot exist")
+            setTimeout(() => {
+                setNotification([])
+            }, 2500)
+            setNotification([`This handle does not exist`, "red"])
         }
 
 
@@ -576,11 +582,17 @@ const Train = () => {
         setTopciOverlay("none")
     }
 
-
+   
 
     return (
-        <>
+        <div>
+              {notification.length === 2 &&
+                                    <div className="Notification" style={{ backgroundColor: notification[1] }}>
+                                        <h3> {notification[0]}</h3>
+                                    </div>
+                                }
             {
+                
                 permission >= 1 ?
 
                     <div className="mainField">
@@ -636,7 +648,7 @@ const Train = () => {
                             </div>
                         }
 
-                        <div className="content-problemset" >
+                        <div className="content-problemset" style = {{flexDirection : contentPset}}>
 
                             <div className="controls" style={contentStyle}>
                                 {notification.length === 2 &&
@@ -644,7 +656,7 @@ const Train = () => {
                                         <h3> {notification[0]}</h3>
                                     </div>
                                 }
-                                <h2>Filters</h2>
+                                <h2 >Filters</h2>
                                 <div className="LEFT">
                                     <form className="RangeInputForm">
                                         <h3>Enter the difficutly range</h3>
@@ -716,7 +728,7 @@ const Train = () => {
 
                             <div className="overlayForTopics" style={OverlayStyle}>
                                 <button onClick={() => manageOverlayTopic()}>
-                                    Cancel
+                                    ❌
                                 </button>
                                 {
                                     allTags.map((i, index) => <p key={index} onClick={() => handleAddTopic(i)}>{i}</p>)
@@ -728,13 +740,9 @@ const Train = () => {
                                        updatedSet.length > 0 ? 
                                         handleList(updatedSet)
                                         :
-                                        <h3 style={{ marginLeft: "auto", marginRight: "auto" }}>Please Add the handles to begin</h3>
+                                        <h3 style={{ marginLeft: "auto", marginRight: "auto", color: "snow" }}>Please Add the handles to begin</h3>
                                       
-                                    // :
-                                    // <>
-                                    //     <h1 style={{ marginLeft: "auto", marginRight: "auto" }}>Please enter the handles</h1>
-                                    // </>
-
+                                   
 
                                 }
 
@@ -749,14 +757,14 @@ const Train = () => {
 
                     </div>
                     :
-                    <div>
+                    < >
 
 
 
 
 
                         <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter your Codeforces Handle</h1>
-                        <form onSubmit={(event) => handleAdminUsername(event)} className="INPUT">
+                        <form onSubmit={(event) => handleAdminUsername(event)} className = "INPUT">
 
                             <div className="ui action input ">
 
@@ -775,10 +783,10 @@ const Train = () => {
                             </div>
                         </form>
 
-                    </div>
+                    </>
 
             }
-        </>
+        </div>
     )
 }
 export default Train

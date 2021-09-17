@@ -42,7 +42,7 @@ const HeatMap = ({ optionWise, DateWise, setDate}) => {
 
                         <div className="HeadingContainer">
 
-                            <h2 style = {{fontSize: "1.2em"}}> HeatMap</h2>
+                            <h2>Heat map</h2>
                             <Select
                                 className="dropdown"
                                 options={optionWise}

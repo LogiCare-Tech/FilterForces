@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 
 import Header from './components/header/Header'
 import Body from './components/body/Body'
-import axios from 'axios'
+
 import { UserContext } from './contexts/UserContext'
 const App = () => {
     

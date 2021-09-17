@@ -1,7 +1,7 @@
 .login_page{
     max-width: 500px;
     margin: auto;
-    color: #444;
+    color: snow;
     padding: 0 15px;
 }
 .login_page h2{
@@ -31,7 +31,7 @@
     width: 150px;
     padding: 10px 0;
     color: white;
-    background: black;
+   background-color: chocolate;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-right: 10px;
@@ -40,6 +40,9 @@
     margin: 10px 0;
 }
 .login_page a{
-    color:  #111;
+    color:  rgb(110, 30, 30);
     font-weight: 600;
+}
+p{
+    color: snow;
 }

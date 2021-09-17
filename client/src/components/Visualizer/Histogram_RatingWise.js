@@ -49,7 +49,9 @@ const Histogram = (props) => {
             {
 
                 data: [...AvgTime],
-                backgroundColor: [...COLOR_First]
+                backgroundColor: [...COLOR_First],
+                borderWidth: 2,
+                borderColor: 'black'
 
             }
         ]
@@ -60,7 +62,9 @@ const Histogram = (props) => {
         {
 
             data: [...AvgTimeType],
-            backgroundColor : [...COLOR_Second]
+            backgroundColor : [...COLOR_Second],
+            borderWidth: 2,
+                borderColor: 'black'
 
         }
     ]

@@ -40,15 +40,15 @@ const Display = (props) => {
         
         if(!isElementPresent[0])
         {
-            return ""
+            return "TYPE"
         }
         else{
            if(isElementPresent[0].verdict === 'OK')
            {
-               return "Positive"
+               return "Positive TYPE"
            }
         }
-          return "Negative"
+          return "Negative TYPE"
       }
       return ""
       
@@ -58,18 +58,18 @@ const Display = (props) => {
             
             const data = INFO.map((inf, index) => {
                 return (
-                    <tr key={index}  className={checkAppropriateColor(inf)}>
+                    <tr key={index}  >
                       
-                        <td>
+                        <td className={checkAppropriateColor(inf)}>
                             {inf.index}
                         </td>
-                        <td >
+                        <td className = "Middle">
                             <div className = "psetDisplayStyle">
-                            <a href = {`https://codeforces.com/problemset/problem/${inf.contestId}/${inf.index}` } target="_blank" rel="noopener noreferrer">{inf.name}</a> <p className ="smallTagDisplay" style = {{display: tagDisplay}}>{[inf.tags.map((topic)=>`${topic}; `) ]}</p>
+                            <a href = {`https://codeforces.com/problemset/problem/${inf.contestId}/${inf.index}` } target="_blank" rel="noopener noreferrer" className = "PROBLEM">{inf.name}</a> <span className ="smallTagDisplay" style = {{display: tagDisplay}}>{[inf.tags.map((topic)=>`${topic}; `) ]}</span>
                             </div>
                         </td>
-                        <td >{inf.rating}</td>
-                        <td >🤺 x{getSolvedNumber(inf)}</td>
+                        <td className = "RATING">{inf.rating}</td>
+                        <td className = "NumberOfPpl">🤺 x{getSolvedNumber(inf)}</td>
                     </tr>
                     
                 )

@@ -22,7 +22,7 @@ const Header = () => {
     return (
         <header>
             <div className="logo">
-                <h1><Link to="/">Filter Forces</Link></h1>
+               <h1 ><Link to="/"><img style = {{width: "15%"}} src = "https://lh3.googleusercontent.com/whWdCHvpK52qWkxadxxRiATHijar8KkJZCHtmwa3KeLyzf1hT3jqIGKE5FTJvvrmWWxneg1CGQ7VuQ624HKy=s72-rwa"/> Filter <span className = "HalfLogo"> Forces</span></Link></h1>
             </div>
             <ul className="options">
 
