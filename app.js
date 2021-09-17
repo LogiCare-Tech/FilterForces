@@ -29,6 +29,10 @@ const UserRouter = require('./controllers/userCtrl')
 
 dotenv.config()
 
+
+app.use(express.json())
+
+app.use(cors({origin: '*'}))
 if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'))
 }
@@ -39,10 +43,6 @@ if(process.env.NODE_ENV === "production")
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
-app.use(express.json())
-
-app.use(cors({origin: '*'}))
-
 app.use(cookieParser())
 
 mongoose.connect(config.MONGODB_URI, {
