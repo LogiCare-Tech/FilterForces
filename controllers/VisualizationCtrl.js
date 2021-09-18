@@ -30,19 +30,19 @@ VisualizeRouter.get('/:HANDLE', async (request, response) => {
 VisualizeRouter.post('/', middleware.auth, async (request, response) => {
 
     const data = request.body
-    console.log("From here",request.user)
+  
     let ID = request.user.id
-   
-    console.log(ID)
+     
     
     const visualize = new Visualize({
         type: data.type,
         topic: [...data.topic],
-        ratig: data.rating,
+        rating: Number(data.rating),
         time: data.time,
         userId: `${ID}`
 
     })
+    console.log("Ratting",Number(data.rating))
     const user = await Users.findOne({ _id: `${ID}`})
     if(user.username !== data.handle)
     {
