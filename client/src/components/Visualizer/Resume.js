@@ -39,7 +39,7 @@ const Resume = () => {
       try {
 //http://localhost:3001
         
-        let getVisualizationInfo = await axios.get(`https://filterforces.herokuapp.com/api/Visualize/${data}`)
+        let getVisualizationInfo = await axios.get(`http://localhost:3001/api/Visualize/${data}`)
           console.log(getVisualizationInfo)
 
         for (let data of getVisualizationInfo.data.data) {
