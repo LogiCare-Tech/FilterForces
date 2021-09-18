@@ -20,6 +20,7 @@ const Body = () => {
             <section className = "BODY">
                 <Switch>
                     <Route path="/login" component={loginState ? NotFound : Login} exact />
+                    <Route path = "/forgotPassword" component = {loginState ? NotFound : ForgotPassword} exact/>
                     <Route path="/register" component={ loginState ? NotFound : Register} exact />
                     <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
                     <Route path = "/user/reset/:access_token" component = {ResetPassword} exact/>
@@ -27,7 +28,7 @@ const Body = () => {
                     <Route path = "/Visualize" component = {Resume} exact />
                     <Route path = "/" component = {HomePage} />
                    
-                    <Route path = "/forgotPassword" component = {loginState ? NotFound : ForgotPassword} exact/>
+                    
                 </Switch>
             </section>
         </div>
