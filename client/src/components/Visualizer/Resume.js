@@ -38,51 +38,89 @@ const Resume = () => {
       let AvgTypeTime = new Map()
       try {
         //http://localhost:3001
-        let getVisualizationInfo = await axios.get(`/api/Visualize/:${data}`)
-        
-        console.log(getVisualizationInfo)
-
-        for (let data of getVisualizationInfo.data.data) {
-
-          if (data.type) {
-            if (AvgTypeTime.get(data.type)) {
-              let count = Number(AvgTypeTime.get(data.type)[1]) + 1
-              let AvgTime = Number(AvgTypeTime.get(data.type)[0]) + Number(data.time)
-              AvgTypeTime.set(data.type, [AvgTime, count])
-            }
-            else {
-              AvgTypeTime.set(data.type, [Number(data.time), 1])
-            }
+    
+        let obj = {
+          HANDLE
+        }
+        var getVisualizationInfo
+   
+           getVisualizationInfo = await fetch(`/api/Visualize/please`,
+          {
+            method: 'POST',
+            headers: {
+               
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            mode: 'cors',
+            body: JSON.stringify(obj)
+          })
+      
+          if(getVisualizationInfo.status === 400)
+          {
+            console.log(getVisualizationInfo)
+            setTimeout(() => {
+              setNotification('')
+            }, 3500)
+           
+            setNotification("Only contest data will be visualized");
           }
-          if (data.topic) {
-            for (let topic of data.topic) {
-              if (AvgTopicTime.get(topic)) {
-                let count = Number(AvgTopicTime.get(topic)[1]) + 1
-                let AvgTime = Number(AvgTopicTime.get(topic)[0]) + Number(data.time)
-                AvgTopicTime.set(topic, [AvgTime, count])
+          else{
+            getVisualizationInfo = await getVisualizationInfo.json()
+            if(getVisualizationInfo)
+         {
+          for (let data of getVisualizationInfo.data) {
 
+            if (data.type) {
+              if (AvgTypeTime.get(data.type)) {
+                let count = Number(AvgTypeTime.get(data.type)[1]) + 1
+                let AvgTime = Number(AvgTypeTime.get(data.type)[0]) + Number(data.time)
+                AvgTypeTime.set(data.type, [AvgTime, count])
               }
               else {
-                AvgTopicTime.set(topic, [Number(data.time), 1])
+                AvgTypeTime.set(data.type, [Number(data.time), 1])
               }
             }
-          }
-          if (data.rating) {
-            if (AvgRatingTime.get(data.rating)) {
-              let count = Number(AvgRatingTime.get(data.rating)[1]) + 1
-              let AvgTime = Number(AvgRatingTime.get(data.rating)[0]) + Number(data.time)
-
-              AvgRatingTime.set(data.rating, [AvgTime, count])
-
+            if (data.topic) {
+              for (let topic of data.topic) {
+                if (AvgTopicTime.get(topic)) {
+                  let count = Number(AvgTopicTime.get(topic)[1]) + 1
+                  let AvgTime = Number(AvgTopicTime.get(topic)[0]) + Number(data.time)
+                  AvgTopicTime.set(topic, [AvgTime, count])
+    
+                }
+                else {
+                  AvgTopicTime.set(topic, [Number(data.time), 1])
+                }
+              }
             }
-            else {
-
-              AvgRatingTime.set(data.rating, [Number(data.time), 1])
-
+            if (data.rating) {
+              if (AvgRatingTime.get(data.rating)) {
+                let count = Number(AvgRatingTime.get(data.rating)[1]) + 1
+                let AvgTime = Number(AvgRatingTime.get(data.rating)[0]) + Number(data.time)
+    
+                AvgRatingTime.set(data.rating, [AvgTime, count])
+    
+              }
+              else {
+    
+                AvgRatingTime.set(data.rating, [Number(data.time), 1])
+    
+              }
             }
+    
           }
-
-        }
+    
+         }
+          }
+         
+         
+          
+       
+         
+       
+        
 
       }
       catch (Err) {
@@ -91,9 +129,8 @@ const Resume = () => {
         }, 2500)
         setNotification("Download our extension to visualize in-depth");
       }
-
-
-
+    
+     
       for (let data of response.data.result) {
 
         //Collecting the Year 
