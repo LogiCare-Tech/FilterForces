@@ -218,7 +218,7 @@ UserRouter.get('/userInfo',middleware.auth, async(request, response) => {
 UserRouter.get('/logout', async (request, response) =>{
     try{
         response.clearCookie('refreshtoken', {path:'/api/Users/refresh_token'})
-        return response.json({msg: "Loging out"})
+        return response.status(200).json({msg: "Loging out"})
     }
     catch(err)
     {

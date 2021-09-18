@@ -26,6 +26,7 @@ const Body = () => {
                     <Route path="/train" component={Train} exact />
                     <Route path = "/Visualize" component = {Resume} exact />
                     <Route path = "/" component = {HomePage} />
+                   
                     <Route path = "/forgotPassword" component = {loginState ? NotFound : ForgotPassword} exact/>
                 </Switch>
             </section>

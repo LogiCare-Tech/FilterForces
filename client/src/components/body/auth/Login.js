@@ -32,20 +32,7 @@ const Login = () => {
                 localStorage.setItem('firstLogin', true)
                 setUser({...user, err: '', success: res.data.msg})
                 window.location.href = "/"
-            //    try{
-            //     const use = await axios.post('/api/Users/refresh_token')
-
            
-            //     const userResponse = await axios.get('/api/Users/userInfo', {
-            //         headers: {"Authorization": use.data.access_token}
-            //     })
-               
-                
-            //    }catch(Err)
-            //    {
-            //        console.log(Err)
-            //    }
-            
               
               
               
