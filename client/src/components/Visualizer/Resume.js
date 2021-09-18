@@ -38,8 +38,8 @@ const Resume = () => {
       let AvgTypeTime = new Map()
       try {
 //http://localhost:3001
-
-        let getVisualizationInfo = await axios.get(`http://localhost:3001/api/Visualize/${data}`)
+        
+        let getVisualizationInfo = await axios.get(`https://filterforces.herokuapp.com/api/Visualize/${data}`)
           console.log(getVisualizationInfo)
 
         for (let data of getVisualizationInfo.data.data) {
@@ -67,7 +67,7 @@ const Resume = () => {
               }
             }
           }
-          if (data.points) {
+          if (data.rating) {
             if (AvgRatingTime.get(data.rating)) {
               let count = Number(AvgRatingTime.get(data.rating)[1]) + 1
               let AvgTime = Number(AvgRatingTime.get(data.rating)[0]) + Number(data.time)

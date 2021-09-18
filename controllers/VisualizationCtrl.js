@@ -42,7 +42,7 @@ VisualizeRouter.post('/', middleware.auth, async (request, response) => {
         userId: `${ID}`
 
     })
-    console.log("Ratting",Number(data.rating))
+    console.log("Ratting",  data)
     const user = await Users.findOne({ _id: `${ID}`})
     if(user.username !== data.handle)
     {
