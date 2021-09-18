@@ -13,26 +13,25 @@ const Users = require('../models/userModel')
 
 VisualizeRouter.post('/please', async (request, response) => {
     const res = request.body
-    console.log("From frontend",res)
-    try{
+    console.log("From frontend", res)
+    try {
         const user = await Users.find({ username: `${res.HANDLE}` })
         console.log(user)
         let data = []
         for (let ID of user[0].viz) {
-    
+
             let value = await Visualize.findById({ _id: `${ID}` })
             data.push(value)
-    
-    
+
+
         }
         console.log(data)
-        response.status(200).json({data})
+        response.status(200).json({ data })
     }
-   catch(err)
-   {
-       response.status(400).json({err})
-   }
-  
+    catch (err) {
+        response.status(400).json({ err })
+    }
+
 })
 VisualizeRouter.post('/', middleware.auth, async (request, response) => {
 

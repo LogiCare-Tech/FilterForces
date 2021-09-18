@@ -39,10 +39,10 @@ const Header = () => {
                 {
                     !loginState && 
                     <>
-                     <li><Link to="/train"><i className="fas fa-user-ninja"></i> Train</Link></li>
-                    <li><Link to="/Visualize"><i className="fas fa-chart-line"></i> Visualize </Link></li>
+                     <li><Link to="/train"> Train</Link></li>
+                    <li><Link to="/Visualize">Visualize </Link></li>
                        
-                    <li><Link to="/login"><i className="far fa-user"></i> Sign in</Link></li>
+                    <li><Link to="/login"><i className="user icon"></i> Sign in</Link></li>
                         
                         </>
                 }
@@ -50,13 +50,13 @@ const Header = () => {
                     loginState &&
                     <>
                        
-                        <li><Link to="/train"><i className="fas fa-user-ninja"></i> Train</Link></li>
+                        <li><Link to="/train"> Train</Link></li>
                       
-                        <li><Link to="/Visualize"><i className="fas fa-chart-line"></i> Visualize </Link></li>
+                        <li><Link to="/Visualize"> Visualize </Link></li>
                          
                          
                          
-                          <li  className = "gate"><Link to="/logout" onClick={handleLogout}><i className="fas fa-user"></i>Logout</Link></li>
+                          <li  className = "gate"><Link to="/logout" onClick={handleLogout}><i className="user icon"></i>Logout</Link></li>
 
 
 

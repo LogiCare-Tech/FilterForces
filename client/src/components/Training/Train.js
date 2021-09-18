@@ -54,7 +54,7 @@ const Train = () => {
     const [allPset, setAllPset] = useState([])
     const [allTags, setAllTags] = useState([])
     const [allLadder, setAllLadder] = useState([])
-    
+
 
     const [permission, setPermission] = useState(0)
     const [showTag, setShowTag] = useState("Hide the tag")
@@ -92,42 +92,64 @@ const Train = () => {
 
     //Fetching all problems from Codeforces API and distributing data to different array when page loads
     useEffect(() => {
-
+           let source = axios.CancelToken.source()
         const find = async () => {
-
-            const response = await axios.get(`https://codeforces.com/api/problemset.problems`)
-            
-            const AllTags = []
-            const AllLadder = []
-
-
-            let sets = response.data.result.problems
-            for (let i = 0; i < sets.length; i++) {
-                for (let j = 0; j < sets[i].tags.length; j++) {
-                    if (!AllTags.includes(sets[i].tags[j])) {
-                        AllTags.push(sets[i].tags[j])
+            try{
+                const response = await axios.get(`https://codeforces.com/api/problemset.problems`, {
+                    cancelToken: source.token
+                })
+                var AllTags = []
+                var AllLadder = []
+    
+    
+                var sets = response.data.result.problems
+                for (let i = 0; i < sets.length; i++) {
+                    for (let j = 0; j < sets[i].tags.length; j++) {
+                        if (!AllTags.includes(sets[i].tags[j])) {
+                            AllTags.push(sets[i].tags[j])
+                        }
+    
                     }
-
+                    if (!AllLadder.includes(sets[i].index)) {
+                        AllLadder.push(sets[i].index)
+                    }
                 }
-                if (!AllLadder.includes(sets[i].index)) {
-                    AllLadder.push(sets[i].index)
-                }
+                setAllLadder([...AllLadder])
+                setAllTags([...AllTags])
+    
+                setAllPset([...response.data.result.problemStatistics])
             }
+            catch(err)
+            {
+                   if(axios.isCancel(err))
+                   {
+                       console.log("fetch aborted")
+                   }
+                   else{
+                       throw err
+                   }
+                   
+            }
+                
+            
+    
+                
+            
            
             
-            setAllLadder([...AllLadder])
-            setAllTags([...AllTags])
- 
-            setAllPset([...response.data.result.problemStatistics])
         }
         find()
+return () =>{
+    console.log("unmounting")
+    source.cancel()
+}
     }, [])
-// useEffect(() => {
-//     let personalStuff = personalPsetOnCf.map((info) => info.problem)
-//     console.log(personalStuff)
-//    let StopDuplicates = [...new Map(personalStuff.map(obj => [JSON.stringify(obj), obj])).values()];
-//    setUpdate([...StopDuplicates])
-// }, [personalPsetOnCf.length])
+    // useEffect(() => {
+    //     let personalStuff = personalPsetOnCf.map((info) => info.problem)
+    //     console.log(personalStuff)
+    //    let StopDuplicates = [...new Map(personalStuff.map(obj => [JSON.stringify(obj), obj])).values()];
+    //    setUpdate([...StopDuplicates])
+    // }, [personalPsetOnCf.length])
 
     //Below UseEffect is also controlled by triggerRender variable
     //triggerRender ? UseEffect Runs : UseEffect depends on other factors
@@ -251,13 +273,12 @@ const Train = () => {
             }
 
             triggerRender.current = false
-         
-          
-           
-          
-          let StopDuplicates = [...new Map(listToDisplay.map(obj => [JSON.stringify(obj), obj])).values()];
-            if(StopDuplicates.length > 0)
-            {
+
+
+
+
+            let StopDuplicates = [...new Map(listToDisplay.map(obj => [JSON.stringify(obj), obj])).values()];
+            if (StopDuplicates.length > 0) {
                 setContentPset("row-reverse")
             }
             setUpdate([...StopDuplicates])
@@ -417,8 +438,8 @@ const Train = () => {
         try {
 
             const response = await axios.get(`https://codeforces.com/api/user.status?handle=${personalHandle}`)
-           
-          
+
+
             setPermission(1)
             setPersonalPsetOnCf([...response.data.result])
 
@@ -582,17 +603,18 @@ const Train = () => {
         setTopciOverlay("none")
     }
 
-   
+
 
     return (
         <div>
-              {notification.length === 2 &&
-                                    <div className="Notification" style={{ backgroundColor: notification[1] }}>
-                                        <h3> {notification[0]}</h3>
-                                    </div>
-                                }
+            {notification.length === 2 &&
+                <div className="Notification" style={{ backgroundColor: notification[1] }}>
+                    <h3> {notification[0]}</h3>
+                </div>
+            }
+
             {
-                
+
                 permission >= 1 ?
 
                     <div className="mainField">
@@ -648,7 +670,7 @@ const Train = () => {
                             </div>
                         }
 
-                        <div className="content-problemset" style = {{flexDirection : contentPset}}>
+                        <div className="content-problemset" style={{ flexDirection: contentPset }}>
 
                             <div className="controls" style={contentStyle}>
                                 {notification.length === 2 &&
@@ -665,14 +687,14 @@ const Train = () => {
 
                                             <input value={endRange} onChange={event => handleEndRange(event)} placeholder="To" />
                                         </div>
-                                       <div style = {{display :"flex", flexDirection: "row", justifyContent:"center",flexWrap: "wrap"}}>
+                                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", flexWrap: "wrap" }}>
 
-                                        <button className="ui secondary button" onClick={(e) => handleRangeSubmit(e)}>
-                                            Submit
-                                        </button>
-                                        <button className="ui button" onClick={(e) => clearRange(e)}>
-                                            Cancel
-                                        </button>
+                                            <button className="ui secondary button" onClick={(e) => handleRangeSubmit(e)}>
+                                                Submit
+                                            </button>
+                                            <button className="ui button" onClick={(e) => clearRange(e)}>
+                                                Cancel
+                                            </button>
                                         </div>
 
 
@@ -686,40 +708,40 @@ const Train = () => {
 
 
                                 <div className="RIGHT">
-                                    <div style = {{display :"flex", flexDirection: "row", justifyContent:"center",flexWrap: "wrap"}}>
-                                    <button className="ui select button"  onClick={(event) => handleTopicSubmit(event)} style = {{margin: "0.3em"}}>
-                                        Select the topic
-                                    </button>
-                                    
-                                        <button  style = {{margin: "0.3em"}} className="ui select button" onClick={(e) => handleShowTag(e)}>{showTag}</button>
+                                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", flexWrap: "wrap" }}>
+                                        <button className="ui select button" onClick={(event) => handleTopicSubmit(event)} style={{ margin: "0.3em" }}>
+                                            Select the topic
+                                        </button>
+
+                                        <button style={{ margin: "0.3em" }} className="ui select button" onClick={(e) => handleShowTag(e)}>{showTag}</button>
                                     </div>
                                     <div>
-                                    <form className="HandleInputForm">
-                                        <h3>Enter the handle</h3>
-                                        <input value={handle} type="text" onChange={ChangeInputHandle} />
-                                        <br />
-                                        <button className="ui secondary button"  onClick={handleAddPerson}>
-                                            Add Handle
-                                        </button>
+                                        <form className="HandleInputForm">
+                                            <h3>Enter the handle</h3>
+                                            <input value={handle} type="text" onChange={ChangeInputHandle} />
+                                            <br />
+                                            <button className="ui secondary button" onClick={handleAddPerson}>
+                                                Add Handle
+                                            </button>
 
 
-                                    </form>
-                                   
-                                        
-                                   
-                                    <div className="ladderControls">
-                                    
-                                        <h3>
-                                            Ladders
-                                        </h3>
-                                        <input type="text" value={ladderInputField} onChange={(event) => handleLadderChange(event)} placeholder="Ex: A, B" />
+                                        </form>
 
-                                        <button className="ui secondary button" onClick={(event) => handleAddLadder(event)}>
-                                            Add ladder
-                                        </button>
+
+
+                                        <div className="ladderControls">
+
+                                            <h3>
+                                                Ladders
+                                            </h3>
+                                            <input type="text" value={ladderInputField} onChange={(event) => handleLadderChange(event)} placeholder="Ex: A, B" />
+
+                                            <button className="ui secondary button" onClick={(event) => handleAddLadder(event)}>
+                                                Add ladder
+                                            </button>
+                                        </div>
                                     </div>
-                                    </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -737,12 +759,12 @@ const Train = () => {
                             <div className="content" style={contentStyle}>
 
                                 {
-                                       updatedSet.length > 0 ? 
+                                    updatedSet.length > 0 ?
                                         handleList(updatedSet)
                                         :
                                         <h3 style={{ marginLeft: "auto", marginRight: "auto", color: "snow" }}>Please Add the handles to begin</h3>
-                                      
-                                   
+
+
 
                                 }
 
@@ -764,7 +786,7 @@ const Train = () => {
 
 
                         <h1 style={{ textAlign: 'center', marginTop: '10%' }}>Enter your Codeforces Handle</h1>
-                        <form onSubmit={(event) => handleAdminUsername(event)} className = "INPUT">
+                        <form onSubmit={(event) => handleAdminUsername(event)} className="INPUT">
 
                             <div className="ui action input ">
 

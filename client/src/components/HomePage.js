@@ -28,7 +28,7 @@ const HomePage = () => {
                      <img src = {TrainSvg} alt = "SVG"/>
                      <div className = "Description-middelSection">
                         <h2>Get all the questions solved by your friends</h2>
-                        <h3>Enjoy by filtering problems</h3>
+                        <h3>Train by filtering the problems</h3>
                      </div>
                 </div>
                 <div className="Viz-midSection">

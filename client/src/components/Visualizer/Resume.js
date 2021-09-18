@@ -19,6 +19,7 @@ const Resume = () => {
   const [TypeWiseAvg, setTypeWiseAvg] = useState()
   const [date, setDate] = useState(null)
   const [notification, setNotification] = useState('')
+    const[load, setLoad] = useState(0)
   const handleChange = (e) => {
     setHandle(e.target.value)
   }
@@ -233,7 +234,7 @@ const Resume = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    setLoad(1)
     SendRequest(HANDLE)
   }
   return (
@@ -243,8 +244,9 @@ const Resume = () => {
           <h3> {notification}</h3>
         </div>
       }
+     
       {
-        YearInfo.length === 0 &&
+        YearInfo.length === 0 && load === 0&&
 
         <>
           <h1 style={{ textAlign: 'center', marginTop: '7%', position: "relative" }}>Enter the Codeforces Handle</h1>
@@ -266,13 +268,20 @@ const Resume = () => {
 
             </div>
           </form>
+          
         </>
+           
+         
+        
 
 
       }
       {
+        
         YearInfo.length > 0 && date === null ?
+       
           <>
+           {load === 1 && setLoad(0)}
             <HeatMap
               DateWise={DateWise}
               YearInfo={YearInfo}
@@ -290,14 +299,23 @@ const Resume = () => {
               TopicWiseAvg={TopicWiseAvg}
 
             />
-
+           
           </>
           :
-          YearInfo.length > 0 ?
+          YearInfo.length > 0  ?
             <Overlay date={date} setDate={setDate} DateWise={DateWise} />
-            : null
+            :  
+           null
       }
-
+      {load === 1 &&
+    
+     <div className="ui active dimmer">
+       <div className="ui medium text loader">Loading</div>
+     </div>
+   
+   
+      }
+      
     </div>
   )
 }

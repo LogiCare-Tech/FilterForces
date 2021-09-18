@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Overlay = ({ date, DateWise,setDate }) => {
+   
     return (
 
         <div className="Overlay">
@@ -12,8 +13,8 @@ const Overlay = ({ date, DateWise,setDate }) => {
                         return (
                             (info.verdict === "OK") ?
                                
-                                <li> <a
-                                    key={index}
+                                <li key={index}> <a
+                                    
                                     href={`https://codeforces.com/problemset/problem/${info.problem.contestId}/${info.problem.index}`}
                                     target="_blank" rel="noreferrer"><h3>{info.problem.name}</h3></a></li>
                                 :
