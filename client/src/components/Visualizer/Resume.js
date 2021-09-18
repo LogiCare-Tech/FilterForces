@@ -37,10 +37,10 @@ const Resume = () => {
       let AvgTopicTime = new Map()
       let AvgTypeTime = new Map()
       try {
-//http://localhost:3001
+        //http://localhost:3001
+        let getVisualizationInfo = await axios.get(`/api/Visualize/:${data}`)
         
-        let getVisualizationInfo = await axios.get(`/api/Visualize/${data}`)
-          console.log(getVisualizationInfo)
+        console.log(getVisualizationInfo)
 
         for (let data of getVisualizationInfo.data.data) {
 
@@ -88,7 +88,7 @@ const Resume = () => {
       catch (Err) {
         setTimeout(() => {
           setNotification('')
-        },2500)
+        }, 2500)
         setNotification("Download our extension to visualize in-depth");
       }
 
@@ -190,7 +190,7 @@ const Resume = () => {
 
       setTimeout(() => {
         setNotification('')
-      },2500)
+      }, 2500)
       setNotification("Codeforces api Failed to fetch the handle information");
     }
   }
@@ -200,12 +200,12 @@ const Resume = () => {
     SendRequest(HANDLE)
   }
   return (
-    <div className = "VizContainer">
-       {notification.length > 0 &&
-                                    <div className="Notification" style={{ backgroundColor: "red" }}>
-                                        <h3> {notification}</h3>
-                                    </div>
-                                }
+    <div className="VizContainer">
+      {notification.length > 0 &&
+        <div className="Notification" style={{ backgroundColor: "red" }}>
+          <h3> {notification}</h3>
+        </div>
+      }
       {
         YearInfo.length === 0 &&
 
@@ -260,7 +260,7 @@ const Resume = () => {
             <Overlay date={date} setDate={setDate} DateWise={DateWise} />
             : null
       }
-     
+
     </div>
   )
 }
