@@ -137,15 +137,16 @@ body{
 }
 
 .Cancel-overlay{
-width: 20%;
-  border-radius: 40%;
+width: 10%;
+  border-radius: 100%;
 background-color: black;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: .8em;
-  padding: .5em;
-  font-size: 1.5em;
+  
+ 
 cursor: pointer;
+text-align: center;
  
 }
 
