@@ -46,6 +46,9 @@ const Login = () => {
         }catch(err){
            if(err.response)
            {
+               setTimeout(() =>{
+                   setUser({err: '', success: ''})
+               },1500)
             setUser({...user,  err: err.response.data.msg, success: ''})
            }
             

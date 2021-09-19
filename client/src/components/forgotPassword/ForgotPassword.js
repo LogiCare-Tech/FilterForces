@@ -1,6 +1,5 @@
 import React, {useContext } from 'react'
 
-import { showErrMsg,showSuccessMsg } from '../../utils/notification/Notification'
 import { UserContext } from '../../contexts/UserContext'
 import axios from 'axios'
 
@@ -9,7 +8,7 @@ const ForgotPassword = () => {
    const {USER}= useContext(UserContext)
    const [user, setUser] = USER
 
-    const { email,err, success } = user
+    const { email, } = user
     
     const handleChangeInput = e => {
         const {name, value} = e.target
@@ -23,9 +22,14 @@ const ForgotPassword = () => {
            const res = await axios.post('/api/Users/forgotPassword', {
                email: user.email
            })
+           setTimeout(() => {
+               setUser({err: '', success : ''})
+           },1500)
            setUser({...user, err: '', success: res.data.msg})
         }catch(err){
-            err.response.data.msg &&
+            setTimeout(() => {
+                setUser({err: '', success : ''})
+            },1500)
             setUser({...user,  err: err.response.data.msg, success: ''})
         }
     } 
@@ -34,8 +38,7 @@ const ForgotPassword = () => {
         return (
             <div className="login_page">
                 <h2>Forgot password?</h2>
-                {err && showErrMsg(err)}
-                {success && showSuccessMsg(success)}
+               
                 <form onSubmit = {handleSubmit}>
                     <div>
                         <label htmlFor="email">Email Address</label>
