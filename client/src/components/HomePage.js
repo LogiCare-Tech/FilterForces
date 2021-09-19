@@ -1,10 +1,14 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { googleAnalyticsActions } from '../utils/google-analytics/google-analytics-init'
 import VizSvg from '../Assets/VizSvg.svg'
 import TrainSvg from '../Assets/TrainSvg.svg'
 import Faltu from '../Assets/Faltu.svg'
-const HomePage = () => {
 
+const HomePage = () => {
+    useEffect(() => {
+        googleAnalyticsActions.initGoogleAnalytics("UA-207957581-1")
+        
+    }, [])
     return (
         <div className="homeBody">
             <div className="midSection">
