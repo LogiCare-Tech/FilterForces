@@ -35,6 +35,9 @@ code {
     box-shadow: 0 0 20px #eee;
     margin: 0 auto;
 }
+h3{
+    margin: .5em;
+}
 a{
     text-decoration: none;
 
@@ -55,10 +58,12 @@ button{
     background-color: rgb(24,32,38);
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-evenly;
     padding: 1em;
     top: 100%;
-    align-items: flex-end;
+    height: auto;
+    
 }
 .footer a{
     color: snow;
@@ -66,10 +71,10 @@ button{
 .Train-midSection{
     display: flex;
     flex-direction:row;
-    flex-wrap: wrap;
+  
     background-color: snow;
     color: black !important;
-    height: 80vh;
+    height: auto;
 
     justify-content: space-around;
     align-content: center;
@@ -79,12 +84,12 @@ button{
     padding: 4em;
 }
 .Train-midSection img{
-    width: 40%;
-    padding: 1em;
+    width: 45%;
+    padding: .1em;
 }
 .Video-midSection img{
     width: 40%;
-    padding: 1em;
+    padding: .1em;
 }
 .Video-midSection{
     display: flex;
@@ -105,7 +110,7 @@ button{
     padding-bottom: 2em;
 }
 iframe {
-    width: 100%;
+    width: 80%;
   
   }
   .Addvertisement{
@@ -135,7 +140,7 @@ iframe {
   }
 @media all and (max-width: 800px){
     .Video-midSection{
-        flex-direction: column-reverse;
+        flex-direction: column !important;
         margin-left: auto;
         margin-right: auto;
   
@@ -145,7 +150,23 @@ iframe {
   
     
     .Video-midSection img{
-        width: 60%;
+        width: 60% !important;
+    }
+    .Train-midSection img{
+        width: 80% !important;
+    }
+    .Train-midSection{
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .Viz-midSection{
+        flex-direction: column-reverse !important;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .Viz-midSection img{
+        width: 80% !important;
     }
 }
 
@@ -166,21 +187,21 @@ width: 60%;
     margin-bottom: auto;
 }
 .Viz-midSection img{
-    width: 40%;
-    padding: 1em;
+    width: 45%;
+    padding: .1em;
  
 
 }
 .Viz-midSection{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    
     background-color: rgb(0, 0, 0);
     color: black !important;
    
  
     justify-content: space-around;
-   height: 80vh;
+   height: auto;
     margin-left: auto;
     margin-right: auto;
     padding: 4em;

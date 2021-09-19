@@ -19,7 +19,7 @@ const Resume = () => {
   const [TypeWiseAvg, setTypeWiseAvg] = useState()
   const [date, setDate] = useState(null)
   const [notification, setNotification] = useState('')
-    const[load, setLoad] = useState(0)
+  const [load, setLoad] = useState(0)
   const handleChange = (e) => {
     setHandle(e.target.value)
   }
@@ -34,110 +34,119 @@ const Resume = () => {
       let RATING = []
       let TOPIC = []
       let TYPE = []
+
+      /*
+      @AvgRatingTime, AvgTopicTime, AvgTypeTime => map [key, value]
+                            key => rating, topic,type
+                            value => total time (adding time taken by each question)
+      */
       let AvgRatingTime = new Map()
       let AvgTopicTime = new Map()
       let AvgTypeTime = new Map()
       try {
-        //http://localhost:3001
-    
+
+
         let obj = {
           HANDLE
         }
-        var getVisualizationInfo
-   
-           getVisualizationInfo = await fetch(`/api/Visualize/please`,
+
+
+        var getVisualizationInfo = await fetch(`/api/Visualize/please`,
           {
             method: 'POST',
             headers: {
-               
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
             },
             credentials: 'include',
             mode: 'cors',
             body: JSON.stringify(obj)
           })
-      
-          if(getVisualizationInfo.status === 400)
-          {
-            console.log(getVisualizationInfo)
-            setTimeout(() => {
-              setNotification('')
-            }, 3500)
-           
-            setNotification("Only contest data will be visualized");
-          }
-          else{
-            getVisualizationInfo = await getVisualizationInfo.json()
-            if(getVisualizationInfo)
-         {
-          for (let data of getVisualizationInfo.data) {
 
-            if (data.type) {
-              if (AvgTypeTime.get(data.type)) {
-                let count = Number(AvgTypeTime.get(data.type)[1]) + 1
-                let AvgTime = Number(AvgTypeTime.get(data.type)[0]) + Number(data.time)
-                AvgTypeTime.set(data.type, [AvgTime, count])
-              }
-              else {
-                AvgTypeTime.set(data.type, [Number(data.time), 1])
-              }
-            }
-            if (data.topic) {
-              for (let topic of data.topic) {
-                if (AvgTopicTime.get(topic)) {
-                  let count = Number(AvgTopicTime.get(topic)[1]) + 1
-                  let AvgTime = Number(AvgTopicTime.get(topic)[0]) + Number(data.time)
-                  AvgTopicTime.set(topic, [AvgTime, count])
-    
+        if (getVisualizationInfo.status === 400) {
+          console.log(getVisualizationInfo)
+          setTimeout(() => {
+            setNotification('')
+          }, 3500)
+
+          setNotification("Only contest data will be visualized");
+        }
+        else {
+          getVisualizationInfo = await getVisualizationInfo.json()
+          if (getVisualizationInfo) {
+            for (let data of getVisualizationInfo.data) {
+               if(!data)
+               {
+                   break;
+               }
+              if (data.type) {
+                if (AvgTypeTime.get(data.type)) {
+                  let count = Number(AvgTypeTime.get(data.type)[1]) + 1
+                  let AvgTime = Number(AvgTypeTime.get(data.type)[0]) + Number(data.time)
+                  AvgTypeTime.set(data.type, [AvgTime, count])
                 }
                 else {
-                  AvgTopicTime.set(topic, [Number(data.time), 1])
+                  AvgTypeTime.set(data.type, [Number(data.time), 1])
                 }
               }
-            }
-            if (data.rating) {
-              if (AvgRatingTime.get(data.rating)) {
-                let count = Number(AvgRatingTime.get(data.rating)[1]) + 1
-                let AvgTime = Number(AvgRatingTime.get(data.rating)[0]) + Number(data.time)
-    
-                AvgRatingTime.set(data.rating, [AvgTime, count])
-    
+              if (data.topic) {
+                for (let topic of data.topic) {
+                  if (AvgTopicTime.get(topic)) {
+                    let count = Number(AvgTopicTime.get(topic)[1]) + 1
+                    let AvgTime = Number(AvgTopicTime.get(topic)[0]) + Number(data.time)
+                    AvgTopicTime.set(topic, [AvgTime, count])
+
+                  }
+                  else {
+                    AvgTopicTime.set(topic, [Number(data.time), 1])
+                  }
+                }
               }
-              else {
-    
-                AvgRatingTime.set(data.rating, [Number(data.time), 1])
-    
+              if (data.rating) {
+                if (AvgRatingTime.get(data.rating)) {
+                  let count = Number(AvgRatingTime.get(data.rating)[1]) + 1
+                  let AvgTime = Number(AvgRatingTime.get(data.rating)[0]) + Number(data.time)
+
+                  AvgRatingTime.set(data.rating, [AvgTime, count])
+
+                }
+                else {
+
+                  AvgRatingTime.set(data.rating, [Number(data.time), 1])
+
+                }
               }
+
             }
-    
+
           }
-    
-         }
-          }
-         
-         
-          
-       
-         
-       
-        
+        }
+
+
+
+
+
+
+
 
       }
       catch (Err) {
+        console.log(Err)
         setTimeout(() => {
           setNotification('')
         }, 2500)
         setNotification("Download our extension to visualize in-depth");
       }
-    
-     
+
+
       for (let data of response.data.result) {
 
         //Collecting the Year 
         YEAR.add(Number(new Date(data.creationTimeSeconds * 1000).getFullYear()))
 
 
+        //Collecting the time taken to solve the problems in contest 
 
         if (data.author.participantType === "CONTESTANT" && data.verdict === "OK") {
           for (let topic of data.problem.tags) {
@@ -183,8 +192,10 @@ const Resume = () => {
 
 
         /*
-            MAP  [key, value], key = > "YY-MM-DD" @String
-                               value => [{problem info1}, {problem info2}] @Array
+           Description    
+            MAP  [key, value], key = > "YY-MM-DD" String
+                               value => [{problem info1}, {problem info2}] Array
+                               Storing datewise statistics
         */
         let time = new Date(data.creationTimeSeconds * 1000)
         let Key_Format = String(time.getFullYear()) + "-" + String(time.getMonth() + 1) + "-" + String(time.getDate())
@@ -197,6 +208,8 @@ const Resume = () => {
         }
 
       }
+
+      //This is used for heatmap
       let optionHolder = []
       for (let data of YEAR) {
         optionHolder.push({ value: data, label: data })
@@ -212,7 +225,7 @@ const Resume = () => {
       });
 
 
-
+      //optionWise is used for heatmap
       setOptionWise([...optionHolder])
       setDateWise(Description)
       setTopicWiseAvg(AvgTopicTime)
@@ -244,9 +257,9 @@ const Resume = () => {
           <h3> {notification}</h3>
         </div>
       }
-     
+
       {
-        YearInfo.length === 0 && load === 0&&
+        YearInfo.length === 0 && load === 0 &&
 
         <>
           <h1 style={{ textAlign: 'center', marginTop: '7%', position: "relative" }}>Enter the Codeforces Handle</h1>
@@ -268,20 +281,20 @@ const Resume = () => {
 
             </div>
           </form>
-          
+
         </>
-           
-         
-        
+
+
+
 
 
       }
       {
-        
+
         YearInfo.length > 0 && date === null ?
-       
+
           <>
-           {load === 1 && setLoad(0)}
+            {load === 1 && setLoad(0)}
             <HeatMap
               DateWise={DateWise}
               YearInfo={YearInfo}
@@ -299,23 +312,23 @@ const Resume = () => {
               TopicWiseAvg={TopicWiseAvg}
 
             />
-           
+
           </>
           :
-          YearInfo.length > 0  ?
+          YearInfo.length > 0 ?
             <Overlay date={date} setDate={setDate} DateWise={DateWise} />
-            :  
-           null
+            :
+            null
       }
       {load === 1 &&
-    
-     <div className="ui active dimmer">
-       <div className="ui medium text loader">Loading</div>
-     </div>
-   
-   
+
+        <div className="ui active dimmer">
+          <div className="ui medium text loader">Loading</div>
+        </div>
+
+
       }
-      
+
     </div>
   )
 }
