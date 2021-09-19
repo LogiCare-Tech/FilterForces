@@ -63,7 +63,20 @@ button{
     padding: 1em;
     top: 100%;
     height: auto;
+    align-content: center;
+    align-items: center;
     
+    
+}
+.rightFooter
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+.leftFooter
+{
+    margin-left: auto;
+    margin-right: auto;
 }
 .footer a{
     color: snow;

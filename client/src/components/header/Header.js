@@ -42,7 +42,7 @@ const Header = () => {
                      <li><Link to="/train"> Train</Link></li>
                     <li><Link to="/Visualize">Visualize </Link></li>
                        
-                    <li><Link to="/login"><i className="user icon"></i> Sign in</Link></li>
+                    <li><Link to="/login"><i className="user icon"/>Sign in</Link></li>
                         
                         </>
                 }
@@ -56,7 +56,7 @@ const Header = () => {
                          
                          
                          
-                          <li  className = "gate"><Link to="/logout" onClick={handleLogout}><i className="user icon"></i>Logout</Link></li>
+                          <li  className = "gate"><Link to="/logout" onClick={handleLogout}><i className="user icon"/>Logout</Link></li>
 
 
 

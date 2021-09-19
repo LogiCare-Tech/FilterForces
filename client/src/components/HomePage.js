@@ -8,7 +8,7 @@ const HomePage = () => {
     return (
         <div className="homeBody">
             <div className="midSection">
-                <h1 style={{ textAlign: "center" }}>Introducing filterforces...</h1>
+                <h1 style={{ textAlign: "center" }}>Introducing FilterForces...</h1>
                 <div className="Addvertisement">
                     <h3>Download our Chome Extension to Visualize in-depth</h3>
                     <button onClick={() => alert("Will be releasing soon...")}>Download now</button>
@@ -51,14 +51,15 @@ const HomePage = () => {
             <div className="footer">
                 <div className="leftFooter">
                     <h2>About Me</h2>
-                    <h5>Name: Shreenanda</h5>
+                    <h5>Name: Shreenanda P</h5>
+                    
                     <h5><i className="linkedin icon" /> <a href="https://www.linkedin.com/in/shreenanda-p-127242147/" target="_blank" rel="noreferrer" >Linked in </a></h5>
                     <h5><i className="github icon" /> <a href="https://github.com/shreenanda-8" target="_blank" rel="noreferrer" >Github</a></h5>
                 </div>
 
                 <div className="rightFooter">
                        <h2>Contact</h2>
-                       <h5><a href = "#">Codeforces Blog </a></h5>
+                       <h5><a href = "/#" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
                        <h5>📧 filterforces.founder@gmail.com</h5>
                        <h5><i className="github icon" /> <a href="https://github.com/shreenanda-8" target="_blank" rel="noreferrer" >Github</a></h5>
                 </div>

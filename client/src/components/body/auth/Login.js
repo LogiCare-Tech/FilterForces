@@ -1,6 +1,6 @@
 import React, {useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { showErrMsg,showSuccessMsg } from '../../../utils/notification/Notification'
+
 import { UserContext } from '../../../contexts/UserContext'
 import axios from 'axios'
 
@@ -12,7 +12,7 @@ const Login = () => {
    
     const {setLoginState} = LOGIN_STATE
 
-    const { email, password, err, success } = user
+    const { email, password } = user
     
     const handleChangeInput = e => {
         const {name, value} = e.target
@@ -56,8 +56,8 @@ const Login = () => {
         return (
             <div className="login_page">
                 <h2>Login</h2>
-                {err && showErrMsg(err)}
-                {success && showSuccessMsg(success)}
+                {/* {err && showErrMsg(err)}
+                {success && showSuccessMsg(success)} */}
                 <form onSubmit = {handleSubmit}>
                     <div>
                         <label htmlFor="email">Email Address</label>

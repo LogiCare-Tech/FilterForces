@@ -112,6 +112,7 @@ body{
 .dropdown{
   width: 30%;
   padding: .2em;
+ color: black !important;
 }
 
 .Overlay{

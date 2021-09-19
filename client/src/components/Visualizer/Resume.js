@@ -65,7 +65,7 @@ const Resume = () => {
           })
 
         if (getVisualizationInfo.status === 400) {
-          console.log(getVisualizationInfo)
+        
           setTimeout(() => {
             setNotification('')
           }, 3500)
@@ -132,7 +132,7 @@ const Resume = () => {
 
       }
       catch (Err) {
-        console.log(Err)
+        
         setTimeout(() => {
           setNotification('')
         }, 2500)

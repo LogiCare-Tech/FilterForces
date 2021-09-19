@@ -54,7 +54,7 @@ UserRouter.post('/register', async(request, response) =>{
         }
         const user = await Users.findOne({email: email})
        
-        if(user) return response.status(400).json({message: "This email already exists."})
+        if(user) return response.status(400).json({msg: "This email already exists."})
         
         if(password.length < 6){
             return response.status(400).json({msg: "Password must be atleast 6 characters"})
@@ -83,7 +83,7 @@ UserRouter.post('/register', async(request, response) =>{
       }
         
 
-        response.json({msg: "Register Success! Please activate your email to start."})
+        response.status(200).json({msg: "Register Success! Please activate your email to start."})
     }
     catch(error){
         return response.status(500).json({msg: error.message})
