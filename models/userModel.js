@@ -4,8 +4,8 @@ const userSchema = mongoose.Schema({
     username:
     {   type: String,
         required: [true, "Please enter your Codeforces username"],
-        unique: true,
-        trmie:true
+      
+        trim:true
     },
     name: {
         type: String,
@@ -41,11 +41,7 @@ const userSchema = mongoose.Schema({
        type: mongoose.Schema.Types.ObjectId,
        ref: 'Viz'
    }
-],
-train: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'train'
-}
+]
   
 }, {
     timestamps: true
