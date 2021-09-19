@@ -23,7 +23,7 @@ const dotenv = require('dotenv')
 const config = require('./utils/config')
 
 //Routers
-const TrainRouter = require('./controllers/TrainCtrl')
+
 
 const VisualizeRouter = require('./controllers/VisualizationCtrl')
 
@@ -66,7 +66,7 @@ mongoose.connect(config.MONGODB_URI, {
  
  app.use("/api/Users", UserRouter)
 
- app.use("/api/Train",TrainRouter)
+
 
  app.use("/api/Visualize", VisualizeRouter)
  
