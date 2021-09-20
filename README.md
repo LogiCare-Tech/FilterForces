@@ -46,7 +46,7 @@ A Full-fledged Filtering, Data visualization tool for Competitive Programmers to
 | Forgot Password           | &#10004; | Ability to Reset the Password                  |
 | Visualization    | &#10004; | Ability to track the growth of the user with the help of FilterForces Chrome Extension and Visualization|
 
-## Demonstratoin
+## Demonstration
 
 [FilterForces](https://user-images.githubusercontent.com/54429809/133965399-a7045cf6-92cb-45b1-a5e8-17bd77266c9e.mp4 "For Large Screens as well as Small Screens")
 
