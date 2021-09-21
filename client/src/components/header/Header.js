@@ -34,33 +34,33 @@ const Header = () => {
             <div className="logo">
                <h1 ><Link to="/"><img style = {{width: "15%"}} src = "https://lh3.googleusercontent.com/whWdCHvpK52qWkxadxxRiATHijar8KkJZCHtmwa3KeLyzf1hT3jqIGKE5FTJvvrmWWxneg1CGQ7VuQ624HKy=s72-rwa" alt = "SVG"/> Filter <span className = "HalfLogo"> Forces</span></Link></h1>
             </div>
-            <ul className="options">
+            <ul >
 
                 {
                     !loginState && 
-                    <>
+                    <div className="options">
                      <li><Link to="/train"> Train</Link></li>
                     <li><Link to="/Visualize">Visualize </Link></li>
                        
                     <li><Link to="/login"><i className="user icon"/>Sign in</Link></li>
                         
-                        </>
+                        </div>
                 }
                 {
                     loginState &&
-                    <>
+                    <div className="options">
                        
                         <li><Link to="/train"> Train</Link></li>
                       
-                        <li><Link to="/Visualize"> Visualize </Link></li>
-                         
-                         
+                        <li><Link to="/ContestStats"> ContestStats</Link></li>
+                       
+                        <li><Link to="/PersonalStats"> PersonalStats </Link></li>
                          
                           <li  className = "gate"><Link to="/logout" onClick={handleLogout}><i className="user icon"/>Logout</Link></li>
 
 
 
-                    </>
+                    </div>
                 }
 
             </ul>

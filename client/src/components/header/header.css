@@ -31,14 +31,29 @@ header a{
     letter-spacing: 1px;
  
 }
+@media all and (max-width: 400px){
+  
+   .options{
+      
+      
+       font-size: 0.6em;
+   }
+  
+   
+}
+header ul{
+    margin-left: auto;
+    margin-right: auto;
+}
 header ul li{
    
 
-    padding: 1em 1.2em;
+    padding: 1em 1em;
     opacity: 0.7;
-    font-size: larger;
+    font-size: 1em;
     font-weight: bolder;
    
+    
 }
 .logo h1{
     font-family: 'Are You Serious', cursive;
@@ -60,21 +75,4 @@ header ul li:hover{
 
 
 
-/* .gate{
-    
-    display: none;
-} */
- 
-/* 
-.drop-nav:hover .drop-nav{
-    transform: translateY(20px);
-    width: 50%;
-}
-.drop-nav:hover .gate{
-    display: block;
-    transform: translateX(-40px);
-   border: 2px solid red;
-   padding-right: 0 !important;
-   margin-right: 0 !important;
-   width: 50%;
-} */
+

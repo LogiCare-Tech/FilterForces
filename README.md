@@ -44,7 +44,7 @@ A Full-fledged Filtering, Data visualization tool for Competitive Programmers to
 | Log Out                    | &#10004; | Ability to Log Out                                            |
 | Register           | &#10004; | Ability to Register                  |
 | Forgot Password           | &#10004; | Ability to Reset the Password                  |
-| Visualization    | &#10004; | Ability to track the growth of the user with the help of FilterForces Chrome Extension and Visualization|
+| Visualization    | &#10004; | Ability to track the growth of the user with the help of FilterForces Chrome Extension by Visualizing the data|
 
 ## Demonstration
 
@@ -58,5 +58,8 @@ A Full-fledged Filtering, Data visualization tool for Competitive Programmers to
 * [NODE](https://nodejs.org/en/docs/)
 * [EXPRESS](https://expressjs.com/en/starter/installing.html)
 * [MONGODB](https://www.mongodb.com/cloud/atlas)
+
+
+
 
 

@@ -67,10 +67,10 @@ const Register = () => {
             {success && showSuccessMsg(success)}
             <form onSubmit = {handleSubmit}>
             <div>
-                    <label htmlFor="username">Enter your Codeforces handle</label>
+                    <label htmlFor="username">Enter the username</label>
                     <input
                         type="text"
-                        placeholder="Enter your handle"
+                        placeholder="Enter the username"
                         id="username"
                         value={username}
                         name="username"

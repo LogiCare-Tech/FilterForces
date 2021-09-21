@@ -6,33 +6,43 @@ const VisualizeRouter = require('express').Router()
 const middleware = require('../utils/middleware')
 
 const Users = require('../models/userModel')
-// VisualizeRouter.get('/deleteAll', async (request, response) => {
-//     await Visualize.deleteMany({})
-//     response.status(200).json({msg: "Success"})
-// })
 
-VisualizeRouter.post('/please', async (request, response) => {
+
+VisualizeRouter.post('/private', middleware.auth, async (request, response) => {
     const res = request.body
-    console.log("From frontend", res)
+    
+    
+   
     try {
-        const user = await Users.find({ username: `${res.HANDLE}` })
-        console.log(user)
-        let data = []
-        for (let ID of user[0].viz) {
-
-            let value = await Visualize.findById({ _id: `${ID}` })
-            data.push(value)
-
-
+        const user = await Users.find({ _id: `${request.user.id}`})
+        
+        if(user[0].username !== res.username)
+        {
+            return response.status(400).json({msg: "username is incorrect"})
         }
-        console.log(data)
-        response.status(200).json({ data })
+        if(user[0].viz)
+        {
+            let data = []
+            for (let ID of user[0].viz) {
+    
+                let value = await Visualize.findById({ _id: `${ID}` })
+                data.push(value)
+            }
+         
+            response.status(200).json({ data })
+        }
+        else{
+            response.status(400).json({msg: "Statistics not found"})
+        }
+        
     }
     catch (err) {
-        response.status(400).json({ err })
+        response.status(400).json({ msg: err })
     }
 
 })
+
+
 VisualizeRouter.post('/', middleware.auth, async (request, response) => {
 
     const data = request.body
@@ -48,11 +58,9 @@ VisualizeRouter.post('/', middleware.auth, async (request, response) => {
         userId: `${ID}`
 
     })
-    console.log("Ratting", data)
+   
     const user = await Users.findOne({ _id: `${ID}` })
-    if (user.username !== data.handle) {
-        return response.status(401).json({ msg: "Un-Authorized" })
-    }
+ 
     const savedData = await visualize.save()
 
 
