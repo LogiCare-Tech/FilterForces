@@ -53,9 +53,14 @@ UserRouter.post('/register', async(request, response) =>{
             return response.status(400).json({msg: email + " is not valid :("})
         }
         const user = await Users.findOne({email: email})
-       
-        if(user) return response.status(400).json({msg: "This email already exists."})
         
+        if(user) return response.status(400).json({msg: "This email is already taken."})
+        
+        const CheckUniqueUsername = await Users.findOne({username: username})
+        if(CheckUniqueUsername)
+        {
+            return response.status(400).json({msg: "The username is already taken"})
+        }
         if(password.length < 6){
             return response.status(400).json({msg: "Password must be atleast 6 characters"})
         }
@@ -70,10 +75,10 @@ UserRouter.post('/register', async(request, response) =>{
         }
         
         const activation_token = createActivationToken(newUser)
-        console.log("hi -> ",activation_token)
+  
         const url = `${config.CLIENT_URL}/user/activate/${activation_token}`
        
-       // const url = `${config.CLIENT_URL}/user/activate/${activation_token}`
+     
       try{
         sendMail(email, url, "Verify your email address")
       }
@@ -93,9 +98,9 @@ UserRouter.post('/activateEmail', async(request, response) =>{
    
    try{
     const {activation_token} = request.body
-    console.log("hi ",activation_token)
+  
    const user =  jwt.verify(activation_token, `${config.ACCESS_TOKEN_SECRET}`)
-console.log("USER FROM ACTIVATION", user)
+
     const {username,name, email, password} = user
     const check = await Users.findOne({email})
     if(check)
@@ -119,19 +124,19 @@ console.log("USER FROM ACTIVATION", user)
 UserRouter.post('/login', async(request, response) => {
    
     try{
-        console.log(request.body)
+        
         
         const email = request.body.email
         const password = request.body.password
-        console.log(email, password);
+      
         const user = await Users.findOne({email: email})
         if(!user) return response.status(400).json({msg: "This email does not exists"})
-        console.log("Terrible ",user)
+      
       
         const isMatch= await bcrypt.compare(`${password}`, `${user.password}`)
         if(!isMatch) return response.status(400).json({msg: "Password is incorrect"})
         const refresh_token = createRefreshToken({id: user._id})
-        console.log("hi",refresh_token)
+       
         response.cookie('refreshtoken', refresh_token,{
             httpOnly: true,
             path: '/api/Users/refresh_token',
@@ -149,8 +154,9 @@ UserRouter.post('/refresh_token', async(request, response) => {
     try{
         
        const rf_token = request.cookies.refreshtoken
-       console.log(rf_token) 
+       
        if(!rf_token) return response.status(400).json({msg: "Please login now !"})
+       
        jwt.verify(rf_token, `${config.REFRESH_TOKEN_SECRET}`, (err, user) =>{
            if(err)return response.status(400).json({msg: "Please login now"})
            const access_token = createAccessToken({id: user.id})
@@ -190,9 +196,9 @@ UserRouter.post('/resetPassword',middleware.auth, async (request, response) => {
         
           
           const passwordHash = await bcrypt.hash(`${password}` ,12)
-          console.log(passwordHash)
+         
           const user = request.user
-          console.log("Hello from reset Password ", user)
+       
           await Users.findOneAndUpdate({_id: user.id}, {
               password: passwordHash
            
