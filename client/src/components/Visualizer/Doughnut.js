@@ -49,7 +49,7 @@ const Doughnuts = (props) => {
            
          
             
-             <div className = "DoughnutContainer">
+             
              <Doughnut
                 data={data}
 
@@ -71,7 +71,7 @@ const Doughnuts = (props) => {
                     }
                 }}
             />
-             </div>
+           
             </div>
          
     )

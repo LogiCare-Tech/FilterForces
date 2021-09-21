@@ -40,7 +40,7 @@ const Header = () => {
                     !loginState && 
                     <div className="options">
                      <li><Link to="/train"> Train</Link></li>
-                    <li><Link to="/Visualize">Visualize </Link></li>
+                    <li><Link to="/ContestStats">ContestStats </Link></li>
                        
                     <li><Link to="/login"><i className="user icon"/>Sign in</Link></li>
                         

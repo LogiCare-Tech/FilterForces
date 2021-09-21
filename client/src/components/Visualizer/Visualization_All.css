@@ -182,12 +182,13 @@ margin-right: auto;
 .Doughnut{
  
  
-  width: 40%;
+width: 45%;
   margin-top: 1em;
   margin-left: auto;
   margin-right: auto;
   color: snow !important;
   margin-bottom: 1em;
+  
 }
 .Doughnut:hover{
   box-shadow: 3px 3px 6px 6px #d1cbcb;
@@ -218,11 +219,12 @@ body{
   width: 100%;
 
 }
+
 @media all and (max-width: 800px)
 {
   .Doughnut{
-    width: 100%;
-    
+    width: 100% !important;
+    height: 100%;
   }
   .HistoContainer{
     width: 90%;

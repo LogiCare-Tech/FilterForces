@@ -28,7 +28,6 @@ VisualizeRouter.post('/private', middleware.auth, async (request, response) => {
                 let value = await Visualize.findById({ _id: `${ID}` })
                 data.push(value)
             }
-         
             response.status(200).json({ data })
         }
         else{

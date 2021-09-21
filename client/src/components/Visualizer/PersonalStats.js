@@ -21,7 +21,7 @@ const PersonalStats = () => {
   const usernameChange = (e) => {
     setUsername(e.target.value)
   }
-  const SendRequest = async (data) => {
+  const SendRequest = async () => {
     try {
       
       let RATING = []
@@ -73,10 +73,12 @@ const PersonalStats = () => {
           setShow(1)
           getVisualizationInfo = await getVisualizationInfo.json()
           if (getVisualizationInfo) {
+            
             for (let data of getVisualizationInfo.data) {
+              
                if(!data)
                {
-                   break;
+                   continue;
                }
               if (data.type) {
                 if (AvgTypeTime.get(data.type)) {
@@ -172,7 +174,7 @@ const PersonalStats = () => {
   const usernameSubmit = (e) => {
     e.preventDefault()
     
-    SendRequest(username)
+    SendRequest()
   }
   return (
     <div className="VizContainer">

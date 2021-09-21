@@ -144,15 +144,7 @@ return () =>{
     source.cancel()
 }
     }, [])
-    // useEffect(() => {
-    //     let personalStuff = personalPsetOnCf.map((info) => info.problem)
-    //     console.log(personalStuff)
-    //    let StopDuplicates = [...new Map(personalStuff.map(obj => [JSON.stringify(obj), obj])).values()];
-    //    setUpdate([...StopDuplicates])
-    // }, [personalPsetOnCf.length])
-
-    //Below UseEffect is also controlled by triggerRender variable
-    //triggerRender ? UseEffect Runs : UseEffect depends on other factors
+   
     useEffect(() => {
         //Algorithm to Shortlist the Problems according to the user's filter
 
@@ -762,7 +754,7 @@ return () =>{
                                     updatedSet.length > 0 ?
                                         handleList(updatedSet)
                                         :
-                                        <h3 style={{ marginLeft: "auto", marginRight: "auto", color: "snow" }}>Please Add the handles to begin</h3>
+                                        <h3 style={{ marginLeft: "auto", marginRight: "auto", color: "snow" }}>No questions to display (Try adding different filters)</h3>
 
 
 

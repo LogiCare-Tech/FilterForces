@@ -148,6 +148,7 @@ const PublicStats = () => {
       setTimeout(() => {
         setNotification('')
       }, 2500)
+      setLoad(0)
       setNotification("Codeforces api Failed to fetch the handle information");
     }
   }
