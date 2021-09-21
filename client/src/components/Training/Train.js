@@ -381,7 +381,7 @@ return () =>{
         setTimeout(() => {
             setNotification([])
         }, 2500)
-        setNotification([`Ladder ${data.info} is removed successfully`, "green"])
+        setNotification([`Topic ${data.info} is removed successfully`, "green"])
 
         setCurrentTopics([...listTopics])
     })

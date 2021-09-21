@@ -14,6 +14,7 @@
 
   </a>
 
+
   <strong>
     <h3 align="center" >FilterForces</h3>
   </strong>
@@ -46,10 +47,16 @@ A Full-fledged Filtering, Data visualization tool for Competitive Programmers to
 | Forgot Password           | &#10004; | Ability to Reset the Password                  |
 | Visualization    | &#10004; | Ability to track the growth of the user with the help of FilterForces Chrome Extension by Visualizing the data|
 
-## Demonstration
+<br/>
 
-[FilterForces](https://user-images.githubusercontent.com/54429809/133965399-a7045cf6-92cb-45b1-a5e8-17bd77266c9e.mp4 "For Large Screens as well as Small Screens")
+ Train             |  Visualization(click the cell on the heatmap)
+:-------------------------:|:-------------------------:
+![TrainSection](https://user-images.githubusercontent.com/54429809/134179817-ead780ae-1d7f-4a8b-ad5f-42673e7a1005.png)|![ContestStats_Image](https://user-images.githubusercontent.com/54429809/134178360-8584ca99-7254-4891-8b3e-792b1e4ad468.png)
 
+<br />
+
+ 
+ 
 ### Use it here [FilterForces](https://filterforces.herokuapp.com/ "FilterForces WebApp")
 
 ## Built With

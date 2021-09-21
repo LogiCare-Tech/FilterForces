@@ -39,13 +39,13 @@ const HomePage = () => {
 
                     <div className="Description-middelSection">
                         <h2>Visualization <i className="chart area icon" /></h2>
-                        <ul>
+                        <ol style = {{color: "white"}}>
                             <li><h3>Follow the steps explained in the Introduction video to set-up the extension</h3></li>
                             <li><h3>Record the time while practicing ⌛</h3></li>
                             <li><h3>Visualize your growth 📈</h3></li>
 
 
-                        </ul>
+                        </ol>
                     </div>
                     <img src={VizSvg} alt="SVG" />
                 </div>
@@ -63,9 +63,9 @@ const HomePage = () => {
 
                 <div className="rightFooter">
                        <h2>Contact</h2>
-                       <h5><a href = "/#" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
+                       <h5><a href = "/" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
                        <h5>📧 filterforces.founder@gmail.com</h5>
-                       <h5><i className="github icon" /> <a href="https://github.com/shreenanda-8" target="_blank" rel="noreferrer" >Github</a></h5>
+                       <h5><i className="github icon" /> <a href="https://github.com/LogiCare-Tech/FilterForces" target="_blank" rel="noreferrer" >Github</a></h5>
                 </div>
                
 

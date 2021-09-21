@@ -116,7 +116,7 @@ body{
 }
 
 .Overlay{
-  width: 50%;
+  width: auto;
   overflow: auto;
   font-size: 1em;
   height: 400px;
@@ -134,10 +134,14 @@ body{
   align-items: flex-start !important;
   font-size: larger;
   justify-content: center;
+  width: auto;
 }
-
+.OverlayQn li{
+  width: auto;
+  background-color: rgb(36, 39, 33);
+}
 .Cancel-overlay{
-width: 10%;
+width: 2em;
   border-radius: 100%;
 background-color: black;
   margin-left: auto;
