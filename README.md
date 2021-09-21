@@ -8,7 +8,7 @@
 
  
 <p align="center">
-  <a href="https://filterforces.herokuapp.com/>
+  <a href="https://filterforces.herokuapp.com/">
     <img src="https://lh3.googleusercontent.com/whWdCHvpK52qWkxadxxRiATHijar8KkJZCHtmwa3KeLyzf1hT3jqIGKE5FTJvvrmWWxneg1CGQ7VuQ624HKy=s72-rwa" alt="Logo" width="auto" height="100">
  
 
