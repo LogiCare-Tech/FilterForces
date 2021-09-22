@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+
 import ReactGa from 'react-ga'
 
 import Histogram from './Histogram_RatingWise'
@@ -23,6 +23,7 @@ const PersonalStats = () => {
   const [TypeWiseAvg, setTypeWiseAvg] = useState()
   const [notification, setNotification] = useState(null)
   const [show, setShow] = useState(0)
+
   const usernameChange = (e) => {
     setUsername(e.target.value)
   }
@@ -47,8 +48,20 @@ const PersonalStats = () => {
         let obj = {
           username
         }
-        const getAccessToken = await axios.post('/api/Users/refresh_token')
-      const { access_token } = getAccessToken.data
+       
+     
+        var getAccessToken = await fetch('/api/Users/refresh_token', {
+            method: 'POST',
+            credentials: 'include',
+            mode: 'cors'
+
+        })
+        
+        const { access_token } = await getAccessToken.json();
+          
+      
+        
+    
      
     
         var getVisualizationInfo = await fetch(`/api/Visualize/private`,
@@ -137,12 +150,12 @@ const PersonalStats = () => {
         
       }
       catch (Err) {
-        
+       
         setTimeout(() => {
           setNotification('')
         }, 2500)
         setShow(0)
-        setNotification("Download our extension to visualize in-depth");
+        setNotification(Err.msg);
       }
 
     

@@ -9,7 +9,7 @@ const HomePage = () => {
     useEffect(() => {
         ReactGa.initialize("UA-207957581-1")
         ReactGa.pageview(window.location.pathname) 
-       
+        
     }, [])
     return (
         <div className="homeBody">
@@ -22,8 +22,7 @@ const HomePage = () => {
                 <div className="Video-midSection">
 
                     <iframe
-                        width="1171"
-                        height="480"
+                        
                         src="https://www.youtube.com/embed/IHhqsnjaaJ4"
                         title="YouTube video player"
                         frameBorder="1"

@@ -7,6 +7,7 @@ import Body from './components/body/Body'
 
 import { UserContext } from './contexts/UserContext'
 const App = () => {
+   
     useEffect(() => {
         ReactGa.initialize("UA-207957581-1")
         ReactGa.pageview(window.location.pathname) 
@@ -19,23 +20,20 @@ const App = () => {
    
     useEffect( () => {
         const dummy = async() => {
-            const firstLogin = localStorage.getItem('firstLogin')
+             let firstLogin = localStorage.getItem('firstLogin')
            
-            if(firstLogin)
-            { 
-            
-              
-                
-                
-                setLoginState(true)
-             
-             
-               
-                
-            }
+                if(firstLogin)
+                {  
+                    setLoginState(true)
+       
+                    
+                }
+
+           
+           
         }
         dummy()
-    
+        
     }, [loginState, setLoginState])
     return (
       
