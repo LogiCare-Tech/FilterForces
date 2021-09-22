@@ -17,19 +17,20 @@ const HomePage = () => {
                 <h1 style={{ textAlign: "center" }}>Introducing FilterForces...</h1>
                 <div className="Addvertisement">
                     <h3>Download our Chome Extension to Visualize in-depth</h3>
-                    <button onClick={() => alert("Will be releasing soon...")}>Download now</button>
+                    <a style = {{color: "blue", fontSize: "larger", fontWeight:"bolder"}}  href="https://github.com/LogiCare-Tech/FilterForces-Extension" target="_blank" rel="noreferrer">Chrom Extension</a>
                 </div>
                 <div className="Video-midSection">
 
                     <iframe
                         
-                        src="https://www.youtube.com/embed/IHhqsnjaaJ4"
+                        src="https://www.youtube.com/embed/6WLlupC5pm8"
                         title="YouTube video player"
                         frameBorder="1"
                        
                         allowFullScreen>
 
                     </iframe>
+                   
                     
                     <img src={Faltu} alt="SVG" />
                 </div>
