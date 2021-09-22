@@ -31,6 +31,8 @@
 ## About
 A Full-fledged Filtering, Data visualization tool for Competitive Programmers to train efficiently.
 
+<a href="https://www.youtube.com/watch?v=6WLlupC5pm8" target="_blank" rel="noreferrer">Watch the video</a>
+
 ## Features
 
 | Feature                    |  Coded?  | Description                                                   |
