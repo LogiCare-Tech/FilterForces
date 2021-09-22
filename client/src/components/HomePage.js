@@ -1,12 +1,16 @@
-import React from 'react'
-
+import React , {useEffect}from 'react'
+import ReactGa from 'react-ga'
 import VizSvg from '../Assets/VizSvg.svg'
 import TrainSvg from '../Assets/TrainSvg.svg'
 import Faltu from '../Assets/Faltu.svg'
 
 
 const HomePage = () => {
-  
+    useEffect(() => {
+        ReactGa.initialize("UA-207957581-1")
+        ReactGa.pageview(window.location.pathname) 
+       
+    }, [])
     return (
         <div className="homeBody">
             <div className="midSection">

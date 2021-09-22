@@ -10,7 +10,7 @@ const Train = () => {
     useEffect(() => {
         ReactGa.initialize("UA-207957581-1")
         ReactGa.pageview(window.location.pathname) 
-        alert(`sending data ${window.location.pathname}`)
+       
     }, [])
  
 

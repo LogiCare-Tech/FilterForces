@@ -11,7 +11,7 @@ const PersonalStats = () => {
   useEffect(() => {
     ReactGa.initialize("UA-207957581-1")
     ReactGa.pageview(window.location.pathname) 
-    alert(`sending data ${window.location.pathname}`)
+
 }, [])
   const [username,setUsername] = useState('')
 

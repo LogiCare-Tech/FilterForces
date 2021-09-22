@@ -16,7 +16,7 @@ const Body = () => {
     useEffect(() => {
         ReactGa.initialize("UA-207957581-1")
         ReactGa.pageview(window.location.pathname) 
-        alert(`sending data ${window.location.pathname}`)
+       
     }, [])
     const {LOGIN_STATE} = useContext(UserContext)
  

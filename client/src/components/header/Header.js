@@ -1,10 +1,15 @@
 import axios from 'axios'
-import React, { useContext} from 'react'
+import React, { useContext, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../contexts/UserContext'
-
+import ReactGa from 'react-ga'
 import {showErrMsg,showSuccessMsg } from '../../utils/notification/Notification'
 const Header = () => {
+    useEffect(() => {
+        ReactGa.initialize("UA-207957581-1")
+        ReactGa.pageview(window.location.pathname) 
+       
+    }, [])
     const {USER, LOGIN_STATE} = useContext(UserContext)
     const [user,setUser] = USER
     const { err, success } = user
