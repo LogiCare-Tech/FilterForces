@@ -70,7 +70,7 @@ const HomePage = () => {
 
                 <div className="rightFooter">
                     <h2>Contact</h2>
-                    <h5><a href="/" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
+                    <h5><a href="https://codeforces.com/blog/entry/95234" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
                     <h5>📧 filterforces.founder@gmail.com</h5>
                     <h5><i className="github icon" /> <a href="https://github.com/LogiCare-Tech/FilterForces" target="_blank" rel="noreferrer" >Github</a></h5>
                 </div>
