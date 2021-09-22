@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
-import { googleAnalyticsActions } from '../utils/google-analytics/google-analytics-init'
+import React from 'react'
+
 import VizSvg from '../Assets/VizSvg.svg'
 import TrainSvg from '../Assets/TrainSvg.svg'
 import Faltu from '../Assets/Faltu.svg'
 
+
 const HomePage = () => {
-    useEffect(() => {
-        googleAnalyticsActions.initGoogleAnalytics("UA-207957581-1")
-        
-    }, [])
+  
     return (
         <div className="homeBody">
             <div className="midSection">
@@ -19,12 +17,17 @@ const HomePage = () => {
                 </div>
                 <div className="Video-midSection">
 
+                    <iframe
+                        width="1171"
+                        height="480"
+                        src="https://www.youtube.com/embed/IHhqsnjaaJ4"
+                        title="YouTube video player"
+                        frameBorder="1"
+                       
+                        allowFullScreen>
 
-
-                    <iframe frameBorder="1" allow="autoplay; picture-in-picture" title="YouTube Embed"
-                        src={"https://www.youtube.com/embed/tgbNymZ7vqY"}>
                     </iframe>
-
+                    
                     <img src={Faltu} alt="SVG" />
                 </div>
 
@@ -39,7 +42,7 @@ const HomePage = () => {
 
                     <div className="Description-middelSection">
                         <h2>Visualization <i className="chart area icon" /></h2>
-                        <ol style = {{color: "white"}}>
+                        <ol style={{ color: "white" }}>
                             <li><h3>Follow the steps explained in the Introduction video to set-up the extension</h3></li>
                             <li><h3>Record the time while practicing ⌛</h3></li>
                             <li><h3>Visualize your growth 📈</h3></li>
@@ -56,18 +59,18 @@ const HomePage = () => {
                 <div className="leftFooter">
                     <h2>About Me</h2>
                     <h5>Name: Shreenanda P</h5>
-                    
+
                     <h5><i className="linkedin icon" /> <a href="https://www.linkedin.com/in/shreenanda-p-127242147/" target="_blank" rel="noreferrer" >Linked in </a></h5>
                     <h5><i className="github icon" /> <a href="https://github.com/shreenanda-8" target="_blank" rel="noreferrer" >Github</a></h5>
                 </div>
 
                 <div className="rightFooter">
-                       <h2>Contact</h2>
-                       <h5><a href = "/" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
-                       <h5>📧 filterforces.founder@gmail.com</h5>
-                       <h5><i className="github icon" /> <a href="https://github.com/LogiCare-Tech/FilterForces" target="_blank" rel="noreferrer" >Github</a></h5>
+                    <h2>Contact</h2>
+                    <h5><a href="/" target="_blank" rel="noreferrer">Codeforces Blog </a></h5>
+                    <h5>📧 filterforces.founder@gmail.com</h5>
+                    <h5><i className="github icon" /> <a href="https://github.com/LogiCare-Tech/FilterForces" target="_blank" rel="noreferrer" >Github</a></h5>
                 </div>
-               
+
 
 
 

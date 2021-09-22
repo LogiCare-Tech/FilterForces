@@ -1,23 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Display from './DisplayList'
+import AddNewRange from './AddNewRange'
 
+import AddNewHandle from './AddNewHandle'
+import AddNewLadder from './AddNewLadder'
 const Train = () => {
 
 
-    const [handle, setHandle] = useState('')
+ 
 
     const [listHandle, setListHandle] = useState([])
 
     //@updatedSet => Stores the filtered problem list
     const [updatedSet, setUpdate] = useState([])
-    const triggerRender = useRef(false)
+   
 
 
-    //Input field for filters (ex: startRagne = 1300; endRange = 1500; ladderInputField = A)
-    const [startRange, setStartRange] = useState('')
-    const [endRange, setEndRange] = useState('')
-    const [ladderInputField, setLadderField] = useState('')
+  
+   
 
     /*
     @allHandlePsetInfo => {
@@ -92,23 +93,23 @@ const Train = () => {
 
     //Fetching all problems from Codeforces API and distributing data to different array when page loads
     useEffect(() => {
-           let source = axios.CancelToken.source()
+        let source = axios.CancelToken.source()
         const find = async () => {
-            try{
+            try {
                 const response = await axios.get(`https://codeforces.com/api/problemset.problems`, {
                     cancelToken: source.token
                 })
                 var AllTags = []
                 var AllLadder = []
-    
-    
+
+
                 var sets = response.data.result.problems
                 for (let i = 0; i < sets.length; i++) {
                     for (let j = 0; j < sets[i].tags.length; j++) {
                         if (!AllTags.includes(sets[i].tags[j])) {
                             AllTags.push(sets[i].tags[j])
                         }
-    
+
                     }
                     if (!AllLadder.includes(sets[i].index)) {
                         AllLadder.push(sets[i].index)
@@ -116,42 +117,39 @@ const Train = () => {
                 }
                 setAllLadder([...AllLadder])
                 setAllTags([...AllTags])
-    
+
                 setAllPset([...response.data.result.problemStatistics])
             }
-            catch(err)
-            {
-                   if(axios.isCancel(err))
-                   {
-                       console.log("fetch aborted")
-                   }
-                   else{
-                       throw err
-                   }
-                   
+            catch (err) {
+                if (axios.isCancel(err)) {
+                    console.log("fetch aborted")
+                }
+                else {
+                    throw err
+                }
+
             }
-                
-            
-    
-                
-            
-           
-            
+
+
+
+
+
+
+
         }
         find()
-return () =>{
-    console.log("unmounting")
-    source.cancel()
-}
+        return () => {
+            console.log("unmounting")
+            source.cancel()
+        }
     }, [])
-   
+
     useEffect(() => {
         //Algorithm to Shortlist the Problems according to the user's filter
 
         let priorityPset = new Map()
 
 
-        if (triggerRender.current === true) {
 
             //Set every pset priority as 0
             for (let info of filterTagPset) {
@@ -264,10 +262,6 @@ return () =>{
                 }
             }
 
-            triggerRender.current = false
-
-
-
 
             let StopDuplicates = [...new Map(listToDisplay.map(obj => [JSON.stringify(obj), obj])).values()];
             if (StopDuplicates.length > 0) {
@@ -275,7 +269,7 @@ return () =>{
             }
             setUpdate([...StopDuplicates])
 
-        }
+    
 
     }, [filterTagPset, currentLadder, currentRange, currentTopics])
 
@@ -284,20 +278,9 @@ return () =>{
     /*
       Controlled input change
     */
-    const handleEndRange = (event) => {
-        setEndRange(event.target.value)
-    }
-    const handleStartRange = (event) => {
-        setStartRange(event.target.value)
-    }
-    const ChangeInputHandle = (event) => {
 
-        setHandle(event.target.value)
-    }
-    const handleLadderChange = (event) => {
-
-        setLadderField(event.target.value)
-    }
+    
+    
     const handlePersonalHandle = (event) => {
         setPersonalHandle(event.target.value)
     }
@@ -309,44 +292,10 @@ return () =>{
     /*
        Filter Controls
     */
-    const handleAddLadder = (event) => {
-        event.preventDefault()
-        const prevLadder = [...currentLadder]
-
-        triggerRender.current = true
-        if (allLadder.includes(ladderInputField)) {
-
-            if (!prevLadder.includes(ladderInputField)) {
-                prevLadder.push(ladderInputField)
-
-
-                setTimeout(() => {
-                    setNotification([])
-                }, 2500)
-                setNotification([` ${ladderInputField} is added successfully`, "green"])
-                setCurrentLadder([...prevLadder])
-                setLadderField('')
-            }
-            else {
-
-                setTimeout(() => {
-                    setNotification([])
-                }, 2500)
-                setNotification([`Already added`, "red"])
-            }
-
-        }
-        else {
-
-            setTimeout(() => {
-                setNotification([])
-            }, 2500)
-            setNotification([`Please enter the valid tag`, "red"])
-        }
-    }
+  
     const handleAddTopic = (topic) => {
         const prevTopics = [...currentTopics]
-        triggerRender.current = true
+      
 
         if (prevTopics.includes(topic) === false) {
             prevTopics.push(topic)
@@ -367,7 +316,7 @@ return () =>{
     }
     const handleRemoveLadder = (data) => {
 
-        triggerRender.current = true
+        
         let listLadder = currentLadder.filter((info) => info !== data.info)
         setTimeout(() => {
             setNotification([])
@@ -376,7 +325,7 @@ return () =>{
         setCurrentLadder([...listLadder])
     }
     const handleRemoveTopic = (data => {
-        triggerRender.current = true
+        
         let listTopics = currentTopics.filter((info) => info !== data.info)
         setTimeout(() => {
             setNotification([])
@@ -385,45 +334,8 @@ return () =>{
 
         setCurrentTopics([...listTopics])
     })
-    const handleRangeSubmit = (event) => {
-        event.preventDefault()
-        console.log(startRange, endRange)
-        if (startRange.length === 0 || endRange.length === 0 || Number(startRange) > Number(endRange)) {
-            setTimeout(() => {
-                setNotification([])
-            }, 2500)
-            setNotification([`Invalid range.. Try something like 1200 - 1500`, "red"])
-        }
-        else {
-            triggerRender.current = true
-            setTimeout(() => {
-                setNotification([])
-            }, 2500)
-            setNotification([`Filter ${startRange} - ${endRange} is added`, "green"])
-            setCurrentRange([startRange, endRange])
-        }
 
-    }
-    const clearRange = (event) => {
-        event.preventDefault()
-        if (startRange.length === 0 || endRange.length === 0) {
-            setTimeout(() => {
-                setNotification([])
-            }, 2500)
-            setNotification([`Invalid range`, "red"])
-        }
-        else {
-            triggerRender.current = true
-            setTimeout(() => {
-                setNotification([])
-            }, 2500)
-            setNotification([`Filter ${startRange} - ${endRange} is removed`, "green"])
-            setStartRange('')
-            setEndRange('')
-            setCurrentRange([])
-        }
 
-    }
     const handleAdminUsername = async (event) => {
         event.preventDefault()
 
@@ -447,81 +359,14 @@ return () =>{
 
 
     }
-    const handleAddPerson = async (event) => {
-        event.preventDefault()
-
-
-        try {
-            triggerRender.current = true
-            var handles = [...listHandle]
-            if (handles.includes(handle) === false) {
-                handles.push(handle)
-                var alreadyExistingProblemSet = []
-                const response = await axios.get(`https://codeforces.com/api/user.status?handle=${handle}`)
-
-                const ProblemSetInfo = response.data.result.filter((info) => {
-                    return info.verdict === "OK"
-                })
-
-
-                var list = []
-                for (let i = 0; i < ProblemSetInfo.length; i++) {
-                    alreadyExistingProblemSet.push(ProblemSetInfo[i].problem)
-                    list.push(ProblemSetInfo[i].problem)
-                }
-
-                var newGuy = {
-                    ...allHandlePsetInfo
-                }
-
-                newGuy[handle] = [...alreadyExistingProblemSet]
-
-
-
-                // console.log(allHandlePsetInfo)
-                for (let i = 0; i < listHandle.length; i++) {
-
-                    let individualPset = [...allHandlePsetInfo[listHandle[i]]]
-                    for (let j = 0; j < individualPset.length; j++) {
-                        list.push(individualPset[j])
-
-                    }
-                }
-
-                setTimeout(() => {
-                    setNotification([])
-                }, 2500)
-                setNotification([` ${handle} is added successfully`, "green"])
-                setPsetInfo(newGuy)
-                setListHandle(handles)
-                setFilterTagPset([...list])
-                setHandle('')
-
-            }
-            else {
-                setTimeout(() => {
-                    setNotification([])
-                }, 2500)
-                setNotification([` Handle is already added`, "red"])
-            }
-
-        }
-        catch (error) {
-
-            setTimeout(() => {
-                setNotification([])
-            }, 2500)
-            setNotification(["Please enter the valid handle or wait for the codeforces api to accept the request", "red"])
-        }
-
-    }
+ 
 
     const handleRemovePerson = (info) => {
 
         const data = [...listHandle]
         const filter = data.filter((name) => name !== info)
         const updatedObject = allHandlePsetInfo
-        triggerRender.current = true
+    
         delete updatedObject[info]
 
         let psetHolder = []
@@ -665,38 +510,12 @@ return () =>{
                         <div className="content-problemset" style={{ flexDirection: contentPset }}>
 
                             <div className="controls" style={contentStyle}>
-                                {notification.length === 2 &&
-                                    <div className="Notification" style={{ backgroundColor: notification[1] }}>
-                                        <h3> {notification[0]}</h3>
-                                    </div>
-                                }
+                               
                                 <h2 >Filters</h2>
-                                <div className="LEFT">
-                                    <form className="RangeInputForm">
-                                        <h3>Enter the difficutly range</h3>
-                                        <div className="RangeInput">
-                                            <input value={startRange} onChange={(event) => handleStartRange(event)} placeholder="From" />
 
-                                            <input value={endRange} onChange={event => handleEndRange(event)} placeholder="To" />
-                                        </div>
-                                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", flexWrap: "wrap" }}>
-
-                                            <button className="ui secondary button" onClick={(e) => handleRangeSubmit(e)}>
-                                                Submit
-                                            </button>
-                                            <button className="ui button" onClick={(e) => clearRange(e)}>
-                                                Cancel
-                                            </button>
-                                        </div>
-
-
-                                    </form>
-
-
-
-                                </div>
-
-
+                                <AddNewRange
+                                    setCurrentRange={setCurrentRange}
+                                />
 
 
                                 <div className="RIGHT">
@@ -708,30 +527,21 @@ return () =>{
                                         <button style={{ margin: "0.3em" }} className="ui select button" onClick={(e) => handleShowTag(e)}>{showTag}</button>
                                     </div>
                                     <div>
-                                        <form className="HandleInputForm">
-                                            <h3>Enter the handle</h3>
-                                            <input value={handle} type="text" onChange={ChangeInputHandle} />
-                                            <br />
-                                            <button className="ui secondary button" onClick={handleAddPerson}>
-                                                Add Handle
-                                            </button>
+                                       
+                                        <AddNewHandle
+                                        allHandlePsetInfo = {allHandlePsetInfo}
+                                        listHandle = {listHandle}
+                                        setFilterTagPset = {setFilterTagPset}
+                                        setPsetInfo = {setPsetInfo}
+                                        setListHandle = {setListHandle}
+                                        />
 
 
-                                        </form>
-
-
-
-                                        <div className="ladderControls">
-
-                                            <h3>
-                                                Ladders
-                                            </h3>
-                                            <input type="text" value={ladderInputField} onChange={(event) => handleLadderChange(event)} placeholder="Ex: A, B" />
-
-                                            <button className="ui secondary button" onClick={(event) => handleAddLadder(event)}>
-                                                Add ladder
-                                            </button>
-                                        </div>
+                                       <AddNewLadder 
+                                       allLadder = {allLadder}
+                                       currentLadder = {currentLadder}
+                                       setCurrentLadder = {setCurrentLadder}
+                                       />
                                     </div>
 
                                 </div>

@@ -336,10 +336,10 @@ tr{
 .Notification{
     text-align: center;
     width: 50%;
-    border-radius: 15px;
+    
     margin-right: auto;
     margin-left: auto;
    margin-top: 2%;
-   
+   font-size: medium;
    margin-bottom: 2%;
 }
