@@ -1,12 +1,16 @@
-import React, {useContext } from 'react'
+import React, {useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
+import ReactGa from 'react-ga'
 import { UserContext } from '../../../contexts/UserContext'
 import axios from 'axios'
 
 
 const Login = () => {
-   
+    useEffect(() => {
+        ReactGa.initialize("UA-207957581-1")
+        ReactGa.pageview(window.location.pathname) 
+        alert(`sending data ${window.location.pathname}`)
+    }, [])
     const {USER, LOGIN_STATE} = useContext(UserContext)
     const [user,setUser] = USER
    

@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import ReactGa from 'react-ga'
 import HeatMap from './Heatmap'
 import Histogram from './Histogram_RatingWise'
 import Doughnuts from './Doughnut'
 import Overlay from './Overlay'
 
 const PublicStats = () => {
+  useEffect(() => {
+    ReactGa.initialize("UA-207957581-1")
+    ReactGa.pageview(window.location.pathname) 
+    alert(`sending data ${window.location.pathname}`)
+}, [])
   const [HANDLE, setHandle] = useState('')
   const [DateWise, setDateWise] = useState()
   const [YearInfo, setYearInfo] = useState([])

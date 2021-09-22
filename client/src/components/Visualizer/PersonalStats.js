@@ -1,13 +1,18 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import ReactGa from 'react-ga'
 
 import Histogram from './Histogram_RatingWise'
 import Doughnuts from './Doughnut'
 
 
 const PersonalStats = () => {
+  useEffect(() => {
+    ReactGa.initialize("UA-207957581-1")
+    ReactGa.pageview(window.location.pathname) 
+    alert(`sending data ${window.location.pathname}`)
+}, [])
   const [username,setUsername] = useState('')
 
   const [RatingInfo, setRatingInfo] = useState([])

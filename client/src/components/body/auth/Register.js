@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { showErrMsg,showSuccessMsg } from '../../../utils/notification/Notification'
 import { isEmpty, isEmail, isLength, isMatch } from '../../../utils/validation/Validation'
 import axios from 'axios'
+import ReactGa from 'react-ga'
 const initialState = {
     username:'',
     name: '',
@@ -13,6 +14,11 @@ const initialState = {
     success: ''
 }
 const Register = () => {
+    useEffect(() => {
+        ReactGa.initialize("UA-207957581-1")
+        ReactGa.pageview(window.location.pathname) 
+        alert(`sending data ${window.location.pathname}`)
+    }, [])
     const [user, setUser] = useState(initialState)
 
     const { username, email, password,cf_password, err, success } = user

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Display from './DisplayList'
 import AddNewRange from './AddNewRange'
-
+import ReactGa from 'react-ga'
 import AddNewHandle from './AddNewHandle'
 import AddNewLadder from './AddNewLadder'
 const Train = () => {
 
-
+    useEffect(() => {
+        ReactGa.initialize("UA-207957581-1")
+        ReactGa.pageview(window.location.pathname) 
+        alert(`sending data ${window.location.pathname}`)
+    }, [])
  
 
     const [listHandle, setListHandle] = useState([])
