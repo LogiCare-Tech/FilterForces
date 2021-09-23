@@ -21,7 +21,7 @@ const Register = () => {
     }, [])
     const [user, setUser] = useState(initialState)
 
-    const { username, email, password,cf_password, err, success } = user
+    const { username, email,name, password,cf_password, err, success } = user
     
     const handleChangeInput = e => {
         const {name, value} = e.target
@@ -31,7 +31,7 @@ const Register = () => {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        if(isEmpty(password) || isEmail(username))
+        if(isEmpty(password) || isEmail(username) || isEmpty(name))
         {
             
             return setUser({...user, err: "Please fill in all fields", success: ''})
@@ -52,7 +52,7 @@ const Register = () => {
            
            
             const res = await axios.post('/api/Users/register', {
-                username, email, password
+                username,name, email, password
              })
            
         
@@ -82,7 +82,16 @@ const Register = () => {
                         name="username"
                         onChange = {handleChangeInput} />
                 </div>
-         
+                <div>
+                    <label htmlFor="name">Enter your name</label>
+                    <input
+                        type="text"
+                        placeholder="Enter your name"
+                        id="name"
+                        value={name}
+                        name="name"
+                        onChange = {handleChangeInput} />
+                </div>
                 <div>
                     <label htmlFor="email">Email Address</label>
                     <input

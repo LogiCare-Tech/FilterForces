@@ -51,8 +51,8 @@ app.use(cookieParser())
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  retryWrites: true
-
+  retryWrites: true,
+  autoIndex: false
 
 })
   .then(() => {

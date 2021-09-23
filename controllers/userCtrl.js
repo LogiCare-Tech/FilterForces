@@ -41,11 +41,11 @@ UserRouter.post('/register', async(request, response) =>{
        
     
         const username = String(request.body.username)
-      
+        const name = String(request.body.name)
         const email = String(request.body.email)
         const password = String(request.body.password)
        
-        if( email.length === 0 || password.length === 0 || username.length === 0){
+        if(name.length === 0 || email.length === 0 || password.length === 0 || username.length === 0){
             
             return response.status(400).json({msg: "Please fill in all fields."})
         }
@@ -69,7 +69,7 @@ UserRouter.post('/register', async(request, response) =>{
         
         const newUser = {
             username: username,
-           
+            name: name,
             email: email,
             password: passwordHash
         }
@@ -101,7 +101,7 @@ UserRouter.post('/activateEmail', async(request, response) =>{
   
    const user =  jwt.verify(activation_token, `${config.ACCESS_TOKEN_SECRET}`)
 
-    const {username, email, password} = user
+    const {username, name,email, password} = user
     const check = await Users.findOne({email})
     if(check)
     {
@@ -109,7 +109,7 @@ UserRouter.post('/activateEmail', async(request, response) =>{
     }
     const newUser = new Users({
         username: username,
-       
+       name: name,
         email: email,
         password: password
     })
