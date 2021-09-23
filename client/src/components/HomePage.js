@@ -45,6 +45,7 @@ const HomePage = () => {
                 <div className="Viz-midSection">
 
                     <div className="Description-middelSection">
+                        
                         <h2>Visualization <i className="chart area icon" /></h2>
                         <ol style={{ color: "white" }}>
                             <li><h3>Follow the steps explained in the Introduction video to set-up the extension</h3></li>
